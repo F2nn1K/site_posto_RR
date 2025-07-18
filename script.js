@@ -1,7 +1,7 @@
 // Variáveis globais
 let mobileMenuOpen = false;
 
-// Configuração do Supabase
+// Configuração do Supabase - as credenciais reais agora estão nas variáveis do Railway
 const SUPABASE_URL = 'https://ezpjdywoywtpxtiynseg.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6cGpkeXdveXd0cHh0aXluc2VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4NjE3MjgsImV4cCI6MjA2ODQzNzcyOH0.qiVX5Lti7kpOoJEEAlU795P9OmXFBDqOKKxUBW4cFc8';
 
