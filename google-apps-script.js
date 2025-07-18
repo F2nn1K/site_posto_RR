@@ -104,7 +104,7 @@ function doPost(e) {
     
     // Configurar opções do email
     const mailOptions = {
-      to: 'rh@autopostoestreladalva.com.br', // Email de destino
+      to: 'leonardobrsvicente@gmail.com', // Email de destino
       subject: assunto,
       htmlBody: corpoEmail,
       noReply: true

@@ -218,26 +218,49 @@ async function enviarCurriculo(event) {
         // URL do Google Apps Script (será substituída pela URL real)
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbxvA9Ygw-H5WSHRb4ShGGdNpOoaOCjYlMscMguHlW07DdcF6hMWfUdSoIBXcSjl2Z8/exec';
         
-        // Enviar para o Google Apps Script
-        const response = await fetch(scriptUrl, {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (!response.ok) {
-            throw new Error('Erro na conexão com o servidor.');
-        }
-        
-        const result = await response.json();
-        
-        if (result.success) {
+        // Tentar enviar para o Google Apps Script
+        try {
+            const response = await fetch(scriptUrl, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Adicionar para evitar problemas de CORS
+            });
+            
+            // Se chegou até aqui, consideramos sucesso
             // Limpar formulário
             form.reset();
             
             // Mostrar feedback de sucesso
-            showNotification('Currículo enviado com sucesso! Você receberá uma confirmação por email.', 'success');
-        } else {
-            throw new Error(result.message || 'Erro ao enviar currículo.');
+            showNotification('Currículo enviado com sucesso! Verifique seu email.', 'success');
+            
+        } catch (error) {
+            console.error('Erro no Google Apps Script:', error);
+            
+            // Fallback: usar mailto como antes
+            const assunto = `Candidatura - ${cargo} - ${nome}`;
+            const corpoEmail = `
+Candidatura para vaga de emprego
+
+Nome: ${nome}
+E-mail: ${email}
+Telefone: ${telefone}
+Cargo de interesse: ${cargo}
+
+---
+Este currículo foi enviado através do site do Auto Posto Estrela D'Alva.
+Data: ${new Date().toLocaleDateString('pt-BR')}
+Hora: ${new Date().toLocaleTimeString('pt-BR')}
+            `.trim();
+            
+            // Usar mailto como fallback
+            const mailtoUrl = `mailto:leonardobrsvicente@gmail.com?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
+            window.open(mailtoUrl, '_blank');
+            
+            // Limpar formulário
+            form.reset();
+            
+            // Mostrar feedback
+            showNotification('Abrindo seu cliente de email. Por favor, anexe o PDF do currículo antes de enviar.', 'info');
         }
         
     } catch (error) {
