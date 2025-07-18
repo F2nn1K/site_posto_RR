@@ -1,6 +1,13 @@
 // Variáveis globais
 let mobileMenuOpen = false;
 
+// Configuração do Supabase
+const SUPABASE_URL = 'https://ezpjdywoywtpxtiynseg.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6cGpkeXdveXd0cHh0aXluc2VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4NjE3MjgsImV4cCI6MjA2ODQzNzcyOH0.qiVX5Lti7kpOoJEEAlU795P9OmXFBDqOKKxUBW4cFc8';
+
+// Inicializar Supabase
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 // Configurações de segurança
 const SECURITY_CONFIG = {
     maxFileSize: 1 * 1024 * 1024, // 1MB
@@ -149,7 +156,7 @@ function validateCargo(cargo) {
     return cargosValidos.includes(cargo);
 }
 
-// Função para enviar currículo via email local
+// Função para enviar currículo para o Supabase
 async function enviarCurriculo(event) {
     console.log('🚀 Função enviarCurriculo iniciada!');
     console.log('Evento recebido:', event);
@@ -194,9 +201,9 @@ async function enviarCurriculo(event) {
         
         console.log('📝 Obtendo dados do formulário...');
     
-    const form = event.target;
-    const formData = new FormData(form);
-    
+        const form = event.target;
+        const formData = new FormData(form);
+        
         // Obter e sanitizar dados
         const nome = sanitizeInput(formData.get('nome'));
         const email = sanitizeInput(formData.get('email'));
@@ -238,37 +245,56 @@ async function enviarCurriculo(event) {
         
         console.log('✅ Todas as validações passaram!');
         
-        // Criar email usando mailto (solução simples e limpa)
-        const assunto = `Candidatura - ${cargo} - ${nome}`;
-        const corpoEmail = `
-Candidatura para vaga de emprego
-
-Nome: ${nome}
-E-mail: ${email}
-Telefone: ${telefone}
-Cargo de interesse: ${cargo}
-
-Data: ${new Date().toLocaleDateString('pt-BR')}
-Hora: ${new Date().toLocaleTimeString('pt-BR')}
-
----
-Este currículo foi enviado através do site do Auto Posto Estrela D'Alva.
-R. Estrela D'álva, 1794 - Boa Vista/RR | (95) 99174-0090
-
-IMPORTANTE: Anexe o arquivo PDF do currículo antes de enviar este email.
-        `.trim();
+        // Upload do arquivo para o Supabase Storage
+        let arquivoUrl = null;
+        if (curriculo) {
+            console.log('📁 Fazendo upload do arquivo...');
+            const fileName = `curriculos/${Date.now()}-${curriculo.name}`;
+            
+            const { data: uploadData, error: uploadError } = await supabase.storage
+                .from('curriculos')
+                .upload(fileName, curriculo);
+            
+            if (uploadError) {
+                console.error('❌ Erro no upload:', uploadError);
+                throw new Error('Erro ao fazer upload do arquivo: ' + uploadError.message);
+            }
+            
+            // Obter URL pública do arquivo
+            const { data: urlData } = supabase.storage
+                .from('curriculos')
+                .getPublicUrl(fileName);
+            
+            arquivoUrl = urlData.publicUrl;
+            console.log('✅ Upload concluído:', arquivoUrl);
+        }
         
-        // Usar mailto para abrir cliente de email
-        const mailtoUrl = `mailto:leonardobrsvicente@gmail.com?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
+        // Salvar dados no banco
+        console.log('💾 Salvando no banco...');
+        const { data, error } = await supabase
+            .from('curriculos')
+            .insert([
+                {
+                    nome: nome,
+                    email: email,
+                    telefone: telefone,
+                    cargo: cargo,
+                    arquivo_url: arquivoUrl
+                }
+            ]);
         
-        console.log('📧 Abrindo cliente de email...');
-        window.open(mailtoUrl, '_blank');
+        if (error) {
+            console.error('❌ Erro ao salvar no banco:', error);
+            throw new Error('Erro ao salvar currículo: ' + error.message);
+        }
+        
+        console.log('✅ Currículo salvo com sucesso!', data);
         
         // Limpar formulário
         form.reset();
         
         // Mostrar feedback de sucesso
-        showNotification('Cliente de email aberto! Por favor, anexe o PDF do currículo antes de enviar.', 'success');
+        showNotification('Currículo enviado com sucesso! Entraremos em contato em breve.', 'success');
         
     } catch (error) {
         console.error('❌ Erro:', error);
