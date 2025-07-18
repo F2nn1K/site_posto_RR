@@ -152,7 +152,7 @@ function validatePDFFile(file) {
 
 // Função para validar cargo
 function validateCargo(cargo) {
-    const cargosValidos = ['Frentista', 'Caixa', 'Atendente', 'Barbeiro', 'Auxiliar de Cozinha', 'Outro'];
+    const cargosValidos = ['Frentista', 'Auxiliar de Limpeza', 'Auxiliar Administrativo'];
     return cargosValidos.includes(cargo);
 }
 
