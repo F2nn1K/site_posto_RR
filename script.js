@@ -215,26 +215,60 @@ async function enviarCurriculo(event) {
         // Adicionar IP do usuário (opcional)
         formData.append('ip', await getClientIP());
         
-        // URL do Google Apps Script (será substituída pela URL real)
+        // URL do Google Apps Script
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbxvA9Ygw-H5WSHRb4ShGGdNpOoaOCjYlMscMguHlW07DdcF6hMWfUdSoIBXcSjl2Z8/exec';
         
         // Tentar enviar para o Google Apps Script
         try {
-            const response = await fetch(scriptUrl, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors' // Adicionar para evitar problemas de CORS
+            console.log('Enviando dados para Google Apps Script...');
+            console.log('Dados do formulário:', {
+                nome: nome,
+                email: email,
+                telefone: telefone,
+                cargo: cargo,
+                arquivo: curriculo ? curriculo.name : 'Nenhum'
             });
             
-            // Se chegou até aqui, consideramos sucesso
-            // Limpar formulário
-            form.reset();
+            const response = await fetch(scriptUrl, {
+                method: 'POST',
+                body: formData
+            });
             
-            // Mostrar feedback de sucesso
-            showNotification('Currículo enviado com sucesso! Verifique seu email.', 'success');
+            console.log('Resposta do Google Apps Script:', response);
+            
+            // Verificar se a resposta foi bem-sucedida
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Resultado:', result);
+                
+                if (result.success) {
+                    // Limpar formulário
+                    form.reset();
+                    
+                    // Mostrar feedback de sucesso
+                    showNotification('Currículo enviado com sucesso! Verifique seu email.', 'success');
+                } else {
+                    throw new Error(result.message || 'Erro ao enviar currículo');
+                }
+            } else {
+                throw new Error('Erro na resposta do servidor');
+            }
             
         } catch (error) {
             console.error('Erro no Google Apps Script:', error);
+            
+            // Verificar se é erro de CORS ou rede
+            if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                showNotification('Erro de conexão. Verificando se o Google Apps Script está ativo...', 'error');
+                
+                // Testar se a URL está acessível
+                try {
+                    const testResponse = await fetch(scriptUrl, { method: 'GET' });
+                    console.log('Teste de conectividade:', testResponse.status);
+                } catch (testError) {
+                    console.error('Erro no teste de conectividade:', testError);
+                }
+            }
             
             // Fallback: usar mailto como antes
             const assunto = `Candidatura - ${cargo} - ${nome}`;
