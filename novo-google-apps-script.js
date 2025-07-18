@@ -17,7 +17,25 @@ function doPost(e) {
     
     // Obter dados do formulário
     const formData = e.parameter;
-    const fileBlob = e.parameter.curriculo;
+    
+    // Tentar diferentes formas de capturar o arquivo
+    let fileBlob = null;
+    
+    // Método 1: e.parameter.curriculo
+    if (e.parameter.curriculo) {
+      fileBlob = e.parameter.curriculo;
+      console.log('📎 Arquivo capturado via e.parameter.curriculo');
+    }
+    
+    // Método 2: e.postData.contents (para FormData)
+    if (!fileBlob && e.postData && e.postData.contents) {
+      console.log('📎 Tentando capturar via e.postData.contents');
+      // Aqui precisaríamos processar o FormData manualmente
+    }
+    
+    // Método 3: e.parameter (todos os parâmetros)
+    console.log('📋 Todos os parâmetros recebidos:', Object.keys(e.parameter));
+    console.log('📋 Tipo de e.parameter.curriculo:', typeof e.parameter.curriculo);
     
     console.log('📋 Dados recebidos:', {
       nome: formData.nome,

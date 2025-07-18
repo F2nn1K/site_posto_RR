@@ -149,7 +149,7 @@ function validateCargo(cargo) {
     return cargosValidos.includes(cargo);
 }
 
-// Função para enviar currículo via Google Apps Script
+// Função para enviar currículo via email local
 async function enviarCurriculo(event) {
     console.log('🚀 Função enviarCurriculo iniciada!');
     console.log('Evento recebido:', event);
@@ -160,42 +160,58 @@ async function enviarCurriculo(event) {
     
     // Rate limiting
     const now = Date.now();
+    console.log('⏰ Rate limiting check...');
     if (now - lastSubmitTime < SECURITY_CONFIG.rateLimit.timeWindow) {
         submitAttempts++;
+        console.log('⚠️ Tentativa número:', submitAttempts);
         if (submitAttempts > SECURITY_CONFIG.rateLimit.maxAttempts) {
+            console.log('❌ Muitas tentativas, bloqueando...');
             showNotification('Muitas tentativas. Aguarde um momento antes de tentar novamente.', 'error');
             return;
         }
     } else {
         submitAttempts = 1;
         lastSubmitTime = now;
+        console.log('✅ Rate limiting OK');
     }
     
+    console.log('🔒 Verificando botão...');
     // Prevenir múltiplos envios
     const submitButton = event.target.querySelector('button[type="submit"]');
-    if (submitButton.disabled) return;
     
+    console.log('🔒 Desabilitando botão...');
     submitButton.disabled = true;
     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Enviando...</span>';
     
     try {
         console.log('🔍 Verificando se é bot...');
-        // Verificar se é um bot
-        if (detectBot()) {
-            console.log('❌ Bot detectado! Acesso negado.');
-            throw new Error('Acesso negado.');
-        }
-        console.log('✅ Não é bot, continuando...');
+        // Verificar se é um bot (DESABILITADO PARA TESTE)
+        // if (detectBot()) {
+        //     console.log('❌ Bot detectado! Acesso negado.');
+        //     throw new Error('Acesso negado.');
+        // }
+        console.log('✅ Verificação de bot desabilitada para teste...');
         
-        const form = event.target;
-        const formData = new FormData(form);
-        
+        console.log('📝 Obtendo dados do formulário...');
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    
         // Obter e sanitizar dados
         const nome = sanitizeInput(formData.get('nome'));
         const email = sanitizeInput(formData.get('email'));
         const telefone = sanitizeInput(formData.get('telefone'));
         const cargo = formData.get('cargo');
         const curriculo = formData.get('curriculo');
+        
+        console.log('📄 Dados capturados:');
+        console.log('- Nome:', nome);
+        console.log('- Email:', email);
+        console.log('- Telefone:', telefone);
+        console.log('- Cargo:', cargo);
+        console.log('- Arquivo:', curriculo ? curriculo.name : 'Nenhum');
+        console.log('- Tamanho do arquivo:', curriculo ? curriculo.size + ' bytes' : 'N/A');
+        console.log('- Tipo do arquivo:', curriculo ? curriculo.type : 'N/A');
         
         // Validações
         if (!nome || nome.length < 3) {
@@ -220,60 +236,11 @@ async function enviarCurriculo(event) {
             throw new Error(fileValidation.message);
         }
         
-        // Adicionar IP do usuário (opcional)
-        formData.append('ip', await getClientIP());
+        console.log('✅ Todas as validações passaram!');
         
-        // URL do Google Apps Script
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbxpXtWlzdTkB32qtgViGsxbsLuZBPgs38Jw_o9eAEy22c3DehL8H48dqFURs-Pc-g_t/exec';
-        
-        // Tentar enviar para o Google Apps Script
-        try {
-            console.log('Enviando dados para Google Apps Script...');
-            console.log('Dados do formulário:', {
-                nome: nome,
-                email: email,
-                telefone: telefone,
-                cargo: cargo,
-                arquivo: curriculo ? curriculo.name : 'Nenhum'
-            });
-            
-            const response = await fetch(scriptUrl, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors' // Adicionar para evitar problemas de CORS
-            });
-            
-            console.log('Resposta do Google Apps Script:', response);
-            
-            // Com no-cors, não conseguimos ler a resposta JSON
-            // Se chegou até aqui sem erro, consideramos sucesso
-            console.log('✅ Envio realizado com sucesso!');
-            
-            // Limpar formulário
-            form.reset();
-            
-            // Mostrar feedback de sucesso
-            showNotification('Currículo enviado com sucesso! Verifique seu email.', 'success');
-            
-        } catch (error) {
-            console.error('Erro no Google Apps Script:', error);
-            
-            // Verificar se é erro de CORS ou rede
-            if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
-                showNotification('Erro de conexão. Verificando se o Google Apps Script está ativo...', 'error');
-                
-                // Testar se a URL está acessível
-                try {
-                    const testResponse = await fetch(scriptUrl, { method: 'GET' });
-                    console.log('Teste de conectividade:', testResponse.status);
-                } catch (testError) {
-                    console.error('Erro no teste de conectividade:', testError);
-                }
-            }
-            
-            // Fallback: usar mailto como antes
-            const assunto = `Candidatura - ${cargo} - ${nome}`;
-            const corpoEmail = `
+        // Criar email usando mailto (solução simples e limpa)
+        const assunto = `Candidatura - ${cargo} - ${nome}`;
+        const corpoEmail = `
 Candidatura para vaga de emprego
 
 Nome: ${nome}
@@ -281,24 +248,30 @@ E-mail: ${email}
 Telefone: ${telefone}
 Cargo de interesse: ${cargo}
 
----
-Este currículo foi enviado através do site do Auto Posto Estrela D'Alva.
 Data: ${new Date().toLocaleDateString('pt-BR')}
 Hora: ${new Date().toLocaleTimeString('pt-BR')}
-            `.trim();
-            
-            // Usar mailto como fallback
-            const mailtoUrl = `mailto:leonardobrsvicente@gmail.com?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
-            window.open(mailtoUrl, '_blank');
-            
-            // Limpar formulário
-            form.reset();
-            
-            // Mostrar feedback
-            showNotification('Abrindo seu cliente de email. Por favor, anexe o PDF do currículo antes de enviar.', 'info');
-        }
+
+---
+Este currículo foi enviado através do site do Auto Posto Estrela D'Alva.
+R. Estrela D'álva, 1794 - Boa Vista/RR | (95) 99174-0090
+
+IMPORTANTE: Anexe o arquivo PDF do currículo antes de enviar este email.
+        `.trim();
+        
+        // Usar mailto para abrir cliente de email
+        const mailtoUrl = `mailto:leonardobrsvicente@gmail.com?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
+        
+        console.log('📧 Abrindo cliente de email...');
+        window.open(mailtoUrl, '_blank');
+        
+        // Limpar formulário
+        form.reset();
+        
+        // Mostrar feedback de sucesso
+        showNotification('Cliente de email aberto! Por favor, anexe o PDF do currículo antes de enviar.', 'success');
         
     } catch (error) {
+        console.error('❌ Erro:', error);
         // Mostrar erro
         showNotification(error.message, 'error');
         
@@ -309,15 +282,13 @@ Hora: ${new Date().toLocaleTimeString('pt-BR')}
     }
 }
 
-// Função para obter IP do cliente (opcional)
-async function getClientIP() {
-    try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        return data.ip;
-    } catch (error) {
-        return 'Não disponível';
-    }
+// Função simples para obter data/hora formatada
+function getFormattedDateTime() {
+    const now = new Date();
+    return {
+        date: now.toLocaleDateString('pt-BR'),
+        time: now.toLocaleTimeString('pt-BR')
+    };
 }
 
 // Função para mostrar notificações
@@ -769,6 +740,46 @@ function initializeApp() {
     // Adicionar efeito parallax apenas em desktop
     if (!isMobile()) {
         initParallaxEffect();
+    }
+    
+    // Adicionar listener direto no formulário para garantir funcionamento
+    const form = document.querySelector('form');
+    if (form) {
+        console.log('🔧 Adicionando listener direto no formulário...');
+        form.addEventListener('submit', function(e) {
+            console.log('🎯 Submit capturado pelo listener direto!');
+            enviarCurriculo(e);
+        });
+        
+        // Adicionar listener também no botão para garantir
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) {
+            console.log('🔧 Adicionando listener no botão também...');
+            submitButton.addEventListener('click', function(e) {
+                console.log('🎯 Clique no botão capturado!');
+                
+                // Verificar se o formulário é válido
+                const formValid = form.checkValidity();
+                console.log('📋 Formulário válido:', formValid);
+                
+                if (!formValid) {
+                    console.log('❌ Formulário inválido! Campos com problema:');
+                    const invalidFields = form.querySelectorAll(':invalid');
+                    invalidFields.forEach(field => {
+                        console.log('- Campo:', field.name, 'Valor:', field.value, 'Tipo:', field.type);
+                    });
+                } else {
+                    console.log('✅ Formulário válido, submit deve acontecer...');
+                    
+                    // Chamar a função diretamente
+                    console.log('🚀 Chamando enviarCurriculo diretamente...');
+                    const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+                    form.dispatchEvent(submitEvent);
+                }
+                
+                // Não prevenir o comportamento padrão aqui, deixar o submit acontecer
+            });
+        }
     }
     
     console.log('Auto Posto Estrela D\'Alva - Site inicializado com sucesso!');

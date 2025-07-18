@@ -1,124 +1,115 @@
-# Auto Posto Estrela D'Alva - Site Institucional
+# Auto Posto Estrela D'Alva - Site de Currículos
 
-Site institucional do Auto Posto Estrela D'Alva localizado em Boa Vista - RR, oferecendo combustível de qualidade, loja de conveniência, barbearia e açaiteria com atendimento 24 horas.
+Site institucional para recebimento de currículos do Auto Posto Estrela D'Alva em Boa Vista/RR.
 
 ## 🚀 Funcionalidades
 
-### Principais Seções
-- **Início**: Apresentação dos serviços principais
-- **Sobre**: Missão, visão, valores e diferenciais da empresa
-- **Serviços**: Detalhamento de todos os serviços oferecidos
-- **Localização**: Mapa e informações de endereço
-- **Vagas de Emprego**: Formulário para envio de currículos
-- **Instagram**: Galeria de fotos e integração com redes sociais
+- **Formulário de Candidatura**: Permite que candidatos enviem seus dados pessoais e currículo
+- **Validação Completa**: Validação de todos os campos obrigatórios
+- **Segurança**: Proteção contra spam e validação de arquivos PDF
+- **Responsivo**: Funciona perfeitamente em desktop e mobile
+- **Design Moderno**: Interface clean e profissional
 
-### Formulário de Currículo
-O site agora inclui um formulário completo e seguro para candidatos enviarem seus currículos:
+## 📁 Estrutura do Projeto
 
-- **Campos obrigatórios**:
-  - Nome completo (mínimo 3 caracteres)
-  - E-mail (validação de formato)
-  - Telefone (formatação automática)
-  - Cargo de interesse (dropdown com opções)
-  - Anexo do currículo (PDF até 1MB)
-
-- **Funcionalidade**: O formulário abre o cliente de email do usuário com os dados preenchidos automaticamente
-
-- **Recursos de Segurança**:
-  - Validação em tempo real dos campos
-  - Sanitização de dados contra injeção de código
-  - Validação rigorosa de arquivos PDF
-  - Rate limiting (máximo 3 tentativas por minuto)
-  - Detecção de bots
-  - Formatação automática de telefone
-  - Notificações visuais de sucesso/erro
-
-### Vagas Disponíveis
-- Frentista
-- Caixa
-- Atendente
-- Barbeiro
-- Auxiliar de Cozinha
-- Outros cargos
+```
+site posto puro/
+├── index.html          # Página principal
+├── style.css           # Estilos CSS
+├── script.js           # JavaScript principal
+├── logos/              # Logotipos das seções
+│   ├── acai.png
+│   ├── barbearia.jpeg
+│   ├── conveniencia.png
+│   └── logoposto.png
+├── acai.png           # Imagem da seção açaí
+├── conveniencia.png   # Imagem da seção conveniência
+├── layout.png         # Layout de referência
+├── Logotipo.png       # Logo principal
+└── README.md          # Este arquivo
+```
 
 ## 🛠️ Tecnologias Utilizadas
 
 - **HTML5**: Estrutura semântica
-- **CSS3**: Estilização moderna e responsiva
-- **JavaScript**: Funcionalidades interativas
+- **CSS3**: Estilos modernos e responsivos
+- **JavaScript**: Interatividade e validações
 - **Font Awesome**: Ícones
-- **Google Maps**: Integração de localização
+- **Google Fonts**: Tipografia (Poppins)
 
-## 📱 Responsividade
+## 📧 Como Funciona
 
-O site é totalmente responsivo e funciona perfeitamente em:
-- Desktop
-- Tablet
-- Smartphone
+1. **Candidato preenche o formulário** com seus dados pessoais
+2. **Sistema valida** todos os campos obrigatórios
+3. **Candidato anexa** currículo em PDF (máximo 1MB)
+4. **Sistema abre cliente de email** com dados preenchidos
+5. **Candidato anexa o PDF** e envia o email
 
-## 🎨 Design
+## 🔧 Configuração
 
-- Design moderno e limpo
-- Cores alinhadas com a identidade visual do posto
-- Animações suaves e interativas
-- Gradientes e sombras para profundidade visual
+O site é **100% estático** e funciona sem necessidade de servidor. Basta:
 
-## 📧 Funcionalidades de Contato
+1. **Abrir o arquivo `index.html`** em qualquer navegador
+2. **Ou servir via HTTP** para funcionalidades completas
 
-### WhatsApp
-- Botão flutuante para contato rápido
-- Integração direta com WhatsApp Business
-- Mensagem pré-formatada sobre vagas
+## 🌐 Deploy
 
-### Email via Google Apps Script
-- Formulário de currículo que envia diretamente para email
-- Validação de arquivos (máximo 1MB)
-- Formatação automática da mensagem
-- Sistema gratuito com limite de 1.500 emails por dia
-- Anexos PDF incluídos automaticamente
+### GitHub Pages
+```bash
+git add .
+git commit -m "Site do Auto Posto Estrela D'Alva"
+git push origin main
+```
 
-## 🚀 Como Usar
+### Railway
+```bash
+# O site pode ser facilmente deployado no Railway
+# Apenas conecte o repositório GitHub
+```
 
-1. Clone ou baixe os arquivos
-2. Abra o `index.html` em um navegador
-3. Navegue pelas seções usando o menu
-4. Para enviar currículo, preencha o formulário na seção "Envie seu Currículo"
+### Vercel/Netlify
+```bash
+# Deploy direto via drag & drop ou GitHub
+```
 
-## 📍 Localização
+## 📱 Funcionalidades Responsivas
 
-**Auto Posto Estrela D'Alva**
-- Endereço: R. Estrela D'álva, 1794 - Boa Vista/RR
-- Telefone: (95) 99174-0090
-- Horário: 24 horas
-- WhatsApp: (95) 99174-0090
+- ✅ **Desktop**: Layout completo com sidebar
+- ✅ **Tablet**: Adaptação do layout
+- ✅ **Mobile**: Menu hambúrguer e layout otimizado
 
-## 📸 Redes Sociais
+## 🎨 Seções do Site
 
+1. **Hero**: Apresentação principal
+2. **Sobre**: Informações sobre o posto
+3. **Serviços**: Conveniência, Açaí, Barbearia
+4. **Localização**: Mapa e endereço
+5. **Trabalhe Conosco**: Formulário de currículos
+
+## 📞 Contato
+
+- **Telefone**: (95) 99174-0090
+- **Email**: leonardobrsvicente@gmail.com
+- **Endereço**: R. Estrela D'álva, 1794 - Boa Vista/RR
 - **Instagram**: @autopostoestreladalvarr
-- **WhatsApp**: (95) 99174-0090
 
-## 🔄 Atualizações Recentes
+## 🔒 Segurança
 
-### Versão Atual - Formulário de Currículo Seguro
-- Substituição do formulário de contato por formulário de currículo
-- Adição de campos específicos para candidatos
-- Integração com email para envio de currículos
-- Atualização da seção de contato para focar em vagas de emprego
-- Melhorias no design dos campos de formulário
-- **Implementação de segurança robusta**:
-  - Validação de arquivos PDF (máximo 1MB)
-  - Sanitização contra injeção de código
-  - Rate limiting para prevenir spam
-  - Detecção de bots
-  - Validação em tempo real
-  - Formatação automática de telefone
-  - Sistema de notificações visuais
-- **Integração com Google Apps Script**:
-  - Envio direto para email
-  - Formato HTML profissional
-  - Anexos automáticos
-  - Sistema gratuito e confiável
+- Validação de tipos de arquivo (apenas PDF)
+- Limite de tamanho de arquivo (1MB)
+- Sanitização de entrada de dados
+- Rate limiting para prevenir spam
+- Proteção contra bots
+
+## 🚀 Próximos Passos
+
+Este projeto está preparado para futuras evoluções:
+
+- **Integração com banco de dados** (PlanetScale)
+- **Painel administrativo** para gerenciar currículos
+- **API REST** para processamento de dados
+- **Deploy automatizado** via Railway/Vercel
 
 ---
 
-**Desenvolvido com ❤️ para o Auto Posto Estrela D'Alva** 
+**Desenvolvido para Auto Posto Estrela D'Alva - Boa Vista/RR** 

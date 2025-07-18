@@ -21,7 +21,7 @@
     <meta property="twitter:description" content="Combustível de qualidade, conveniência, barbearia e açaí em um só lugar. Atendimento 24 horas em Boa Vista - RR.">
     
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="/Logotipo.png">
+    <link rel="icon" type="image/png" href="Logotipo.png">
     
     <!-- Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -54,7 +54,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <img src="/Logotipo.png" alt="Auto Posto Estrela D'Alva" class="logo-img">
+                    <img src="Logotipo.png" alt="Auto Posto Estrela D'Alva" class="logo-img">
                 </div>
                 
                 <nav class="nav desktop-nav">
@@ -83,7 +83,7 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-bg">
-            <img src="/layout.png" alt="Auto Posto Estrela D'Alva" class="hero-bg-img">
+            <img src="layout.png" alt="Auto Posto Estrela D'Alva" class="hero-bg-img">
         </div>
         <div class="hero-overlay"></div>
         <div class="hero-decorations">
@@ -199,7 +199,7 @@
             <div class="servicos-grid">
                 <div class="servico-card red-bg">
                     <div class="servico-icon red">
-                        <img src="/logos/logoposto.png" alt="Logo Posto" class="servico-logo">
+                        <img src="logos/logoposto.png" alt="Logo Posto" class="servico-logo">
                     </div>
                     <h3>Posto de Combustível</h3>
                     <p>Combustível de alta qualidade com preços competitivos</p>
@@ -213,7 +213,7 @@
                 
                 <div class="servico-card yellow-bg">
                     <div class="servico-icon yellow">
-                        <img src="/logos/conveniencia.png" alt="Loja de Conveniência" class="servico-logo">
+                        <img src="logos/conveniencia.png" alt="Loja de Conveniência" class="servico-logo">
                     </div>
                     <h3>Loja de Conveniência</h3>
                     <p>Tudo o que você precisa em um só lugar</p>
@@ -227,7 +227,7 @@
                 
                 <div class="servico-card purple-bg">
                     <div class="servico-icon purple">
-                        <img src="/logos/barbearia.jpeg" alt="Barbearia" class="servico-logo">
+                        <img src="logos/barbearia.jpeg" alt="Barbearia" class="servico-logo">
                     </div>
                     <h3>Barbearia</h3>
                     <p>Corte e cuidado masculino enquanto você abastece</p>
@@ -241,7 +241,7 @@
                 
                 <div class="servico-card orange-bg">
                     <div class="servico-icon orange">
-                        <img src="/logos/acai.png" alt="Açaiteria" class="servico-logo">
+                        <img src="logos/acai.png" alt="Açaiteria" class="servico-logo">
                     </div>
                     <h3>Açaiteria</h3>
                     <p>Açaí natural e cremoso, perfeito para o calor de Roraima</p>
@@ -397,18 +397,18 @@
                 
                 <div class="contato-form">
                     <h3>Envie seu Currículo</h3>
-                    <form onsubmit="enviarCurriculo(event)">
+                    <form>
                         <div class="form-group">
                             <label for="nome">Nome Completo</label>
-                            <input type="text" id="nome" name="nome" required placeholder="Seu nome completo" onblur="validateField(this, 'nome')" maxlength="100">
+                            <input type="text" id="nome" name="nome" required placeholder="Seu nome completo" maxlength="100">
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" required placeholder="seu@email.com" onblur="validateField(this, 'email')" maxlength="100">
+                            <input type="email" id="email" name="email" required placeholder="seu@email.com" maxlength="100">
                         </div>
                         <div class="form-group">
                             <label for="telefone">Telefone</label>
-                            <input type="tel" id="telefone" name="telefone" required placeholder="(95) 99999-9999" onblur="validateField(this, 'telefone')" oninput="formatPhone(this)" maxlength="15">
+                            <input type="tel" id="telefone" name="telefone" required placeholder="(95) 99999-9999" maxlength="15">
                         </div>
                         <div class="form-group">
                             <label for="cargo">Cargo de Interesse</label>
@@ -424,7 +424,7 @@
                         </div>
                         <div class="form-group">
                             <label for="curriculo">Anexar Currículo (PDF)</label>
-                            <input type="file" id="curriculo" name="curriculo" accept=".pdf" required onchange="validateFileInput(this)">
+                            <input type="file" id="curriculo" name="curriculo" accept=".pdf" required>
                             <small class="form-help">Apenas arquivos PDF até 1MB são permitidos</small>
                         </div>
                         <button type="submit" class="btn-enviar">
@@ -464,7 +464,7 @@
                 </div>
                 
                 <div class="instagram-post" onclick="abrirInstagram()">
-                    <img src="/conveniencia.png" alt="Nossa loja de conveniência tem tudo o que você precisa">
+                    <img src="conveniencia.png" alt="Nossa loja de conveniência tem tudo o que você precisa">
                     <div class="post-overlay">
                         <div class="post-caption">
                             <p>Nossa loja de conveniência tem tudo o que você precisa</p>
@@ -488,7 +488,7 @@
                 </div>
                 
                 <div class="instagram-post" onclick="abrirInstagram()">
-                    <img src="/acai.png" alt="Açaí fresquinho todos os dias">
+                    <img src="acai.png" alt="Açaí fresquinho todos os dias">
                     <div class="post-overlay">
                         <div class="post-caption">
                             <p>Açaí fresquinho todos os dias</p>
@@ -541,7 +541,7 @@
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <img src="/Logotipo.png" alt="Auto Posto Estrela D'Alva" class="footer-logo-img">
+                        <img src="Logotipo.png" alt="Auto Posto Estrela D'Alva" class="footer-logo-img">
                     </div>
                     <p>Seu destino completo em Boa Vista - RR. Combustível de qualidade, conveniência, barbearia e açaí em um só lugar, com atendimento 24 horas.</p>
                 </div>
