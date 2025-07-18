@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Posto Estrela D'Alva - Boa Vista, RR | Combustível, Conveniência, Barbearia e Açaí</title>
+    <meta name="description" content="Auto Posto Estrela D'Alva em Boa Vista - RR. Combustível de qualidade, loja de conveniência, barbearia e açaiteria. Atendimento 24 horas. Abasteça, aproveite e relaxe!">
+    <meta name="keywords" content="auto posto, combustível, conveniência, barbearia, açaí, Boa Vista, Roraima, 24 horas">
+    <meta name="author" content="Auto Posto Estrela D'Alva">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://autopostoestreladalva.com.br">
+    <meta property="og:title" content="Auto Posto Estrela D'Alva - Boa Vista, RR">
+    <meta property="og:description" content="Combustível de qualidade, conveniência, barbearia e açaí em um só lugar. Atendimento 24 horas em Boa Vista - RR.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://autopostoestreladalva.com.br">
+    <meta property="twitter:title" content="Auto Posto Estrela D'Alva - Boa Vista, RR">
+    <meta property="twitter:description" content="Combustível de qualidade, conveniência, barbearia e açaí em um só lugar. Atendimento 24 horas em Boa Vista - RR.">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="/Logotipo.png">
+    
+    <!-- Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Top -->
+    <div class="header-top">
+        <div class="container">
+            <div class="header-top-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(95) 99174-0090</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Aberto 24 horas</span>
+                    </div>
+                </div>
+                <div class="location-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="location-text">Boa Vista - RR</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="/Logotipo.png" alt="Auto Posto Estrela D'Alva" class="logo-img">
+                </div>
+                
+                <nav class="nav desktop-nav">
+                    <button onclick="scrollToSection('home')" class="nav-link">Início</button>
+                    <button onclick="scrollToSection('sobre')" class="nav-link">Sobre</button>
+                    <button onclick="scrollToSection('servicos')" class="nav-link">Serviços</button>
+                    <button onclick="scrollToSection('localizacao')" class="nav-link">Localização</button>
+                    <button onclick="scrollToSection('contato')" class="nav-link">Trabalhe Conosco</button>
+                </nav>
+                
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars" id="menu-icon"></i>
+                </button>
+            </div>
+            
+            <nav class="mobile-nav" id="mobile-nav">
+                <button onclick="scrollToSection('home')" class="nav-link">Início</button>
+                <button onclick="scrollToSection('sobre')" class="nav-link">Sobre</button>
+                <button onclick="scrollToSection('servicos')" class="nav-link">Serviços</button>
+                <button onclick="scrollToSection('localizacao')" class="nav-link">Localização</button>
+                <button onclick="scrollToSection('contato')" class="nav-link">Trabalhe Conosco</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <img src="/layout.png" alt="Auto Posto Estrela D'Alva" class="hero-bg-img">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-decorations">
+            <div class="decoration decoration-1"></div>
+            <div class="decoration decoration-2"></div>
+            <div class="decoration decoration-3"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-cards">
+                    <div class="hero-card" onclick="scrollToSection('servicos')">
+                        <div class="hero-card-icon red">
+                            <i class="fas fa-gas-pump"></i>
+                        </div>
+                        <h3>Posto</h3>
+                        <p>Combustível de qualidade</p>
+                    </div>
+                    <div class="hero-card" onclick="scrollToSection('servicos')">
+                        <div class="hero-card-icon yellow">
+                            <i class="fas fa-shopping-basket"></i>
+                        </div>
+                        <h3>Conveniência</h3>
+                        <p>Snacks e bebidas</p>
+                    </div>
+                    <div class="hero-card" onclick="scrollToSection('servicos')">
+                        <div class="hero-card-icon purple">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <h3>Barbearia</h3>
+                        <p>Atendimento masculino</p>
+                    </div>
+                    <div class="hero-card" onclick="scrollToSection('servicos')">
+                        <div class="hero-card-icon orange">
+                            <i class="fas fa-ice-cream"></i>
+                        </div>
+                        <h3>Açaiteria</h3>
+                        <p>Açaí natural e cremoso</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Section -->
+    <section id="sobre" class="sobre">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sobre o <span class="highlight">Auto Posto Estrela D'Alva</span></h2>
+                <p>Há anos servindo a comunidade de Boa Vista com excelência, qualidade e compromisso com nossos clientes.</p>
+            </div>
+            
+            <div class="sobre-cards">
+                <div class="sobre-card">
+                    <div class="sobre-card-icon red">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Nossa Missão</h3>
+                    <p>Oferecer produtos e serviços de qualidade superior, proporcionando uma experiência completa e conveniente para nossos clientes, sempre com atendimento humanizado e eficiente.</p>
+                </div>
+                <div class="sobre-card">
+                    <div class="sobre-card-icon yellow">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Nossa Visão</h3>
+                    <p>Ser reconhecido como o melhor auto posto de Boa Vista, referência em qualidade, inovação e atendimento ao cliente, expandindo nossos serviços para atender todas as necessidades da comunidade.</p>
+                </div>
+                <div class="sobre-card">
+                    <div class="sobre-card-icon purple">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Nossos Valores</h3>
+                    <p>Integridade, qualidade, respeito ao cliente, responsabilidade ambiental e compromisso com a comunidade são os pilares que guiam todas as nossas ações e decisões.</p>
+                </div>
+            </div>
+
+            <div class="diferenciais">
+                <h3>Nossos <span class="highlight-orange">Diferenciais</span></h3>
+                <div class="diferenciais-grid">
+                    <div class="diferencial">
+                        <div class="diferencial-icon green">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4>Atendimento Personalizado</h4>
+                        <p>Equipe treinada e dedicada para oferecer o melhor atendimento, sempre com um sorriso e disposição para ajudar.</p>
+                    </div>
+                    <div class="diferencial">
+                        <div class="diferencial-icon blue">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4>Aberto 24 Horas</h4>
+                        <p>Funcionamento ininterrupto para atender você a qualquer hora do dia ou da noite, com total segurança e comodidade.</p>
+                    </div>
+                    <div class="diferencial">
+                        <div class="diferencial-icon orange">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h4>Qualidade Garantida</h4>
+                        <p>Combustível de alta qualidade, produtos selecionados e serviços executados com excelência e responsabilidade.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Section -->
+    <section id="servicos" class="servicos">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nossos <span class="highlight">Serviços</span></h2>
+                <p>Oferecemos uma gama completa de serviços para tornar sua parada mais conveniente e prazerosa.</p>
+            </div>
+            
+            <div class="servicos-grid">
+                <div class="servico-card red-bg">
+                    <div class="servico-icon red">
+                        <img src="/logos/logoposto.png" alt="Logo Posto" class="servico-logo">
+                    </div>
+                    <h3>Posto de Combustível</h3>
+                    <p>Combustível de alta qualidade com preços competitivos</p>
+                    <ul class="servico-features">
+                        <li><span class="feature-dot red"></span>Gasolina Comum e Aditivada</li>
+                        <li><span class="feature-dot red"></span>Etanol</li>
+                        <li><span class="feature-dot red"></span>Diesel</li>
+                        <li><span class="feature-dot red"></span>Atendimento Rápido</li>
+                    </ul>
+                </div>
+                
+                <div class="servico-card yellow-bg">
+                    <div class="servico-icon yellow">
+                        <img src="/logos/conveniencia.png" alt="Loja de Conveniência" class="servico-logo">
+                    </div>
+                    <h3>Loja de Conveniência</h3>
+                    <p>Tudo o que você precisa em um só lugar</p>
+                    <ul class="servico-features">
+                        <li><span class="feature-dot yellow"></span>Snacks e Bebidas</li>
+                        <li><span class="feature-dot yellow"></span>Produtos de Higiene</li>
+                        <li><span class="feature-dot yellow"></span>Utensílios Domésticos</li>
+                        <li><span class="feature-dot yellow"></span>Revistas e Jornais</li>
+                    </ul>
+                </div>
+                
+                <div class="servico-card purple-bg">
+                    <div class="servico-icon purple">
+                        <img src="/logos/barbearia.jpeg" alt="Barbearia" class="servico-logo">
+                    </div>
+                    <h3>Barbearia</h3>
+                    <p>Corte e cuidado masculino enquanto você abastece</p>
+                    <ul class="servico-features">
+                        <li><span class="feature-dot purple"></span>Corte de Cabelo</li>
+                        <li><span class="feature-dot purple"></span>Barba e Bigode</li>
+                        <li><span class="feature-dot purple"></span>Sobrancelha</li>
+                        <li><span class="feature-dot purple"></span>Atendimento Profissional</li>
+                    </ul>
+                </div>
+                
+                <div class="servico-card orange-bg">
+                    <div class="servico-icon orange">
+                        <img src="/logos/acai.png" alt="Açaiteria" class="servico-logo">
+                    </div>
+                    <h3>Açaiteria</h3>
+                    <p>Açaí natural e cremoso, perfeito para o calor de Roraima</p>
+                    <ul class="servico-features">
+                        <li><span class="feature-dot orange"></span>Açaí Natural</li>
+                        <li><span class="feature-dot orange"></span>Vitaminas e Sucos</li>
+                        <li><span class="feature-dot orange"></span>Variedade de Complementos</li>
+                        <li><span class="feature-dot orange"></span>Ambiente Climatizado</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="servicos-adicionais">
+                <h3>Serviços <span class="highlight">Adicionais</span></h3>
+                <div class="servicos-extras">
+                    <div class="servico-extra">
+                        <div class="extra-icon red">
+                            <i class="fas fa-oil-can"></i>
+                        </div>
+                        <h4>Troca de Óleo</h4>
+                        <p>Serviço rápido e eficiente</p>
+                    </div>
+                    <div class="servico-extra">
+                        <div class="extra-icon yellow">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <h4>Café Fresh</h4>
+                        <p>Café sempre fresco e quentinho</p>
+                    </div>
+                    <div class="servico-extra">
+                        <div class="extra-icon purple">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <h4>Ar Comprimido</h4>
+                        <p>Calibragem gratuita</p>
+                    </div>
+                    <div class="servico-extra">
+                        <div class="extra-icon orange">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4>Atendimento VIP</h4>
+                        <p>Experiência diferenciada</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Localização Section -->
+    <section id="localizacao" class="localizacao">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nossa <span class="highlight">Localização</span></h2>
+                <p>Estamos estrategicamente localizados para melhor atendê-lo. Venha nos visitar!</p>
+            </div>
+            
+            <div class="localizacao-content">
+                <div class="mapa">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.9776886772194!2d-60.67454142555618!3d2.820464754353847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8d93f6e8e5e5e5e5%3A0x5e5e5e5e5e5e5e5e!2sR.%20Estrela%20D'%C3%A1lva%2C%201794%20-%20Profa.%20Araceli%20Souto%20Maior%2C%20Boa%20Vista%20-%20RR%2C%2069315-076!5e0!3m2!1spt-BR!2sbr!4v1638360000000!5m2!1spt-BR!2sbr" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <div class="localizacao-info">
+                    <div class="info-card">
+                        <div class="info-icon red">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Endereço</h3>
+                            <p>R. Estrela D'álva, 1794 - Profa. Araceli Souto Maior, Boa Vista - RR, 69315-076</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon green">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Horário de Funcionamento</h3>
+                            <p>Aberto 24 horas</p>
+                            <p class="sub-text">Todos os dias da semana</p>
+                        </div>
+                    </div>
+                    <button onclick="abrirMaps()" class="btn-maps">
+                        <i class="fas fa-directions"></i>
+                        <span>Como Chegar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Section -->
+    <section id="contato" class="contato">
+        <div class="container">
+            <div class="section-header">
+                <h2>Envie seu <span class="highlight">Currículo</span></h2>
+                <p>Estamos sempre em busca de profissionais talentosos para fazer parte da nossa equipe. Envie seu currículo e venha trabalhar conosco!</p>
+            </div>
+            
+            <div class="contato-content">
+                <div class="contato-info">
+                    <div class="contato-card">
+                        <h3>Vagas Disponíveis</h3>
+                        <div class="contato-items">
+                            <div class="contato-item">
+                                <div class="contato-icon red">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <div class="contato-text">
+                                    <h4>Frentista</h4>
+                                    <p>Atendimento ao cliente</p>
+                                </div>
+                            </div>
+                            <div class="contato-item">
+                                <div class="contato-icon green">
+                                    <i class="fas fa-cash-register"></i>
+                                </div>
+                                <div class="contato-text">
+                                    <h4>Caixa</h4>
+                                    <p>Operação de caixa</p>
+                                </div>
+                            </div>
+                            <div class="contato-item">
+                                <div class="contato-icon purple">
+                                    <i class="fas fa-cut"></i>
+                                </div>
+                                <div class="contato-text">
+                                    <h4>Barbeiro</h4>
+                                    <p>Corte masculino</p>
+                                </div>
+                            </div>
+                            <div class="contato-item">
+                                <div class="contato-icon orange">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <div class="contato-text">
+                                    <h4>Auxiliar de Cozinha</h4>
+                                    <p>Açaiteria</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="abrirWhatsApp()" class="btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>Falar sobre Vagas</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="contato-form">
+                    <h3>Envie seu Currículo</h3>
+                    <form onsubmit="enviarCurriculo(event)">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" id="nome" name="nome" required placeholder="Seu nome completo" onblur="validateField(this, 'nome')" maxlength="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" required placeholder="seu@email.com" onblur="validateField(this, 'email')" maxlength="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="telefone" required placeholder="(95) 99999-9999" onblur="validateField(this, 'telefone')" oninput="formatPhone(this)" maxlength="15">
+                        </div>
+                        <div class="form-group">
+                            <label for="cargo">Cargo de Interesse</label>
+                            <select id="cargo" name="cargo" required>
+                                <option value="">Selecione um cargo</option>
+                                <option value="Frentista">Frentista</option>
+                                <option value="Caixa">Caixa</option>
+                                <option value="Atendente">Atendente</option>
+                                <option value="Barbeiro">Barbeiro</option>
+                                <option value="Auxiliar de Cozinha">Auxiliar de Cozinha</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="curriculo">Anexar Currículo (PDF)</label>
+                            <input type="file" id="curriculo" name="curriculo" accept=".pdf" required onchange="validateFileInput(this)">
+                            <small class="form-help">Apenas arquivos PDF até 1MB são permitidos</small>
+                        </div>
+                        <button type="submit" class="btn-enviar">
+                            <i class="fas fa-file-upload"></i>
+                            <span>Enviar Currículo</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Section -->
+    <section class="instagram">
+        <div class="container">
+            <div class="section-header">
+                <h2>Siga no <span class="highlight-purple">Instagram</span></h2>
+                <p>Acompanhe nosso dia a dia, promoções especiais e novidades através do nosso perfil oficial no Instagram.</p>
+                <button onclick="abrirInstagram()" class="btn-instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>@autopostoestreladalvarr</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </button>
+            </div>
+            
+            <div class="instagram-gallery">
+                <div class="instagram-post" onclick="abrirInstagram()">
+                    <img src="https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Combustível de qualidade sempre!">
+                    <div class="post-overlay">
+                        <div class="post-caption">
+                            <p>Combustível de qualidade sempre!</p>
+                        </div>
+                        <div class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="instagram-post" onclick="abrirInstagram()">
+                    <img src="/conveniencia.png" alt="Nossa loja de conveniência tem tudo o que você precisa">
+                    <div class="post-overlay">
+                        <div class="post-caption">
+                            <p>Nossa loja de conveniência tem tudo o que você precisa</p>
+                        </div>
+                        <div class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="instagram-post" onclick="abrirInstagram()">
+                    <img src="https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Corte profissional na nossa barbearia">
+                    <div class="post-overlay">
+                        <div class="post-caption">
+                            <p>Corte profissional na nossa barbearia</p>
+                        </div>
+                        <div class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="instagram-post" onclick="abrirInstagram()">
+                    <img src="/acai.png" alt="Açaí fresquinho todos os dias">
+                    <div class="post-overlay">
+                        <div class="post-caption">
+                            <p>Açaí fresquinho todos os dias</p>
+                        </div>
+                        <div class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="instagram-post" onclick="abrirInstagram()">
+                    <img src="https://images.pexels.com/photos/3807277/pexels-photo-3807277.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Atendimento 24 horas para sua comodidade">
+                    <div class="post-overlay">
+                        <div class="post-caption">
+                            <p>Atendimento 24 horas para sua comodidade</p>
+                        </div>
+                        <div class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="instagram-post" onclick="abrirInstagram()">
+                    <img src="https://images.pexels.com/photos/2449457/pexels-photo-2449457.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Variedade de produtos na conveniência">
+                    <div class="post-overlay">
+                        <div class="post-caption">
+                            <p>Variedade de produtos na conveniência</p>
+                        </div>
+                        <div class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="instagram-cta">
+                <div class="cta-card">
+                    <i class="fab fa-instagram"></i>
+                    <h3>Não perca nenhuma novidade!</h3>
+                    <p>Siga nosso Instagram para ficar por dentro das promoções, novidades e muito mais.</p>
+                    <button onclick="abrirInstagram()" class="btn-seguir">Seguir Agora</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="/Logotipo.png" alt="Auto Posto Estrela D'Alva" class="footer-logo-img">
+                    </div>
+                    <p>Seu destino completo em Boa Vista - RR. Combustível de qualidade, conveniência, barbearia e açaí em um só lugar, com atendimento 24 horas.</p>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contato</h3>
+                    <div class="footer-contact-items">
+                        <div class="footer-contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>(95) 99174-0090</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Aberto 24 horas</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>R. Estrela D'álva, 1794<br>Boa Vista - RR</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-services">
+                    <h3>Serviços</h3>
+                    <ul class="footer-services-list">
+                        <li>• Posto de Combustível</li>
+                        <li>• Loja de Conveniência</li>
+                        <li>• Barbearia</li>
+                        <li>• Açaiteria</li>
+                        <li>• Troca de Óleo</li>
+                        <li>• Ar Comprimido</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Auto Posto Estrela D'Alva. Todos os direitos reservados.</p>
+                <p class="footer-slogan">"Abasteça, aproveite e relaxe!" - Boa Vista, Roraima</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <button onclick="abrirWhatsApp()" class="whatsapp-float" aria-label="Falar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
