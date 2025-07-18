@@ -151,7 +151,12 @@ function validateCargo(cargo) {
 
 // Função para enviar currículo via Google Apps Script
 async function enviarCurriculo(event) {
+    console.log('🚀 Função enviarCurriculo iniciada!');
+    console.log('Evento recebido:', event);
+    
     event.preventDefault();
+    
+    console.log('📋 Iniciando validações...');
     
     // Rate limiting
     const now = Date.now();
@@ -174,10 +179,13 @@ async function enviarCurriculo(event) {
     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Enviando...</span>';
     
     try {
+        console.log('🔍 Verificando se é bot...');
         // Verificar se é um bot
         if (detectBot()) {
+            console.log('❌ Bot detectado! Acesso negado.');
             throw new Error('Acesso negado.');
         }
+        console.log('✅ Não é bot, continuando...');
         
         const form = event.target;
         const formData = new FormData(form);
