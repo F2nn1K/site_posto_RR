@@ -158,49 +158,28 @@ function validateCargo(cargo) {
 
 // Função para enviar currículo para o Supabase
 async function enviarCurriculo(event) {
-    console.log('🚀 Função enviarCurriculo iniciada!');
-    console.log('Evento recebido:', event);
-    
     event.preventDefault();
-    
-    console.log('📋 Iniciando validações...');
     
     // Rate limiting
     const now = Date.now();
-    console.log('⏰ Rate limiting check...');
     if (now - lastSubmitTime < SECURITY_CONFIG.rateLimit.timeWindow) {
         submitAttempts++;
-        console.log('⚠️ Tentativa número:', submitAttempts);
         if (submitAttempts > SECURITY_CONFIG.rateLimit.maxAttempts) {
-            console.log('❌ Muitas tentativas, bloqueando...');
             showNotification('Muitas tentativas. Aguarde um momento antes de tentar novamente.', 'error');
             return;
         }
     } else {
         submitAttempts = 1;
         lastSubmitTime = now;
-        console.log('✅ Rate limiting OK');
     }
     
-    console.log('🔒 Verificando botão...');
     // Prevenir múltiplos envios
     const submitButton = event.target.querySelector('button[type="submit"]');
     
-    console.log('🔒 Desabilitando botão...');
     submitButton.disabled = true;
     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Enviando...</span>';
     
     try {
-        console.log('🔍 Verificando se é bot...');
-        // Verificar se é um bot (DESABILITADO PARA TESTE)
-        // if (detectBot()) {
-        //     console.log('❌ Bot detectado! Acesso negado.');
-        //     throw new Error('Acesso negado.');
-        // }
-        console.log('✅ Verificação de bot desabilitada para teste...');
-        
-        console.log('📝 Obtendo dados do formulário...');
-    
         const form = event.target;
         const formData = new FormData(form);
         
@@ -210,15 +189,6 @@ async function enviarCurriculo(event) {
         const telefone = sanitizeInput(formData.get('telefone'));
         const cargo = formData.get('cargo');
         const curriculo = formData.get('curriculo');
-        
-        console.log('📄 Dados capturados:');
-        console.log('- Nome:', nome);
-        console.log('- Email:', email);
-        console.log('- Telefone:', telefone);
-        console.log('- Cargo:', cargo);
-        console.log('- Arquivo:', curriculo ? curriculo.name : 'Nenhum');
-        console.log('- Tamanho do arquivo:', curriculo ? curriculo.size + ' bytes' : 'N/A');
-        console.log('- Tipo do arquivo:', curriculo ? curriculo.type : 'N/A');
         
         // Validações
         if (!nome || nome.length < 3) {
@@ -243,12 +213,9 @@ async function enviarCurriculo(event) {
             throw new Error(fileValidation.message);
         }
         
-        console.log('✅ Todas as validações passaram!');
-        
         // Upload do arquivo para o Supabase Storage
         let arquivoUrl = null;
         if (curriculo) {
-            console.log('📁 Fazendo upload do arquivo...');
             const fileName = `curriculos/${Date.now()}-${curriculo.name}`;
             
             const { data: uploadData, error: uploadError } = await supabase.storage
@@ -256,7 +223,6 @@ async function enviarCurriculo(event) {
                 .upload(fileName, curriculo);
             
             if (uploadError) {
-                console.error('❌ Erro no upload:', uploadError);
                 throw new Error('Erro ao fazer upload do arquivo: ' + uploadError.message);
             }
             
@@ -266,11 +232,9 @@ async function enviarCurriculo(event) {
                 .getPublicUrl(fileName);
             
             arquivoUrl = urlData.publicUrl;
-            console.log('✅ Upload concluído:', arquivoUrl);
         }
         
         // Salvar dados no banco
-        console.log('💾 Salvando no banco...');
         const { data, error } = await supabase
             .from('curriculos')
             .insert([
@@ -284,11 +248,8 @@ async function enviarCurriculo(event) {
             ]);
         
         if (error) {
-            console.error('❌ Erro ao salvar no banco:', error);
             throw new Error('Erro ao salvar currículo: ' + error.message);
         }
-        
-        console.log('✅ Currículo salvo com sucesso!', data);
         
         // Limpar formulário
         form.reset();
@@ -297,7 +258,6 @@ async function enviarCurriculo(event) {
         showNotification('Currículo enviado com sucesso! Entraremos em contato em breve.', 'success');
         
     } catch (error) {
-        console.error('❌ Erro:', error);
         // Mostrar erro
         showNotification(error.message, 'error');
         
@@ -693,7 +653,6 @@ function manageCookies() {
 // Função para rastrear eventos (analytics)
 function trackEvent(eventName, eventData = {}) {
     // Aqui você pode integrar com Google Analytics ou outra ferramenta
-    console.log('Event tracked:', eventName, eventData);
     
     // Exemplo para Google Analytics (gtag)
     if (typeof gtag !== 'undefined') {
@@ -740,7 +699,6 @@ function handleImageErrors() {
         img.addEventListener('error', function() {
             // Usar uma imagem placeholder ou esconder a imagem
             this.style.display = 'none';
-            console.warn('Erro ao carregar imagem:', this.src);
         });
     });
 }
@@ -771,34 +729,19 @@ function initializeApp() {
     // Adicionar listener direto no formulário para garantir funcionamento
     const form = document.querySelector('form');
     if (form) {
-        console.log('🔧 Adicionando listener direto no formulário...');
         form.addEventListener('submit', function(e) {
-            console.log('🎯 Submit capturado pelo listener direto!');
             enviarCurriculo(e);
         });
         
         // Adicionar listener também no botão para garantir
         const submitButton = form.querySelector('button[type="submit"]');
         if (submitButton) {
-            console.log('🔧 Adicionando listener no botão também...');
             submitButton.addEventListener('click', function(e) {
-                console.log('🎯 Clique no botão capturado!');
-                
                 // Verificar se o formulário é válido
                 const formValid = form.checkValidity();
-                console.log('📋 Formulário válido:', formValid);
                 
-                if (!formValid) {
-                    console.log('❌ Formulário inválido! Campos com problema:');
-                    const invalidFields = form.querySelectorAll(':invalid');
-                    invalidFields.forEach(field => {
-                        console.log('- Campo:', field.name, 'Valor:', field.value, 'Tipo:', field.type);
-                    });
-                } else {
-                    console.log('✅ Formulário válido, submit deve acontecer...');
-                    
+                if (formValid) {
                     // Chamar a função diretamente
-                    console.log('🚀 Chamando enviarCurriculo diretamente...');
                     const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
                     form.dispatchEvent(submitEvent);
                 }
@@ -807,8 +750,6 @@ function initializeApp() {
             });
         }
     }
-    
-    console.log('Auto Posto Estrela D\'Alva - Site inicializado com sucesso!');
 }
 
 // Função para lidar com redimensionamento da janela
