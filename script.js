@@ -216,7 +216,7 @@ async function enviarCurriculo(event) {
         formData.append('ip', await getClientIP());
         
         // URL do Google Apps Script
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbxvA9Ygw-H5WSHRb4ShGGdNpOoaOCjYlMscMguHlW07DdcF6hMWfUdSoIBXcSjl2Z8/exec';
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbxpXtWlzdTkB32qtgViGsxbsLuZBPgs38Jw_o9eAEy22c3DehL8H48dqFURs-Pc-g_t/exec';
         
         // Tentar enviar para o Google Apps Script
         try {
