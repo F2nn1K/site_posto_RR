@@ -96,36 +96,7 @@
         </div>
         <div class="container">
             <div class="hero-content">
-                <div class="hero-cards">
-                    <div class="hero-card" onclick="scrollToSection('servicos')">
-                        <div class="hero-card-icon red">
-                            <i class="fas fa-gas-pump"></i>
-                        </div>
-                        <h3>Posto</h3>
-                        <p>Combustível de qualidade</p>
-                    </div>
-                    <div class="hero-card" onclick="scrollToSection('servicos')">
-                        <div class="hero-card-icon yellow">
-                            <i class="fas fa-shopping-basket"></i>
-                        </div>
-                        <h3>Conveniência</h3>
-                        <p>Snacks e bebidas</p>
-                    </div>
-                    <div class="hero-card" onclick="scrollToSection('servicos')">
-                        <div class="hero-card-icon purple">
-                            <i class="fas fa-cut"></i>
-                        </div>
-                        <h3>Barbearia</h3>
-                        <p>Atendimento masculino</p>
-                    </div>
-                    <div class="hero-card" onclick="scrollToSection('servicos')">
-                        <div class="hero-card-icon orange">
-                            <i class="fas fa-ice-cream"></i>
-                        </div>
-                        <h3>Açaiteria</h3>
-                        <p>Açaí natural e cremoso</p>
-                    </div>
-                </div>
+                <!-- Cards removidos para dar mais destaque à imagem de fundo -->
             </div>
         </div>
     </section>
@@ -134,8 +105,9 @@
     <section id="sobre" class="sobre">
         <div class="container">
             <div class="section-header">
-                <h2>Sobre o <span class="highlight">Auto Posto Estrela D'Alva</span></h2>
-                <p>Há anos servindo a comunidade de Boa Vista com excelência, qualidade e compromisso com nossos clientes.</p>
+                <img src="brasao.png" alt="Brasão Auto Posto Estrela D'Alva" class="brasao-image">
+                <h2><span class="highlight">Auto Posto Estrela D'Alva</span></h2>
+                <p>A qualidade que você pode sentir<br>e a confiança que você pode contar</p>
             </div>
             
             <div class="sobre-cards">
@@ -162,6 +134,19 @@
                 </div>
             </div>
 
+        </div>
+    </section>
+
+    <!-- Diferenciais Section -->
+    <section class="diferenciais-section">
+        <div class="video-background">
+            <video autoplay muted loop class="video-bg">
+                <source src="videos/combustivel.mp4" type="video/mp4">
+                Seu navegador não suporta vídeos HTML5.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="container">
             <div class="diferenciais">
                 <h3>Nossos <span class="highlight-orange">Diferenciais</span></h3>
                 <div class="diferenciais-grid">
@@ -200,99 +185,82 @@
             </div>
             
             <div class="servicos-grid">
-                <div class="servico-card red-bg">
+                <div class="servico-card red-bg hover-card">
                     <div class="servico-icon red">
-                        <img src="logos/logoposto.png" alt="Logo Posto" class="servico-logo">
+                        <img src="bolota.jpeg" alt="Bolota" class="icon-image">
                     </div>
-                    <h3>Posto de Combustível</h3>
-                    <p>Combustível de alta qualidade com preços competitivos</p>
-                    <ul class="servico-features">
-                        <li><span class="feature-dot red"></span>Gasolina Comum e Aditivada</li>
-                        <li><span class="feature-dot red"></span>Etanol</li>
-                        <li><span class="feature-dot red"></span>Diesel</li>
-                        <li><span class="feature-dot red"></span>Atendimento Rápido</li>
-                    </ul>
+                    <div class="servico-image-container">
+                        <img src="troca.png" alt="Troca de Óleo" class="servico-image">
+                    </div>
+                    <div class="servico-hover-content">
+                        <h3>Serviços Oferecidos</h3>
+                        <ul class="servico-list">
+                            <li>Troca de óleo</li>
+                            <li>Calibragem de Pneus</li>
+                            <li>Troca de filtro</li>
+                            <li>Troca de fluidos</li>
+                        </ul>
+                    </div>
                 </div>
                 
-                <div class="servico-card yellow-bg">
+                <div class="servico-card yellow-bg hover-card">
                     <div class="servico-icon yellow">
                         <img src="logos/conveniencia.png" alt="Loja de Conveniência" class="servico-logo">
                     </div>
-                    <h3>Loja de Conveniência</h3>
-                    <p>Tudo o que você precisa em um só lugar</p>
-                    <ul class="servico-features">
-                        <li><span class="feature-dot yellow"></span>Snacks e Bebidas</li>
-                        <li><span class="feature-dot yellow"></span>Produtos de Higiene</li>
-                        <li><span class="feature-dot yellow"></span>Utensílios Domésticos</li>
-                        <li><span class="feature-dot yellow"></span>Revistas e Jornais</li>
-                    </ul>
+                    <div class="servico-image-container">
+                        <img src="conve.jpg" alt="Loja de Conveniência" class="servico-image">
+                    </div>
+                    <div class="servico-hover-content">
+                        <h3>Serviços Oferecidos</h3>
+                        <ul class="servico-list">
+                            <li>Bebidas</li>
+                            <li>Salgadinhos</li>
+                            <li>Café Expresso</li>
+                            <li>Wi-fi (Ambiente Climatizado)</li>
+                        </ul>
+                    </div>
                 </div>
                 
-                <div class="servico-card purple-bg">
+                <div class="servico-card purple-bg hover-card">
                     <div class="servico-icon purple">
                         <img src="logos/barbearia.jpeg" alt="Barbearia" class="servico-logo">
                     </div>
-                    <h3>Barbearia</h3>
-                    <p>Corte e cuidado masculino enquanto você abastece</p>
-                    <ul class="servico-features">
-                        <li><span class="feature-dot purple"></span>Corte de Cabelo</li>
-                        <li><span class="feature-dot purple"></span>Barba e Bigode</li>
-                        <li><span class="feature-dot purple"></span>Sobrancelha</li>
-                        <li><span class="feature-dot purple"></span>Atendimento Profissional</li>
-                    </ul>
+                    <div class="servico-image-container">
+                        <img src="babearia1.jpg" alt="Barbearia" class="servico-image">
+                    </div>
+                    <div class="servico-hover-content">
+                        <h3>Serviços Oferecidos</h3>
+                        <ul class="servico-list">
+                            <li>Corte de Cabelo</li>
+                            <li>Barba e Bigode</li>
+                            <li>Sobrancelha</li>
+                            <li>Atendimento Profissional</li>
+                        </ul>
+                    </div>
                 </div>
                 
-                <div class="servico-card orange-bg">
+                <div class="servico-card orange-bg hover-card">
                     <div class="servico-icon orange">
                         <img src="logos/acai.png" alt="Açaiteria" class="servico-logo">
                     </div>
-                    <h3>Açaiteria</h3>
-                    <p>Açaí natural e cremoso, perfeito para o calor de Roraima</p>
-                    <ul class="servico-features">
-                        <li><span class="feature-dot orange"></span>Açaí Natural</li>
-                        <li><span class="feature-dot orange"></span>Vitaminas e Sucos</li>
-                        <li><span class="feature-dot orange"></span>Variedade de Complementos</li>
-                        <li><span class="feature-dot orange"></span>Ambiente Climatizado</li>
-                    </ul>
+                    <div class="servico-image-container">
+                        <img src="acaip.jpg" alt="Açaiteria" class="servico-image">
+                    </div>
+                    <div class="servico-hover-content">
+                        <h3>Serviços Oferecidos</h3>
+                        <ul class="servico-list">
+                            <li>Açaí Premium</li>
+                            <li>Polpa de Açaí</li>
+                            <li>Açaí com Creme</li>
+                            <li>Taça</li>
+                            <li>Salada de Frutas</li>
+                            <li>Sorvete e Frozen Yogurt</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <div class="servicos-adicionais">
-                <div class="servicos-header">
-                    <img src="bolota.jpeg" alt="Bolota" class="bolota-icon">
-                    <h3>Serviços <span class="highlight">Adicionais</span></h3>
-                </div>
-                <div class="servicos-extras">
-                    <div class="servico-extra">
-                        <div class="extra-icon red">
-                            <i class="fas fa-oil-can"></i>
-                        </div>
-                        <h4>Troca de Óleo</h4>
-                        <p>Serviço rápido e eficiente</p>
-                    </div>
-                    <div class="servico-extra">
-                        <div class="extra-icon yellow">
-                            <i class="fas fa-coffee"></i>
-                        </div>
-                        <h4>Café Fresh</h4>
-                        <p>Café sempre fresco e quentinho</p>
-                    </div>
-                    <div class="servico-extra">
-                        <div class="extra-icon purple">
-                            <i class="fas fa-wind"></i>
-                        </div>
-                        <h4>Ar Comprimido</h4>
-                        <p>Calibragem gratuita</p>
-                    </div>
-                    <div class="servico-extra">
-                        <div class="extra-icon orange">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <h4>Atendimento VIP</h4>
-                        <p>Experiência diferenciada</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </section>
 
@@ -322,7 +290,7 @@
                         </div>
                         <div class="info-content">
                             <h3>Endereço</h3>
-                            <p>R. Estrela D'álva, 1794 - Profa. Araceli Souto Maior, Boa Vista - RR, 69315-076</p>
+                            <p>R. Estrela D'Alva, 1794 - Profa. Araceli Souto Maior, Boa Vista - RR, 69315-076</p>
                         </div>
                     </div>
                     <div class="info-card">
@@ -431,113 +399,12 @@
         </div>
     </section>
 
-    <!-- Instagram Section -->
-    <section class="instagram">
-        <div class="container">
-            <div class="section-header">
-                <h2>Siga no <span class="highlight-purple">Instagram</span></h2>
-                <p>Acompanhe nosso dia a dia, promoções especiais e novidades através do nosso perfil oficial no Instagram.</p>
-                <button onclick="abrirInstagram()" class="btn-instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span>@autopostoestreladalvarr</span>
-                    <i class="fas fa-external-link-alt"></i>
-                </button>
-            </div>
-            
-            <div class="instagram-gallery">
-                <div class="instagram-post" onclick="abrirInstagram()">
-                    <img src="https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Combustível de qualidade sempre!">
-                    <div class="post-overlay">
-                        <div class="post-caption">
-                            <p>Combustível de qualidade sempre!</p>
-                        </div>
-                        <div class="instagram-icon">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="instagram-post" onclick="abrirInstagram()">
-                    <img src="conveniencia.png" alt="Nossa loja de conveniência tem tudo o que você precisa">
-                    <div class="post-overlay">
-                        <div class="post-caption">
-                            <p>Nossa loja de conveniência tem tudo o que você precisa</p>
-                        </div>
-                        <div class="instagram-icon">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="instagram-post" onclick="abrirInstagram()">
-                    <img src="https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Corte profissional na nossa barbearia">
-                    <div class="post-overlay">
-                        <div class="post-caption">
-                            <p>Corte profissional na nossa barbearia</p>
-                        </div>
-                        <div class="instagram-icon">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="instagram-post" onclick="abrirInstagram()">
-                    <img src="acai.png" alt="Açaí fresquinho todos os dias">
-                    <div class="post-overlay">
-                        <div class="post-caption">
-                            <p>Açaí fresquinho todos os dias</p>
-                        </div>
-                        <div class="instagram-icon">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="instagram-post" onclick="abrirInstagram()">
-                    <img src="https://images.pexels.com/photos/3807277/pexels-photo-3807277.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Atendimento 24 horas para sua comodidade">
-                    <div class="post-overlay">
-                        <div class="post-caption">
-                            <p>Atendimento 24 horas para sua comodidade</p>
-                        </div>
-                        <div class="instagram-icon">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="instagram-post" onclick="abrirInstagram()">
-                    <img src="https://images.pexels.com/photos/2449457/pexels-photo-2449457.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Variedade de produtos na conveniência">
-                    <div class="post-overlay">
-                        <div class="post-caption">
-                            <p>Variedade de produtos na conveniência</p>
-                        </div>
-                        <div class="instagram-icon">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="instagram-cta">
-                <div class="cta-card">
-                    <i class="fab fa-instagram"></i>
-                    <h3>Não perca nenhuma novidade!</h3>
-                    <p>Siga nosso Instagram para ficar por dentro das promoções, novidades e muito mais.</p>
-                    <button onclick="abrirInstagram()" class="btn-seguir">Seguir Agora</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-about">
-                    <div class="footer-logo">
-                        <img src="Logotipo.png" alt="Auto Posto Estrela D'Alva" class="footer-logo-img">
-                    </div>
-                    <p>Seu destino completo em Boa Vista - RR. Combustível de qualidade, conveniência, barbearia e açaí em um só lugar, com atendimento 24 horas.</p>
+                                <div class="footer-about">
+ 
                 </div>
                 
                 <div class="footer-contact">
@@ -553,7 +420,7 @@
                         </div>
                         <div class="footer-contact-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>R. Estrela D'álva, 1794<br>Boa Vista - RR</span>
+                            <span>R. Estrela D'Alva, 1794<br>Boa Vista - RR</span>
                         </div>
                     </div>
                 </div>
@@ -561,12 +428,12 @@
                 <div class="footer-services">
                     <h3>Serviços</h3>
                     <ul class="footer-services-list">
-                        <li>• Posto de Combustível</li>
+                        <li>• Troca de Óleo</li>
                         <li>• Loja de Conveniência</li>
                         <li>• Barbearia</li>
                         <li>• Açaiteria</li>
-                        <li>• Troca de Óleo</li>
                         <li>• Ar Comprimido</li>
+                        <li>• Café Fresh</li>
                     </ul>
                 </div>
             </div>
