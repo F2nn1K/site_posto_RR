@@ -780,6 +780,193 @@ window.addEventListener('beforeunload', function() {
     trackEvent('page_exit');
 });
 
+// Animações da Seção Sobre Moderna
+function initModernSectionAnimations() {
+    const modernCards = document.querySelectorAll('.modern-card');
+    const floatingLogo = document.querySelector('.floating-logo');
+    const floatingElements = document.querySelectorAll('.floating-element');
+    
+    // Intersection Observer para animações de entrada
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }, index * 200);
+            }
+        });
+    }, observerOptions);
+    
+    // Aplicar animações iniciais aos cards
+    modernCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(50px) scale(0.9)';
+        card.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        cardObserver.observe(card);
+    });
+    
+    // Efeito parallax nos elementos flutuantes
+    let ticking = false;
+    
+    function updateParallax() {
+        const scrolled = window.pageYOffset;
+        const parallaxSpeed = 0.5;
+        
+        floatingElements.forEach((element, index) => {
+            const speed = parallaxSpeed * (index + 1) * 0.3;
+            element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+        });
+        
+        ticking = false;
+    }
+    
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', requestTick);
+    
+    // Animação de hover com efeito 3D
+    modernCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'perspective(1000px) rotateX(10deg) rotateY(-5deg) translateY(-15px) scale(1.02)';
+            this.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.4)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)';
+            this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+        });
+        
+        // Efeito de movimento do mouse
+        card.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+        });
+    });
+    
+    // Animação da linha conectiva SVG
+    const connectionPath = document.querySelector('.connection-path');
+    if (connectionPath) {
+        const pathLength = connectionPath.getTotalLength();
+        connectionPath.style.strokeDasharray = pathLength;
+        connectionPath.style.strokeDashoffset = pathLength;
+        
+        const pathObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    connectionPath.style.animation = 'pathDraw 2s ease-in-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        pathObserver.observe(connectionPath);
+    }
+    
+        // Partículas flutuantes dinâmicas - elegantes
+    function createDynamicParticles() {
+        const aboutSection = document.querySelector('.sobre-modern');
+        if (!aboutSection) return;
+        
+        // Partículas sutis e elegantes
+        for (let i = 0; i < 8; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'dynamic-particle';
+            
+            // Alternar entre cores da marca
+            const isRed = i % 2 === 0;
+            const color = isRed ? 'rgba(217, 37, 26, 0.4)' : 'rgba(247, 199, 0, 0.4)';
+            const glowColor = isRed ? 'rgba(217, 37, 26, 0.2)' : 'rgba(247, 199, 0, 0.2)';
+            
+            particle.style.cssText = `
+                 position: absolute;
+                 width: 2px;
+                 height: 2px;
+                 background: ${color};
+                 border-radius: 50%;
+                 pointer-events: none;
+                 z-index: 2;
+                 animation: floatParticle ${8 + Math.random() * 4}s infinite ease-in-out;
+                 left: ${Math.random() * 100}%;
+                 top: ${Math.random() * 100}%;
+                 animation-delay: ${Math.random() * 5}s;
+                 box-shadow: 0 0 20px ${glowColor};
+             `;
+            aboutSection.appendChild(particle);
+        }
+    }
+    
+    createDynamicParticles();
+    
+    // Efeito de glow no logo baseado na posição do scroll
+    function updateLogoGlow() {
+        if (!floatingLogo) return;
+        
+        const scrolled = window.pageYOffset;
+        const glowIntensity = Math.min(scrolled / 500, 1);
+        const hue = 0 + (glowIntensity * 30); // De vermelho para laranja
+        
+        floatingLogo.style.boxShadow = `
+            0 0 ${30 + glowIntensity * 20}px hsla(${hue}, 80%, 50%, ${0.3 + glowIntensity * 0.3}),
+            0 0 ${60 + glowIntensity * 40}px hsla(${hue}, 80%, 50%, ${0.1 + glowIntensity * 0.2})
+        `;
+    }
+    
+    window.addEventListener('scroll', updateLogoGlow);
+    
+    // Adição das animações CSS via JavaScript
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes pathDraw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        @keyframes floatParticle {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px) scale(1.2);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-10px) translateX(-10px) scale(0.8);
+                opacity: 0.6;
+            }
+            75% {
+                transform: translateY(-30px) translateX(5px) scale(1.1);
+                opacity: 0.9;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Inicializar animações quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    // Delay pequeno para garantir que todos os elementos foram renderizados
+    setTimeout(initModernSectionAnimations, 100);
+});
+
 // Exportar funções para uso global (para compatibilidade com onclick)
 window.scrollToSection = scrollToSection;
 window.toggleMobileMenu = toggleMobileMenu;

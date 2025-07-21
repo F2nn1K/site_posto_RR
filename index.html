@@ -101,77 +101,228 @@
         </div>
     </section>
 
-    <!-- Sobre Section -->
-    <section id="sobre" class="sobre">
+    <!-- Sobre Section - Design Inovador -->
+    <section id="sobre" class="sobre-modern">
+        <!-- Background com elementos decorativos -->
+        <div class="modern-bg">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+            <div class="floating-element element-4"></div>
+            <div class="floating-element element-5"></div>
+        </div>
+        
         <div class="container">
-            <div class="section-header">
-                <img src="brasao.png" alt="Brasão Auto Posto Estrela D'Alva" class="brasao-image">
-                <h2><span class="highlight">Auto Posto Estrela D'Alva</span></h2>
-                <p>A qualidade que você pode sentir<br>e a confiança que você pode contar</p>
+            <!-- Header moderno -->
+            <div class="modern-header">
+                <div class="brand-showcase">
+                    <div class="logo-container">
+                        <img src="brasao.png" alt="Brasão Auto Posto Estrela D'Alva" class="floating-logo">
+                        <div class="logo-glow"></div>
+                    </div>
+                    <div class="brand-info">
+                        <h2 class="brand-title">
+                            <span class="title-line-1">Auto Posto</span>
+                            <span class="title-line-2">Estrela D'Alva</span>
+                        </h2>
+                        <div class="brand-tagline">
+                            <span class="tagline-text">A qualidade que você pode sentir</span>
+                            <span class="tagline-accent">e a confiança que você pode contar</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="sobre-cards">
-                <div class="sobre-card">
-                    <div class="sobre-card-icon red">
-                        <i class="fas fa-bullseye"></i>
+            <!-- Cards modernos com design inovador -->
+            <div class="modern-cards-container">
+                <!-- Card Missão -->
+                <div class="modern-card mission-card" data-card="mission">
+                    <div class="card-background"></div>
+                    <div class="card-header">
+                        <div class="icon-container mission-icon">
+                            <div class="icon-bg"></div>
+                            <i class="fas fa-rocket"></i>
+                            <div class="icon-particles">
+                                <span class="particle p1"></span>
+                                <span class="particle p2"></span>
+                                <span class="particle p3"></span>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Nossa Missão</h3>
                     </div>
-                    <h3>Nossa Missão</h3>
-                    <p>Oferecer produtos e serviços de qualidade superior, proporcionando uma experiência completa e conveniente para nossos clientes, sempre com atendimento humanizado e eficiente.</p>
+                    <div class="card-content">
+                        <p>Oferecer produtos e serviços de qualidade superior, proporcionando uma experiência completa e conveniente para nossos clientes, sempre com atendimento humanizado e eficiente.</p>
+                    </div>
+                    <div class="card-decorator mission-decorator"></div>
                 </div>
-                <div class="sobre-card">
-                    <div class="sobre-card-icon yellow">
-                        <i class="fas fa-eye"></i>
+
+                <!-- Card Visão -->
+                <div class="modern-card vision-card" data-card="vision">
+                    <div class="card-background"></div>
+                    <div class="card-header">
+                        <div class="icon-container vision-icon">
+                            <div class="icon-bg"></div>
+                            <i class="fas fa-telescope"></i>
+                            <div class="icon-particles">
+                                <span class="particle p1"></span>
+                                <span class="particle p2"></span>
+                                <span class="particle p3"></span>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Nossa Visão</h3>
                     </div>
-                    <h3>Nossa Visão</h3>
-                    <p>Ser reconhecido como o melhor auto posto de Boa Vista, referência em qualidade, inovação e atendimento ao cliente, expandindo nossos serviços para atender todas as necessidades da comunidade.</p>
+                    <div class="card-content">
+                        <p>Ser reconhecido como o melhor auto posto de Boa Vista, referência em qualidade, inovação e atendimento ao cliente, expandindo nossos serviços para atender todas as necessidades da comunidade.</p>
+                    </div>
+                    <div class="card-decorator vision-decorator"></div>
                 </div>
-                <div class="sobre-card">
-                    <div class="sobre-card-icon purple">
-                        <i class="fas fa-heart"></i>
+
+                <!-- Card Valores -->
+                <div class="modern-card values-card" data-card="values">
+                    <div class="card-background"></div>
+                    <div class="card-header">
+                        <div class="icon-container values-icon">
+                            <div class="icon-bg"></div>
+                            <i class="fas fa-gem"></i>
+                            <div class="icon-particles">
+                                <span class="particle p1"></span>
+                                <span class="particle p2"></span>
+                                <span class="particle p3"></span>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Nossos Valores</h3>
                     </div>
-                    <h3>Nossos Valores</h3>
-                    <p>Integridade, qualidade, respeito ao cliente, responsabilidade ambiental e compromisso com a comunidade são os pilares que guiam todas as nossas ações e decisões.</p>
+                    <div class="card-content">
+                        <p>Integridade, qualidade, respeito ao cliente, responsabilidade ambiental e compromisso com a comunidade são os pilares que guiam todas as nossas ações e decisões.</p>
+                    </div>
+                    <div class="card-decorator values-decorator"></div>
                 </div>
             </div>
 
+            <!-- Elemento central conectivo -->
+            <div class="connection-lines">
+                <svg class="connecting-svg" viewBox="0 0 800 200">
+                    <path class="connection-path" d="M 100 100 Q 400 50 700 100" stroke="url(#gradient)" stroke-width="2" fill="none"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#D9251A;stop-opacity:0.8" />
+                            <stop offset="50%" style="stop-color:#F7C700;stop-opacity:0.8" />
+                            <stop offset="100%" style="stop-color:#D9251A;stop-opacity:0.8" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
         </div>
     </section>
 
-    <!-- Diferenciais Section -->
-    <section class="diferenciais-section">
-        <div class="video-background">
-            <video autoplay muted loop class="video-bg">
-                <source src="videos/combustivel.mp4" type="video/mp4">
-                Seu navegador não suporta vídeos HTML5.
-            </video>
-            <div class="video-overlay"></div>
-        </div>
+    <!-- Diferenciais Section - Design Elegante -->
+    <section class="diferenciais-elegante">
         <div class="container">
-            <div class="diferenciais">
-                <h3>Nossos <span class="highlight-orange">Diferenciais</span></h3>
-                <div class="diferenciais-grid">
-                    <div class="diferencial">
-                        <div class="diferencial-icon green">
-                            <i class="fas fa-handshake"></i>
+            <!-- Header Simples e Elegante -->
+            <div class="elegante-header">
+                <h2 class="elegante-title">
+                    Por que escolher a <span class="title-highlight">Estrela D'Alva</span>?
+                </h2>
+                <p class="elegante-subtitle">
+                    Três razões que nos tornam únicos em Boa Vista
+                </p>
+            </div>
+
+            <!-- Cards Elegantes -->
+            <div class="elegante-grid">
+                <div class="elegante-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-icon-wrapper">
+                                <div class="card-icon red-theme">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                            <h3>Atendimento Excepcional</h3>
+                            <p>Equipe capacitada e sempre pronta para oferecer o melhor atendimento.</p>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
                         </div>
-                        <h4>Atendimento Personalizado</h4>
-                        <p>Equipe treinada e dedicada para oferecer o melhor atendimento, sempre com um sorriso e disposição para ajudar.</p>
-                    </div>
-                    <div class="diferencial">
-                        <div class="diferencial-icon blue">
-                            <i class="fas fa-clock"></i>
+                        <div class="card-back red-back">
+                            <div class="back-content">
+                                <h4>Nossa Equipe</h4>
+                                <ul>
+                                    <li>✓ Treinamento constante</li>
+                                    <li>✓ Atendimento humanizado</li>
+                                    <li>✓ Foco na satisfação</li>
+                                    <li>✓ Sempre disponível</li>
+                                </ul>
+                            </div>
                         </div>
-                        <h4>Aberto 24 Horas</h4>
-                        <p>Funcionamento ininterrupto para atender você a qualquer hora do dia ou da noite, com total segurança e comodidade.</p>
-                    </div>
-                    <div class="diferencial">
-                        <div class="diferencial-icon orange">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <h4>Qualidade Garantida</h4>
-                        <p>Combustível de alta qualidade, produtos selecionados e serviços executados com excelência e responsabilidade.</p>
                     </div>
                 </div>
+
+                <div class="elegante-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-icon-wrapper">
+                                <div class="card-icon yellow-theme">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                            <h3>24 Horas de Conveniência</h3>
+                            <p>Funcionamento ininterrupto com total segurança e comodidade.</p>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="card-back yellow-back">
+                            <div class="back-content">
+                                <h4>Sempre Aberto</h4>
+                                <ul>
+                                    <li>✓ Atendimento 24h</li>
+                                    <li>✓ Segurança reforçada</li>
+                                    <li>✓ Iluminação completa</li>
+                                    <li>✓ Monitoramento total</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="elegante-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-icon-wrapper">
+                                <div class="card-icon gray-theme">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                            </div>
+                            <h3>Qualidade Certificada</h3>
+                            <p>Produtos premium e combustível de alta qualidade garantida.</p>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="card-back gray-back">
+                            <div class="back-content">
+                                <h4>Premium Quality</h4>
+                                <ul>
+                                    <li>✓ Combustível certificado</li>
+                                    <li>✓ Produtos selecionados</li>
+                                    <li>✓ Controle de qualidade</li>
+                                    <li>✓ Garantia total</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action Simples -->
+            <div class="elegante-cta">
+                <h3>Experimente você mesmo!</h3>
+                <p>Venha conhecer nossos diferenciais de perto</p>
+                <button class="elegante-button" onclick="scrollToSection('localizacao')">
+                    <span>Visite nossa unidade</span>
+                    <i class="fas fa-map-marker-alt"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -264,49 +415,78 @@
         </div>
     </section>
 
-    <!-- Localização Section -->
-    <section id="localizacao" class="localizacao">
+    <!-- Localização Section - Design Limpo -->
+    <section id="localizacao" class="localizacao-clean">
         <div class="container">
-            <div class="section-header">
-                <h2>Nossa <span class="highlight">Localização</span></h2>
-                <p>Estamos estrategicamente localizados para melhor atendê-lo. Venha nos visitar!</p>
+            <!-- Header Limpo -->
+            <div class="clean-header">
+                <h2 class="clean-title">Como chegar ao <span class="title-brand">Auto Posto Estrela D'Alva</span></h2>
+                <p class="clean-subtitle">Estamos em uma localização privilegiada e de fácil acesso em Boa Vista</p>
             </div>
-            
-            <div class="localizacao-content">
-                <div class="mapa">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.9776886772194!2d-60.67454142555618!3d2.820464754353847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8d93f6e8e5e5e5e5%3A0x5e5e5e5e5e5e5e5e!2sR.%20Estrela%20D'%C3%A1lva%2C%201794%20-%20Profa.%20Araceli%20Souto%20Maior%2C%20Boa%20Vista%20-%20RR%2C%2069315-076!5e0!3m2!1spt-BR!2sbr!4v1638360000000!5m2!1spt-BR!2sbr" 
-                            width="100%" 
-                            height="100%" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+
+            <!-- Grid Principal -->
+            <div class="location-grid">
+                <!-- Mapa -->
+                <div class="map-section">
+                    <div class="map-wrapper">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.9776886772194!2d-60.67454142555618!3d2.820464754353847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8d93f6e8e5e5e5e5%3A0x5e5e5e5e5e5e5e5e!2sR.%20Estrela%20D'%C3%A1lva%2C%201794%20-%20Profa.%20Araceli%20Souto%20Maior%2C%20Boa%20Vista%20-%20RR%2C%2069315-076!5e0!3m2!1spt-BR!2sbr!4v1638360000000!5m2!1spt-BR!2sbr" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
                 </div>
-                <div class="localizacao-info">
-                    <div class="info-card">
-                        <div class="info-icon red">
+
+                <!-- Informações -->
+                <div class="info-section">
+                    <div class="info-box address-box">
+                        <div class="info-icon">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <div class="info-content">
+                        <div class="info-text">
                             <h3>Endereço</h3>
-                            <p>R. Estrela D'Alva, 1794 - Profa. Araceli Souto Maior, Boa Vista - RR, 69315-076</p>
+                            <p>R. Estrela D'Alva, 1794<br>
+                            Profa. Araceli Souto Maior<br>
+                            Boa Vista - RR, CEP 69315-076</p>
                         </div>
                     </div>
-                    <div class="info-card">
-                        <div class="info-icon green">
+
+                    <div class="info-box schedule-box">
+                        <div class="info-icon">
                             <i class="fas fa-clock"></i>
                         </div>
-                        <div class="info-content">
-                            <h3>Horário de Funcionamento</h3>
-                            <p>Aberto 24 horas</p>
-                            <p class="sub-text">Todos os dias da semana</p>
+                        <div class="info-text">
+                            <h3>Funcionamento</h3>
+                            <p class="schedule-hours">24 horas por dia<br>
+                            <span class="schedule-days">Todos os dias da semana</span></p>
+                            <span class="status-badge">Aberto agora</span>
                         </div>
                     </div>
-                    <button onclick="abrirMaps()" class="btn-maps">
-                        <i class="fas fa-directions"></i>
-                        <span>Como Chegar</span>
-                    </button>
+
+                    <div class="info-box contact-box">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Contato</h3>
+                            <p class="phone-number">(95) 99174-0090</p>
+                            <p class="contact-method">WhatsApp disponível</p>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <button onclick="abrirMaps()" class="btn-navigate">
+                            <i class="fas fa-directions"></i>
+                            <span>Ver Rotas</span>
+                        </button>
+                        <button onclick="abrirWhatsApp()" class="btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -399,48 +579,70 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- Footer Moderno -->
+    <footer class="footer-modern">
         <div class="container">
-            <div class="footer-content">
-                                <div class="footer-about">
- 
-                </div>
-                
-                <div class="footer-contact">
-                    <h3>Contato</h3>
-                    <div class="footer-contact-items">
-                        <div class="footer-contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>(95) 99174-0090</span>
+            <!-- Seção Principal do Footer -->
+            <div class="footer-main">
+                <!-- Contato -->
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <div class="contact-icon phone">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-info">
+                                <span class="contact-label">Telefone</span>
+                                <span class="contact-value">(95) 99174-0090</span>
+                            </div>
                         </div>
-                        <div class="footer-contact-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Aberto 24 horas</span>
+                        <div class="contact-item">
+                            <div class="contact-icon clock">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-info">
+                                <span class="contact-label">Funcionamento</span>
+                                <span class="contact-value">24 horas por dia</span>
+                            </div>
                         </div>
-                        <div class="footer-contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>R. Estrela D'Alva, 1794<br>Boa Vista - RR</span>
+                        <div class="contact-item">
+                            <div class="contact-icon location">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-info">
+                                <span class="contact-label">Endereço</span>
+                                <span class="contact-value">R. Estrela D'Alva, 1794<br>Boa Vista - RR</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="footer-services">
-                    <h3>Serviços</h3>
-                    <ul class="footer-services-list">
-                        <li>• Troca de Óleo</li>
-                        <li>• Loja de Conveniência</li>
-                        <li>• Barbearia</li>
-                        <li>• Açaiteria</li>
-                        <li>• Ar Comprimido</li>
-                        <li>• Café Fresh</li>
+
+                <!-- Serviços -->
+                <div class="footer-section">
+                    <h4>Nossos Serviços</h4>
+                    <ul class="services-list">
+                        <li><i class="fas fa-gas-pump"></i> Combustível Premium</li>
+                        <li><i class="fas fa-tools"></i> Troca de Óleo</li>
+                        <li><i class="fas fa-store"></i> Loja de Conveniência</li>
+                        <li><i class="fas fa-cut"></i> Barbearia</li>
+                        <li><i class="fas fa-ice-cream"></i> Açaiteria</li>
+                        <li><i class="fas fa-coffee"></i> Café Fresh</li>
                     </ul>
                 </div>
             </div>
-            
+
+            <!-- Linha de Separação -->
+            <div class="footer-divider"></div>
+
+            <!-- Rodapé Final -->
             <div class="footer-bottom">
-                <p>&copy; 2024 Auto Posto Estrela D'Alva. Todos os direitos reservados.</p>
-                <p class="footer-slogan">"Abasteça, aproveite e relaxe!" - Boa Vista, Roraima</p>
+                <div class="copyright">
+                    <p>&copy; 2025 Auto Posto Estrela D'Alva. Todos os direitos reservados.</p>
+                </div>
+                <div class="slogan">
+                    <p>"Abasteça, aproveite e relaxe!" - Boa Vista, Roraima</p>
+                </div>
             </div>
         </div>
     </footer>
