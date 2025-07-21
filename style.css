@@ -22,6 +22,8 @@ body {
     /* Melhora a performance em dispositivos móveis */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Compensa o header fixo */
+    padding-top: 80px;
 }
 
 .container {
@@ -56,55 +58,26 @@ body {
     color: #9333ea;
 }
 
-/* Header Top */
+/* Header Top - Barra Vermelha */
 .header-top {
-    background: #dc2626;
-    color: white;
-    padding: 0.5rem 0;
-    font-size: 0.875rem;
+    background: #D9251A;
+    height: 4px;
 }
 
-.header-top-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.contact-info {
-    display: flex;
-    gap: 1rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.location-info {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.location-text {
-    display: none;
-}
-
-@media (min-width: 640px) {
-    .location-text {
-        display: inline;
-    }
-}
-
-/* Header */
+/* Header Completo (Fixo) */
 .header {
-    background: white;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 50;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+    background: white;
+}
+
+/* Header Principal */
+.header-main {
+    background: white;
 }
 
 .header-content {
@@ -144,22 +117,11 @@ body {
 
 /* Melhorias para dispositivos muito pequenos */
 @media (max-width: 480px) {
-    .header-top {
-        font-size: 0.75rem;
-        padding: 0.25rem 0;
+    body {
+        padding-top: 70px;
     }
     
-    .header-top-content {
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-    }
-    
-    .contact-info {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.75rem;
-    }
+
     
     .logo-img {
         height: 2.5rem;
