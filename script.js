@@ -8,20 +8,38 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // Inicializar Supabase
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Configurações de segurança
+// Configurações de segurança avançadas
 const SECURITY_CONFIG = {
     maxFileSize: 1 * 1024 * 1024, // 1MB
-    maxTextLength: 1000,
+    maxTextLength: {
+        nome: 100,
+        email: 100,
+        telefone: 20
+    },
     allowedFileTypes: ['application/pdf'],
+    allowedMimeTypes: ['application/pdf'],
     rateLimit: {
         maxAttempts: 3,
-        timeWindow: 60000 // 1 minuto
-    }
+        timeWindow: 60000, // 1 minuto
+        blockDuration: 300000 // 5 minutos de bloqueio após exceder
+    },
+    honeypot: true, // Campo honeypot para detectar bots
+    csrfProtection: true,
+    maxRequestsPerMinute: 5,
+    blacklistedKeywords: [
+        'script', 'javascript', 'vbscript', 'onload', 'onerror', 'onclick',
+        'eval', 'expression', 'document.cookie', 'window.location',
+        'alert', 'confirm', 'prompt', 'setTimeout', 'setInterval'
+    ]
 };
 
-// Controle de rate limiting
+// Controle de segurança avançado
 let submitAttempts = 0;
 let lastSubmitTime = 0;
+let blockedUntil = 0;
+let requestHistory = [];
+let sessionToken = null;
+let formLoadTime = null;
 
 // Função para scroll suave para seções
 function scrollToSection(sectionId) {
@@ -77,33 +95,192 @@ function abrirMaps() {
     window.open(url, '_blank');
 }
 
-// Função para validar e sanitizar entrada de texto
-function sanitizeInput(input) {
+// Função avançada para validar e sanitizar entrada de texto
+function sanitizeInput(input, fieldType = 'default') {
     if (typeof input !== 'string') return '';
+    
+    // Verificar palavras-chave maliciosas
+    const lowerInput = input.toLowerCase();
+    for (const keyword of SECURITY_CONFIG.blacklistedKeywords) {
+        if (lowerInput.includes(keyword.toLowerCase())) {
+            throw new Error(`Entrada inválida: contém conteúdo não permitido`);
+        }
+    }
     
     // Remover caracteres perigosos e scripts
     let sanitized = input
         .replace(/[<>]/g, '') // Remove < e >
+        .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '') // Remove caracteres de controle
         .replace(/javascript:/gi, '') // Remove javascript:
-        .replace(/on\w+=/gi, '') // Remove event handlers
         .replace(/data:/gi, '') // Remove data URLs
         .replace(/vbscript:/gi, '') // Remove vbscript
-        .replace(/expression\(/gi, '') // Remove CSS expressions
-        .replace(/url\(/gi, '') // Remove URL functions
-        .replace(/eval\(/gi, '') // Remove eval
-        .replace(/document\./gi, '') // Remove document access
+        .replace(/on\w+\s*=/gi, '') // Remove event handlers
+        .replace(/expression\s*\(/gi, '') // Remove CSS expressions
+        .replace(/url\s*\(/gi, '') // Remove URL functions
+        .replace(/eval\s*\(/gi, '') // Remove eval
+        .replace(/setTimeout\s*\(/gi, '') // Remove setTimeout
+        .replace(/setInterval\s*\(/gi, '') // Remove setInterval
+        .replace(/Function\s*\(/gi, '') // Remove Function constructor
         .replace(/window\./gi, '') // Remove window access
+        .replace(/document\./gi, '') // Remove document access
+        .replace(/location\./gi, '') // Remove location access
+        .replace(/history\./gi, '') // Remove history access
+        .replace(/navigator\./gi, '') // Remove navigator access
+        .replace(/XMLHttpRequest/gi, '') // Remove XMLHttpRequest
+        .replace(/fetch\s*\(/gi, '') // Remove fetch
+        .replace(/import\s*\(/gi, '') // Remove dynamic import
+        .replace(/require\s*\(/gi, '') // Remove require
         .replace(/localStorage\./gi, '') // Remove localStorage access
         .replace(/sessionStorage\./gi, '') // Remove sessionStorage access
         .replace(/cookie/gi, '') // Remove cookie access
         .trim();
     
-    // Limitar tamanho
-    if (sanitized.length > SECURITY_CONFIG.maxTextLength) {
-        sanitized = sanitized.substring(0, SECURITY_CONFIG.maxTextLength);
+    // Validação específica por tipo de campo
+    const maxLength = SECURITY_CONFIG.maxTextLength[fieldType] || 1000;
+    
+    if (sanitized.length > maxLength) {
+        sanitized = sanitized.substring(0, maxLength);
+    }
+    
+    // Validações específicas por tipo
+    switch (fieldType) {
+        case 'nome':
+            // Permitir apenas letras, espaços, acentos e hífen
+            sanitized = sanitized.replace(/[^a-zA-ZÀ-ÿ\s\-']/g, '');
+            break;
+        case 'telefone':
+            // Permitir apenas números, parênteses, hífen e espaços
+            sanitized = sanitized.replace(/[^0-9()\-\s]/g, '');
+            break;
+        case 'email':
+            // Permitir apenas caracteres válidos para email
+            sanitized = sanitized.replace(/[^a-zA-Z0-9@._\-]/g, '');
+            break;
     }
     
     return sanitized;
+}
+
+// Função para gerar token CSRF simples
+function generateCSRFToken() {
+    return Math.random().toString(36).substring(2) + Date.now().toString(36);
+}
+
+// Função para verificar limite de requisições
+function checkRequestLimit() {
+    const now = Date.now();
+    const oneMinuteAgo = now - 60000;
+    
+    // Remover requisições antigas
+    requestHistory = requestHistory.filter(timestamp => timestamp > oneMinuteAgo);
+    
+    // Verificar se excedeu o limite
+    if (requestHistory.length >= SECURITY_CONFIG.maxRequestsPerMinute) {
+        return false;
+    }
+    
+    // Adicionar nova requisição
+    requestHistory.push(now);
+    return true;
+}
+
+// Função para verificar se está bloqueado
+function isBlocked() {
+    const now = Date.now();
+    return now < blockedUntil;
+}
+
+// Função para bloquear temporariamente
+function blockUser() {
+    blockedUntil = Date.now() + SECURITY_CONFIG.rateLimit.blockDuration;
+}
+
+// Função para inicializar todas as proteções de segurança
+function initSecurity() {
+    // Gerar token de sessão
+    sessionToken = generateCSRFToken();
+    
+    // Registrar tempo de carregamento do formulário
+    formLoadTime = Date.now();
+    
+    // Adicionar event listeners de segurança
+    addSecurityEventListeners();
+    
+    // Configurar validação em tempo real
+    setupRealtimeValidation();
+    
+    // Registrar carregamento da página para tracking
+    console.log('🔒 Sistema de segurança iniciado');
+}
+
+// Função para adicionar event listeners de segurança
+function addSecurityEventListeners() {
+    // Prevenir ataques de devtools
+    document.addEventListener('keydown', function(e) {
+        // Bloquear F12, Ctrl+Shift+I, Ctrl+U, etc.
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+            (e.ctrlKey && e.key === 'U')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // Prevenir clique direito em produção (opcional)
+    // document.addEventListener('contextmenu', function(e) {
+    //     e.preventDefault();
+    //     return false;
+    // });
+    
+    // Detectar tentativas de cópia suspeitas
+    document.addEventListener('copy', function(e) {
+        const selection = window.getSelection().toString();
+        if (selection.length > 1000) {
+            console.warn('🚨 Tentativa de cópia em massa detectada');
+        }
+    });
+}
+
+// Função para configurar validação em tempo real
+function setupRealtimeValidation() {
+    const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
+    
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            try {
+                const fieldType = this.name;
+                const sanitized = sanitizeInput(this.value, fieldType);
+                
+                // Se o valor foi alterado pela sanitização, atualizar
+                if (sanitized !== this.value) {
+                    this.value = sanitized;
+                }
+                
+                // Validar campo
+                validateField(this, fieldType);
+                
+            } catch (error) {
+                this.value = '';
+                showNotification(error.message, 'error');
+            }
+        });
+        
+        // Validar quando sair do campo
+        input.addEventListener('blur', function() {
+            validateField(this, this.name);
+        });
+    });
+    
+    // Validação específica para arquivo
+    const fileInput = document.querySelector('input[type="file"]');
+    if (fileInput) {
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                validatePDFUpload(this);
+            }
+        });
+    }
 }
 
 // Função para validar email
@@ -118,33 +295,74 @@ function validatePhone(phone) {
     return phoneRegex.test(phone.replace(/\s/g, ''));
 }
 
-// Função para validar arquivo PDF
+// Função avançada para validar arquivo PDF
 function validatePDFFile(file) {
     // Verificar se é um arquivo
     if (!file || !file.name) {
         return { valid: false, message: 'Por favor, selecione um arquivo.' };
     }
     
-    // Verificar extensão
+    // Verificar se o arquivo não está vazio
+    if (file.size === 0) {
+        return { valid: false, message: 'O arquivo está vazio ou corrompido.' };
+    }
+    
+    // Verificar extensão de forma mais rigorosa
     const fileName = file.name.toLowerCase();
-    if (!fileName.endsWith('.pdf')) {
+    const allowedExtensions = ['.pdf'];
+    const hasValidExtension = allowedExtensions.some(ext => fileName.endsWith(ext));
+    
+    if (!hasValidExtension) {
         return { valid: false, message: 'Apenas arquivos PDF são permitidos.' };
     }
     
-    // Verificar tamanho
+    // Verificar múltiplas extensões (ex: file.pdf.exe)
+    const extensionCount = (fileName.match(/\./g) || []).length;
+    if (extensionCount > 1) {
+        return { valid: false, message: 'Nome de arquivo suspeito. Use apenas um .pdf' };
+    }
+    
+    // Verificar tamanho mínimo e máximo
+    const minSize = 1024; // 1KB mínimo
+    if (file.size < minSize) {
+        return { valid: false, message: 'Arquivo muito pequeno. O arquivo deve ter pelo menos 1KB.' };
+    }
+    
     if (file.size > SECURITY_CONFIG.maxFileSize) {
         return { valid: false, message: 'O arquivo deve ter no máximo 1MB.' };
     }
     
-    // Verificar tipo MIME
-    if (file.type && !SECURITY_CONFIG.allowedFileTypes.includes(file.type)) {
-        return { valid: false, message: 'Tipo de arquivo inválido. Apenas PDF é permitido.' };
+    // Verificar tipo MIME de forma mais rigorosa
+    if (!file.type || !SECURITY_CONFIG.allowedMimeTypes.includes(file.type)) {
+        return { valid: false, message: 'Tipo MIME inválido. Apenas PDF é permitido.' };
     }
     
     // Verificar se o nome do arquivo não contém caracteres suspeitos
-    const suspiciousChars = /[<>:"/\\|?*\x00-\x1f]/;
+    const suspiciousChars = /[<>:"/\\|?*\x00-\x1f\x80-\xff]/;
     if (suspiciousChars.test(file.name)) {
         return { valid: false, message: 'Nome do arquivo contém caracteres inválidos.' };
+    }
+    
+    // Verificar nomes de arquivo suspeitos
+    const suspiciousNames = [
+        'con', 'prn', 'aux', 'nul', 'com1', 'com2', 'com3', 'com4', 'com5',
+        'com6', 'com7', 'com8', 'com9', 'lpt1', 'lpt2', 'lpt3', 'lpt4',
+        'lpt5', 'lpt6', 'lpt7', 'lpt8', 'lpt9'
+    ];
+    
+    const fileNameOnly = fileName.replace('.pdf', '').toLowerCase();
+    if (suspiciousNames.includes(fileNameOnly)) {
+        return { valid: false, message: 'Nome de arquivo reservado não permitido.' };
+    }
+    
+    // Verificar comprimento do nome
+    if (fileName.length > 255) {
+        return { valid: false, message: 'Nome do arquivo muito longo. Máximo 255 caracteres.' };
+    }
+    
+    // Verificar se o nome não é apenas espaços ou caracteres especiais
+    if (fileNameOnly.trim().length === 0) {
+        return { valid: false, message: 'Nome do arquivo inválido.' };
     }
     
     return { valid: true, message: 'Arquivo válido.' };
@@ -156,21 +374,47 @@ function validateCargo(cargo) {
     return cargosValidos.includes(cargo);
 }
 
-// Função para enviar currículo para o Supabase
+// Função para enviar currículo para o Supabase com proteções avançadas
 async function enviarCurriculo(event) {
     event.preventDefault();
     
-    // Rate limiting
+    // Verificar se está bloqueado temporariamente
+    if (isBlocked()) {
+        const remainingTime = Math.ceil((blockedUntil - Date.now()) / 1000 / 60);
+        showNotification(`Acesso temporariamente bloqueado. Tente novamente em ${remainingTime} minutos.`, 'error');
+        return;
+    }
+    
+    // Verificar limite de requisições por minuto
+    if (!checkRequestLimit()) {
+        showNotification('Muitas tentativas por minuto. Aguarde um momento.', 'error');
+        return;
+    }
+    
+    // Verificar se o usuário é um bot
+    if (detectBot()) {
+        showNotification('Acesso negado: comportamento suspeito detectado.', 'error');
+        return;
+    }
+    
+    // Rate limiting aprimorado
     const now = Date.now();
     if (now - lastSubmitTime < SECURITY_CONFIG.rateLimit.timeWindow) {
         submitAttempts++;
         if (submitAttempts > SECURITY_CONFIG.rateLimit.maxAttempts) {
-            showNotification('Muitas tentativas. Aguarde um momento antes de tentar novamente.', 'error');
+            blockUser();
+            showNotification('Muitas tentativas. Acesso bloqueado temporariamente.', 'error');
             return;
         }
     } else {
         submitAttempts = 1;
         lastSubmitTime = now;
+    }
+    
+    // Verificar tempo mínimo desde o carregamento da página (honeypot temporal)
+    if (!formLoadTime || (now - formLoadTime) < 3000) {
+        showNotification('Erro: formulário enviado muito rapidamente.', 'error');
+        return;
     }
     
     // Prevenir múltiplos envios
@@ -183,12 +427,19 @@ async function enviarCurriculo(event) {
         const form = event.target;
         const formData = new FormData(form);
         
-        // Obter e sanitizar dados
-        const nome = sanitizeInput(formData.get('nome'));
-        const email = sanitizeInput(formData.get('email'));
-        const telefone = sanitizeInput(formData.get('telefone'));
+        // Obter e sanitizar dados com tipo específico
+        const nome = sanitizeInput(formData.get('nome'), 'nome');
+        const email = sanitizeInput(formData.get('email'), 'email');
+        const telefone = sanitizeInput(formData.get('telefone'), 'telefone');
         const cargo = formData.get('cargo');
         const curriculo = formData.get('curriculo');
+        
+        // Verificar honeypot (campo oculto para detectar bots)
+        const honeypot = formData.get('website');
+        if (honeypot && honeypot.trim().length > 0) {
+            showNotification('Acesso negado: bot detectado.', 'error');
+            return;
+        }
         
         // Validações
         if (!nome || nome.length < 3) {
@@ -385,7 +636,7 @@ function formatPhone(input) {
     input.value = value;
 }
 
-// Função para detectar bots
+// Função avançada para detectar bots
 function detectBot() {
     // Verificar se o JavaScript está habilitado
     if (typeof navigator === 'undefined') return true;
@@ -394,7 +645,8 @@ function detectBot() {
     const userAgent = navigator.userAgent.toLowerCase();
     const botPatterns = [
         'bot', 'crawler', 'spider', 'scraper', 'curl', 'wget', 
-        'python', 'java', 'perl', 'ruby', 'php', 'go', 'node'
+        'python', 'java', 'perl', 'ruby', 'php', 'go', 'node',
+        'headless', 'phantom', 'selenium', 'webdriver', 'automation'
     ];
     
     for (const pattern of botPatterns) {
@@ -406,6 +658,33 @@ function detectBot() {
     
     // Verificar se tem cookies habilitados
     if (!navigator.cookieEnabled) return true;
+    
+    // Verificar propriedades suspeitas do navigator
+    if (navigator.webdriver) return true;
+    
+    // Verificar se está em modo headless
+    if (navigator.hardwareConcurrency === 0) return true;
+    
+    // Verificar se tem webGL (bots geralmente não têm)
+    try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return true;
+    } catch (e) {
+        return true;
+    }
+    
+    // Verificar se tem touchscreen em mobile (comportamento humano)
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    if (isMobileDevice && !('ontouchstart' in window)) return true;
+    
+    // Verificar se tem localStorage (bots podem não ter)
+    try {
+        localStorage.setItem('test', 'test');
+        localStorage.removeItem('test');
+    } catch (e) {
+        return true;
+    }
     
     return false;
 }
@@ -705,6 +984,9 @@ function handleImageErrors() {
 
 // Função de inicialização quando DOM carrega
 function initializeApp() {
+    // Inicializar proteções de segurança PRIMEIRO
+    initSecurity();
+    
     // Inicializar todas as funcionalidades
     observeElements();
     addCardEffects();
@@ -861,58 +1143,20 @@ function initModernSectionAnimations() {
         });
     });
     
-    // Animação da linha conectiva SVG
+    // Animação da linha conectiva SVG - DESABILITADA
     const connectionPath = document.querySelector('.connection-path');
     if (connectionPath) {
-        const pathLength = connectionPath.getTotalLength();
-        connectionPath.style.strokeDasharray = pathLength;
-        connectionPath.style.strokeDashoffset = pathLength;
-        
-        const pathObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    connectionPath.style.animation = 'pathDraw 2s ease-in-out forwards';
-                }
-            });
-        }, observerOptions);
-        
-        pathObserver.observe(connectionPath);
+        // Ocultar linhas SVG que estão causando problemas visuais
+        connectionPath.style.display = 'none';
     }
     
-        // Partículas flutuantes dinâmicas - elegantes
+        // Partículas flutuantes dinâmicas - DESABILITADAS
     function createDynamicParticles() {
-        const aboutSection = document.querySelector('.sobre-modern');
-        if (!aboutSection) return;
-        
-        // Partículas sutis e elegantes
-        for (let i = 0; i < 8; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'dynamic-particle';
-            
-            // Alternar entre cores da marca
-            const isRed = i % 2 === 0;
-            const color = isRed ? 'rgba(217, 37, 26, 0.4)' : 'rgba(247, 199, 0, 0.4)';
-            const glowColor = isRed ? 'rgba(217, 37, 26, 0.2)' : 'rgba(247, 199, 0, 0.2)';
-            
-            particle.style.cssText = `
-                 position: absolute;
-                 width: 2px;
-                 height: 2px;
-                 background: ${color};
-                 border-radius: 50%;
-                 pointer-events: none;
-                 z-index: 2;
-                 animation: floatParticle ${8 + Math.random() * 4}s infinite ease-in-out;
-                 left: ${Math.random() * 100}%;
-                 top: ${Math.random() * 100}%;
-                 animation-delay: ${Math.random() * 5}s;
-                 box-shadow: 0 0 20px ${glowColor};
-             `;
-            aboutSection.appendChild(particle);
-        }
+        // Função desabilitada para evitar linhas e elementos visuais indesejados
+        return;
     }
     
-    createDynamicParticles();
+    // createDynamicParticles(); // Comentado para não criar partículas
     
     // Efeito de glow no logo baseado na posição do scroll
     function updateLogoGlow() {
@@ -967,6 +1211,213 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(initModernSectionAnimations, 100);
 });
 
+// Carrossel de Promoções
+let currentSlide = 0;
+let autoplayInterval;
+
+function initCarousel() {
+    const slides = document.querySelectorAll('.promo-card');
+    const indicators = document.querySelectorAll('.indicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const totalSlides = slides.length;
+
+    if (totalSlides === 0) return; // Sair se não houver slides
+
+    // Configurações baseadas no tamanho da tela - ajustado para mostrar os slides corretamente
+    function getCarouselConfig() {
+        const screenWidth = window.innerWidth;
+        if (screenWidth <= 480) {
+            return { cardWidth: 450, gap: 16, visibleCards: 1, centerMode: true };
+        } else if (screenWidth <= 768) {
+            return { cardWidth: 600, gap: 16, visibleCards: 1, centerMode: true };
+        } else {
+            return { cardWidth: 800, gap: 16, visibleCards: 1, centerMode: true };
+        }
+    }
+
+    function updateCarousel() {
+        const track = document.getElementById('carouselTrack');
+        if (!track) return;
+        
+        const config = getCarouselConfig();
+        const containerWidth = track.parentElement.offsetWidth;
+        const cardWidth = config.cardWidth;
+        const gap = config.gap;
+        
+        // Calcular posição para centralizar o slide atual
+        const totalWidth = (cardWidth + gap) * totalSlides - gap;
+        const startOffset = (containerWidth - cardWidth) / 2;
+        const slideOffset = currentSlide * (cardWidth + gap);
+        const translateX = startOffset - slideOffset;
+        
+        track.style.transform = `translateX(${translateX}px)`;
+        
+        // Atualizar indicadores
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentSlide);
+        });
+        
+        // Atualizar cards ativos (efeito blur)
+        updateActiveCards();
+    }
+    
+    function updateActiveCards() {
+        slides.forEach((card, index) => {
+            // Apenas o slide atual fica ativo (sem blur)
+            const isActive = (index === currentSlide);
+            card.classList.toggle('active', isActive);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateCarousel();
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateCarousel();
+    }
+
+    // Event listeners para os botões
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+    // Event listeners para os indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentSlide = index;
+            updateCarousel();
+        });
+    });
+
+    // Auto-play do carrossel
+    function startAutoplay() {
+        autoplayInterval = setInterval(nextSlide, 4000); // Reduzido para 4 segundos
+    }
+
+    function stopAutoplay() {
+        if (autoplayInterval) {
+            clearInterval(autoplayInterval);
+        }
+    }
+
+    startAutoplay();
+
+    // Pausar auto-play ao passar o mouse
+    const carouselContainer = document.querySelector('.carousel-container');
+    if (carouselContainer) {
+        carouselContainer.addEventListener('mouseenter', stopAutoplay);
+        carouselContainer.addEventListener('mouseleave', startAutoplay);
+    }
+
+    // Suporte para gestos touch (mobile)
+    let startX = 0;
+    let endX = 0;
+
+    if (carouselContainer) {
+        carouselContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            stopAutoplay();
+        });
+        
+        carouselContainer.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+            
+            if (Math.abs(diffX) > 50) { // Mínimo de 50px para considerar um swipe
+                if (diffX > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+            
+            startAutoplay();
+        });
+    }
+
+    // Controle por teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+        }
+    });
+
+    // Atualizar carrossel quando redimensionar a janela
+    window.addEventListener('resize', () => {
+        updateCarousel();
+    });
+
+    // Inicializar carrossel
+    updateCarousel();
+}
+
+// Adicionar inicialização do carrossel à função de inicialização
+function initializeAppWithCarousel() {
+    // Inicializar proteções de segurança PRIMEIRO
+    initSecurity();
+    
+    // Inicializar carrossel
+    initCarousel();
+    
+    // Inicializar seção de combustíveis
+    initCombustiveis();
+    
+    // Inicializar todas as outras funcionalidades
+    observeElements();
+    addCardEffects();
+    updateFooterYear();
+    initSmoothScroll();
+    initLazyLoading();
+    initScrollHeader();
+    validateForm();
+    addButtonLoadingEffect();
+    optimizeForMobile();
+    preloadImages();
+    addMetaTags();
+    manageCookies();
+    addTrackingEvents();
+    handleImageErrors();
+    
+    // Adicionar efeito parallax apenas em desktop
+    if (!isMobile()) {
+        initParallaxEffect();
+    }
+    
+    // Adicionar listener direto no formulário para garantir funcionamento
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            enviarCurriculo(e);
+        });
+        
+        // Adicionar listener também no botão para garantir
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) {
+            submitButton.addEventListener('click', function(e) {
+                // Verificar se o formulário é válido
+                const formValid = form.checkValidity();
+                
+                if (formValid) {
+                    // Chamar a função diretamente
+                    const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+                    form.dispatchEvent(submitEvent);
+                }
+                
+                // Não prevenir o comportamento padrão aqui, deixar o submit acontecer
+            });
+        }
+    }
+}
+
+// Substituir a inicialização original
+document.removeEventListener('DOMContentLoaded', initializeApp);
+document.addEventListener('DOMContentLoaded', initializeAppWithCarousel);
+
 // Exportar funções para uso global (para compatibilidade com onclick)
 window.scrollToSection = scrollToSection;
 window.toggleMobileMenu = toggleMobileMenu;
@@ -977,3 +1428,81 @@ window.enviarCurriculo = enviarCurriculo;
 window.validateFileInput = validateFileInput;
 window.validateField = validateField;
 window.formatPhone = formatPhone; 
+
+// Função para inicializar a seção de combustíveis
+function initCombustiveis() {
+    const combustivelItems = document.querySelectorAll('.combustivel-item');
+    const combustivelCard = document.getElementById('combustivel-info');
+    
+    if (!combustivelCard || combustivelItems.length === 0) return;
+    
+    // Dados dos combustíveis
+    const combustiveisData = {
+        comum: {
+            logo: 'Gasolina Comum',
+            tipos: 'GASOLINA COMUM PURA',
+            descricao: '<strong>100% PURA, 0% MISTURA:</strong> Nossa gasolina comum é testada diariamente! Tanques limpos, filtros trocados semanalmente. Certificado de pureza semanal!'
+        },
+        aditivada: {
+            logo: 'Gasolina Aditivada',
+            tipos: 'GASOLINA PREMIUM COM ADITIVOS',
+            descricao: '<strong>POTÊNCIA + PROTEÇÃO MÁXIMA:</strong> Gasolina aditivada que LIMPA seu motor enquanto você dirige! Exclusiva fórmula que aumenta a potência em até 15% e protege contra ferrugem. SÓ AQUI!'
+        },
+        s10: {
+            logo: 'Diesel S-10',
+            tipos: 'DIESEL S-10 ULTRA PURO',
+            descricao: '<strong>DIESEL CAMPEÃO DE PUREZA:</strong> S-10 com menos de 10ppm de enxofre! Motor mais silencioso, menos fumaça, economia comprovada de até 20%. O diesel mais limpo de Roraima!'
+        },
+        s500: {
+            logo: 'Diesel S500',
+            tipos: 'DIESEL S500 PREMIUM',
+            descricao: '<strong>DIESEL CONFIÁVEL E ECONÔMICO:</strong> S500 com qualidade garantida! Ideal para veículos pesados e utilitários. Filtragem rigorosa, combustível limpo e econômico para sua frota!'
+        }
+    };
+    
+    function updateCombustivelCard(tipo) {
+        const data = combustiveisData[tipo];
+        if (!data) return;
+        
+        // Adicionar efeito de fade
+        combustivelCard.style.opacity = '0';
+        combustivelCard.style.transform = 'translateY(10px)';
+        
+        setTimeout(() => {
+            // Atualizar conteúdo
+            const logoElement = combustivelCard.querySelector('.logo-text');
+            const tiposElement = combustivelCard.querySelector('.combustivel-tipos span');
+            const descricaoElement = combustivelCard.querySelector('.combustivel-descricao h3');
+            
+            if (logoElement) logoElement.textContent = data.logo;
+            if (tiposElement) tiposElement.textContent = data.tipos;
+            if (descricaoElement) descricaoElement.innerHTML = data.descricao;
+            
+            // Restaurar visibilidade com animação
+            combustivelCard.style.opacity = '1';
+            combustivelCard.style.transform = 'translateY(0)';
+        }, 150);
+    }
+    
+    // Adicionar event listeners
+    combustivelItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // Remover active de todos os itens
+            combustivelItems.forEach(i => i.classList.remove('active'));
+            
+            // Adicionar active ao item clicado
+            this.classList.add('active');
+            
+            // Obter tipo do combustível
+            const tipo = this.getAttribute('data-combustivel');
+            
+            // Atualizar card
+            updateCombustivelCard(tipo);
+        });
+    });
+    
+    // Adicionar transições CSS
+    if (combustivelCard) {
+        combustivelCard.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    }
+} 

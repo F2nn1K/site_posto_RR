@@ -23,7 +23,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* Compensa o header fixo */
-    padding-top: 80px;
+    padding-top: 30px;
 }
 
 .container {
@@ -84,51 +84,59 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
+    padding: 0;
 }
 
 .logo-img {
-    height: 3rem;
+    height: 2rem;
     width: auto;
+    margin-left: -5rem;
 }
 
 @media (min-width: 768px) {
     .logo-img {
-        height: 3.5rem;
+        height: 2.5rem;
+        margin-left: -6rem;
     }
 }
 
 @media (min-width: 1024px) {
     .logo-img {
-        height: 4rem;
+        height: 3rem;
+        margin-left: -7rem;
     }
 }
 
 .desktop-nav {
-    display: none;
-    gap: 2rem;
-}
-
-@media (min-width: 768px) {
-    .desktop-nav {
-        display: flex;
-    }
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    margin-right: -8rem;
 }
 
 /* Melhorias para dispositivos muito pequenos */
 @media (max-width: 480px) {
     body {
-        padding-top: 70px;
+        padding-top: 25px;
     }
     
-
-    
     .logo-img {
-        height: 2.5rem;
+        height: 1.5rem;
+        margin-left: -3rem;
     }
     
     .header-content {
-        padding: 0.75rem 0;
+        padding: 0;
+    }
+    
+    .nav-link {
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .desktop-nav {
+        gap: 1rem;
+        margin-right: -4rem;
     }
 }
 
@@ -139,11 +147,12 @@ body {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1rem;
     font-size: 1.125rem;
     border-radius: 0.5rem;
     position: relative;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -170,7 +179,7 @@ body {
 }
 
 .mobile-menu-btn {
-    display: block;
+    display: none;
     background: none;
     border: none;
     color: #4b5563;
@@ -179,33 +188,20 @@ body {
     transition: color 0.3s;
 }
 
-@media (min-width: 768px) {
-    .mobile-menu-btn {
-        display: none;
-    }
-}
+
 
 .mobile-menu-btn:hover {
     color: #dc2626;
 }
 
 .mobile-nav {
-    display: none;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #e5e7eb;
-}
-
-.mobile-nav.active {
-    display: flex;
+    display: none !important;
 }
 
 /* Hero Section */
 .hero {
     position: relative;
-    background: linear-gradient(135deg, #dc2626, #ea580c);
+    background: #D9251A;
     color: white;
     padding: 8rem 0;
     min-height: 70vh;
@@ -677,12 +673,7 @@ body {
     margin-bottom: 4rem;
 }
 
-.brasao-image {
-    width: 80px;
-    height: auto;
-    margin-bottom: 1rem;
-    object-fit: contain;
-}
+
 
 .section-header h2 {
     font-size: 2.5rem;
@@ -709,51 +700,406 @@ body {
    Vermelho Principal: #D9251A (RGB: 217, 37, 26) - Pantone 480º C
    Amarelo Secundário: #F7C700 (RGB: 247, 199, 0) - Pantone 7406 C  
    Cinza Neutro: #F1F2F2 (RGB: 241, 242, 242) - Pantone 663 C */
-.sobre-modern {
-    position: relative;
+/* ================================
+   SEÇÃO SOBRE - ESTILO IPIRANGA CLEAN
+   ================================ */
+.sobre-ipiranga {
     padding: 8rem 0;
-    background: #0a0e1a;
+    background: #F1F2F2;
+    position: relative;
     overflow: hidden;
+    border-top: 6px solid #D9251A;
+    border-bottom: 4px solid #F7C700;
 }
 
-.sobre-modern::before {
+.sobre-ipiranga::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: 
-        radial-gradient(circle at 15% 85%, rgba(217, 37, 26, 0.06) 0%, transparent 30%),
-        radial-gradient(circle at 85% 15%, rgba(247, 199, 0, 0.04) 0%, transparent 30%),
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 40%);
-    pointer-events: none;
-    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: transparent;
+    /* Linha removida para manter design limpo */
 }
 
-.sobre-modern::after {
+.sobre-ipiranga::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: 
-        linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%),
-        linear-gradient(0deg, transparent 0%, rgba(255, 255, 255, 0.01) 50%, transparent 100%);
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* Background com elementos flutuantes */
-.modern-bg {
-    position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 85% 20%, rgba(247, 199, 0, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 15% 80%, rgba(217, 37, 26, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 30%);
+        /* Linhas diagonais removidas - linear-gradient comentado */
+    background-size: 500px 500px, 350px 350px, 200px 200px;
     pointer-events: none;
 }
 
-.floating-element {
+/* Header da seção */
+.sobre-ipiranga .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.sobre-ipiranga .brand-showcase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+}
+
+.sobre-ipiranga .brand-logo {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    transition: transform 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.sobre-ipiranga .brand-logo:hover {
+    transform: scale(1.05);
+}
+
+.sobre-ipiranga .brand-info {
+    text-align: center;
+}
+
+.sobre-ipiranga .brand-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #2c3e50;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 6px rgba(255, 255, 255, 0.8);
+}
+
+.sobre-ipiranga .brand-highlight {
+    color: #D9251A;
+}
+
+.sobre-ipiranga .brand-slogan {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.slogan-yellow {
+    font-size: 1.4rem;
+    color: #F7C700;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.slogan-red {
+    font-size: 1.4rem;
+    color: #D9251A;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.brand-slogan p {
+    margin: 0.5rem 0 0 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+/* Carrossel de Promoções - Estilo Ipiranga */
+.promocoes-carousel {
+    max-width: 1800px;
+    margin: 5rem auto 0;
+    padding: 0 2rem;
+}
+
+.carousel-wrapper {
+    position: relative;
+}
+
+.carousel-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 1rem;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: calc(800px * 4 + 3rem); /* 4 cards + gaps */
+    padding: 0 2rem; /* Adiciona espaçamento nas laterais */
+}
+
+.promo-card {
+    min-width: 800px;
+    max-width: 800px;
+    height: 500px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgba(217, 37, 26, 0.1);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    flex-shrink: 0;
+    filter: blur(2px) brightness(0.7);
+    opacity: 0.7;
+    transform: scale(0.85);
+    position: relative;
+}
+
+.promo-card.active {
+    filter: blur(0px) brightness(1);
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    border: 3px solid #D9251A;
+    z-index: 2;
+}
+
+.promo-card:not(.active) {
+    cursor: pointer;
+}
+
+.promo-card:not(.active):hover {
+    filter: blur(1px) brightness(0.8);
+    opacity: 0.8;
+    transform: scale(0.9);
+}
+
+.promo-card:hover {
+    transform: translateY(-8px) scale(0.9);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.promo-card.active:hover {
+    transform: translateY(-8px) scale(1);
+}
+
+.promo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+}
+
+.carousel-btn {
     position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: linear-gradient(45deg, rgba(217, 37, 26, 0.1), rgba(247, 199, 0, 0.08));
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    animation: floating 8s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
+.carousel-btn:hover {
+    background: #fff;
+    color: #D9251A;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-prev {
+    left: -24px;
+}
+
+.carousel-next {
+    right: -24px;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 2rem;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.indicator.active {
+    background: #D9251A;
+    border-color: #F7C700;
+    transform: scale(1.2);
+    box-shadow: 0 3px 6px rgba(217, 37, 26, 0.4);
+}
+
+.indicator:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .sobre-ipiranga {
+        padding: 6rem 0;
+    }
+    
+    .sobre-ipiranga .brand-showcase {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+    
+    .sobre-ipiranga .brand-info {
+        text-align: center;
+    }
+    
+    .sobre-ipiranga .brand-title {
+        font-size: 2.8rem;
+    }
+    
+    .sobre-ipiranga .brand-logo {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .promocoes-carousel {
+        padding: 0 1rem;
+    }
+    
+    .promo-card {
+        min-width: 600px;
+        max-width: 600px;
+        height: 380px;
+        filter: blur(1.5px) brightness(0.8);
+        opacity: 0.8;
+        transform: scale(0.9);
+    }
+    
+    .promo-card.active {
+        filter: blur(0px) brightness(1);
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+    
+    .promo-card:not(.active):hover {
+        filter: blur(0.5px) brightness(0.9);
+        opacity: 0.9;
+        transform: scale(0.95);
+    }
+    
+    .carousel-track {
+        width: calc(600px * 4 + 3rem);
+        padding: 0 1.5rem;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .carousel-prev {
+        left: -20px;
+    }
+    
+    .carousel-next {
+        right: -20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .promocoes-carousel {
+        padding: 0 0.5rem;
+    }
+    
+    .promo-card {
+        min-width: 450px;
+        max-width: 450px;
+        height: 280px;
+        border-radius: 12px;
+        filter: blur(1px) brightness(0.85);
+        opacity: 0.85;
+        transform: scale(0.95);
+    }
+    
+    .promo-card.active {
+        filter: blur(0px) brightness(1);
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+    }
+    
+    .promo-card:not(.active):hover {
+        filter: blur(0.5px) brightness(0.9);
+        opacity: 0.9;
+        transform: scale(0.98);
+    }
+    
+    .carousel-track {
+        width: calc(450px * 4 + 3rem);
+        padding: 0 1rem;
+    }
+    
+    .carousel-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .carousel-prev {
+        left: -18px;
+    }
+    
+    .carousel-next {
+        right: -18px;
+    }
+    
+    .indicator {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .carousel-indicators {
+        margin-top: 1.5rem;
+        gap: 6px;
+    }
+    
+    .mvv-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sobre-ipiranga .brand-title {
+        font-size: 2rem;
+    }
+    
+    .slogan-yellow,
+    .slogan-red {
+        font-size: 1.1rem;
+    }
+}
+
+/* Estilos removidos - seção moderna não utilizada */
 
 .element-1 {
     width: 100px;
@@ -1302,7 +1648,9 @@ body {
 /* Serviços Section */
 .servicos {
     padding: 5rem 0;
-    background: white;
+    background: #F1F2F2;
+    position: relative;
+    border-top: 4px solid #F7C700;
 }
 
 .servicos-grid {
@@ -1344,6 +1692,20 @@ body {
 
 .servico-card.orange-bg {
     background: #fff7ed;
+}
+
+.servico-card.green-bg {
+    background: #f0fdf4;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.servico-card.blue-bg {
+    background: #eff6ff;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
 .servico-icon {
@@ -1412,6 +1774,36 @@ body {
     background: transparent;
 }
 
+.servico-icon.green {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+/* Remove o fundo verde quando há uma imagem de logo */
+.servico-icon.green .servico-logo {
+    background: transparent;
+    width: 6rem;
+    height: 6rem;
+}
+
+.servico-icon.green:has(.servico-logo) {
+    background: transparent;
+}
+
+.servico-icon.blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+/* Remove o fundo azul quando há uma imagem de logo */
+.servico-icon.blue .servico-logo {
+    background: transparent;
+    width: 6rem;
+    height: 6rem;
+}
+
+.servico-icon.blue:has(.servico-logo) {
+    background: transparent;
+}
+
 .servico-logo {
     width: 3rem;
     height: 3rem;
@@ -1434,6 +1826,72 @@ body {
     min-height: 250px;
     object-fit: cover;
     border-radius: 0.5rem;
+}
+
+/* Ajuste específico para a imagem da Econorte */
+.servico-card.green-bg .servico-image-container {
+    align-items: center;
+    padding: 0;
+    height: 100%;
+    flex-grow: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.servico-card.green-bg .servico-image {
+    object-fit: cover;
+    object-position: center center;
+    height: 100%;
+    width: 100%;
+    border-radius: 1rem;
+}
+
+/* Posicionamento da logo sobre a imagem no card da Econorte */
+.servico-card.green-bg .servico-icon {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 10;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste específico para a imagem do Help */
+.servico-card.blue-bg .servico-image-container {
+    align-items: center;
+    padding: 0;
+    height: 100%;
+    flex-grow: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.servico-card.blue-bg .servico-image {
+    object-fit: cover;
+    object-position: center center;
+    height: 100%;
+    width: 100%;
+    border-radius: 1rem;
+}
+
+/* Posicionamento da logo sobre a imagem no card do Help */
+.servico-card.blue-bg .servico-icon {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 10;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 /* Posicionamento do ícone sobre a imagem no card de troca de óleo */
@@ -1599,7 +2057,9 @@ body {
 /* Seção Localização Clean */
 .localizacao-clean {
     padding: 5rem 0;
-    background: #ffffff;
+    background: #F1F2F2;
+    position: relative;
+    border-top: 4px solid #D9251A;
 }
 
 /* Header Limpo */
@@ -1918,7 +2378,10 @@ body {
 /* Contato Section */
 .contato {
     padding: 5rem 0;
-    background: white;
+    background: #F1F2F2;
+    color: #2c3e50;
+    position: relative;
+    border-top: 4px solid #D9251A;
 }
 
 .contato-content {
@@ -1933,9 +2396,11 @@ body {
 }
 
 .contato-card {
-    background: linear-gradient(135deg, #fef2f2, #fff7ed);
+    background: #ffffff;
     border-radius: 1rem;
     padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(217, 37, 26, 0.1);
 }
 
 .contato-card h3 {
@@ -2722,4 +3187,498 @@ body {
     .sobre, .servicos, .localizacao, .contato, .instagram {
         padding: 3rem 0;
     }
-} 
+}
+
+
+
+.contato .section-header h2 {
+    color: #2c3e50;
+}
+
+.contato .section-header p {
+    color: #4a5568;
+}
+
+.contato .contato-form {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    color: #2c3e50;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(217, 37, 26, 0.1);
+}
+
+/* ================================
+   SEÇÃO COMBUSTÍVEIS ESTRELA D'ALVA
+   ================================ */
+.combustiveis-ipiranga {
+    padding: 6rem 0;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    border-top: 4px solid #F7C700;
+}
+
+.combustiveis-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    min-height: 600px;
+}
+
+/* Lado Esquerdo - Informações */
+.combustiveis-info {
+    padding-right: 2rem;
+}
+
+.combustiveis-info h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.combustiveis-info p {
+    font-size: 1.1rem;
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.posto-link {
+    color: #1e88e5;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.posto-link:hover {
+    color: #1565c0;
+    text-decoration: underline;
+}
+
+/* Lista de Combustíveis Clicáveis */
+.combustiveis-lista {
+    margin-top: 2.5rem;
+}
+
+.combustivel-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.combustivel-item:hover {
+    padding-left: 0.5rem;
+}
+
+.combustivel-item.active {
+    padding-left: 0.5rem;
+}
+
+.combustivel-icon {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.combustivel-item.active .combustivel-icon {
+    width: 20px;
+}
+
+.icon-play {
+    color: #1e88e5;
+    font-size: 0.8rem;
+    display: block;
+}
+
+.combustivel-nome {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2c3e50;
+    transition: color 0.3s ease;
+    line-height: 1.2;
+}
+
+.combustivel-item:hover .combustivel-nome,
+.combustivel-item.active .combustivel-nome {
+    color: #1e88e5;
+}
+
+/* Lado Direito - Design Visual */
+.combustiveis-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+}
+
+/* Formas Geométricas */
+.geometric-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50px;
+    transform-origin: center;
+}
+
+/* Formas específicas baseadas na imagem */
+.shape-yellow-1 {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    width: 200px;
+    height: 120px;
+    top: 10%;
+    right: 15%;
+    transform: rotate(-15deg);
+    border-radius: 60px;
+}
+
+.shape-orange-1 {
+    background: linear-gradient(135deg, #ff8c00, #ff6b35);
+    width: 180px;
+    height: 100px;
+    top: 25%;
+    right: 5%;
+    transform: rotate(25deg);
+    border-radius: 50px;
+}
+
+.shape-blue-main {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    width: 320px;
+    height: 280px;
+    top: 15%;
+    left: 25%;
+    transform: rotate(-8deg);
+    border-radius: 80px;
+    z-index: 2;
+}
+
+.shape-yellow-2 {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    width: 150px;
+    height: 90px;
+    bottom: 15%;
+    left: 10%;
+    transform: rotate(45deg);
+    border-radius: 45px;
+}
+
+.shape-orange-2 {
+    background: linear-gradient(135deg, #ff8c00, #ff6b35);
+    width: 220px;
+    height: 110px;
+    bottom: 5%;
+    right: 20%;
+    transform: rotate(-20deg);
+    border-radius: 55px;
+}
+
+/* Card de Informação do Combustível */
+.combustivel-card {
+    position: relative;
+    z-index: 3;
+    background: rgba(30, 58, 138, 0.95);
+    color: white;
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 350px;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.combustivel-header {
+    margin-bottom: 1.5rem;
+}
+
+.combustivel-logo {
+    margin-bottom: 0.5rem;
+}
+
+.logo-text {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #ffd700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.combustivel-tipos {
+    font-size: 0.75rem;
+    color: #ffd700;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.combustivel-descricao h3 {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.combustivel-descricao strong {
+    color: #ffd700;
+}
+
+.saiba-mais-btn {
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #60a5fa;
+    transition: all 0.3s ease;
+}
+
+.saiba-mais-btn:hover {
+    color: #ffd700;
+    border-bottom-color: #ffd700;
+}
+
+/* Animações das formas */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(var(--rotation));
+    }
+    50% {
+        transform: translateY(-10px) rotate(var(--rotation));
+    }
+}
+
+.shape-yellow-1 {
+    --rotation: -15deg;
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-orange-1 {
+    --rotation: 25deg;
+    animation: float 8s ease-in-out infinite 1s;
+}
+
+.shape-blue-main {
+    --rotation: -8deg;
+    animation: float 10s ease-in-out infinite 2s;
+}
+
+.shape-yellow-2 {
+    --rotation: 45deg;
+    animation: float 7s ease-in-out infinite 3s;
+}
+
+.shape-orange-2 {
+    --rotation: -20deg;
+    animation: float 9s ease-in-out infinite 4s;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .combustiveis-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .combustiveis-info {
+        padding-right: 0;
+        text-align: center;
+    }
+    
+    .combustiveis-visual {
+        min-height: 400px;
+    }
+    
+    .shape-blue-main {
+        width: 280px;
+        height: 240px;
+    }
+    
+    .combustivel-card {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 768px) {
+    .combustiveis-ipiranga {
+        padding: 4rem 0;
+    }
+    
+    .combustiveis-info h2 {
+        font-size: 2.5rem;
+    }
+    
+    .combustiveis-visual {
+        min-height: 350px;
+    }
+    
+    .shape-blue-main {
+        width: 240px;
+        height: 200px;
+    }
+    
+    .shape-yellow-1,
+    .shape-orange-1,
+    .shape-yellow-2,
+    .shape-orange-2 {
+        width: 120px;
+        height: 80px;
+    }
+    
+    .combustivel-card {
+        padding: 1.5rem;
+        max-width: 300px;
+    }
+    
+    .logo-text {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .combustiveis-info h2 {
+        font-size: 2rem;
+    }
+    
+    .combustivel-nome {
+        font-size: 1.25rem;
+    }
+    
+    .combustiveis-visual {
+        min-height: 300px;
+    }
+    
+    .shape-blue-main {
+        width: 200px;
+        height: 160px;
+    }
+    
+    .combustivel-card {
+        padding: 1.25rem;
+        max-width: 280px;
+    }
+    
+    .combustivel-descricao h3 {
+        font-size: 0.9rem;
+    }
+}
+
+/* ========================================
+   SEÇÃO MISSÃO, VISÃO E VALORES COMPACTO
+======================================== */
+.mvv-compact {
+    padding: 3rem 0;
+    background: rgba(241, 245, 249, 0.4);
+    border-top: 1px solid rgba(217, 37, 26, 0.1);
+}
+
+.mvv-compact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    text-align: center;
+    align-items: stretch;
+}
+
+.mvv-compact-item {
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(217, 37, 26, 0.05);
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.mvv-compact-item:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(217, 37, 26, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.mvv-compact-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D9251A 0%, #F7C700 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+    position: relative;
+}
+
+.mvv-compact-icon i {
+    font-size: 1.2rem;
+    color: white;
+}
+
+.mvv-compact-item h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.mvv-compact-item p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #64748b;
+    margin: 0;
+    text-align: justify;
+    flex-grow: 1;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .mvv-compact {
+        padding: 2rem 0;
+    }
+    
+    .mvv-compact-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .mvv-compact-item {
+        padding: 1.25rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .mvv-compact {
+        padding: 1.5rem 0;
+    }
+    
+    .mvv-compact-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .mvv-compact-icon i {
+        font-size: 1.1rem;
+    }
+    
+    .mvv-compact-item h4 {
+        font-size: 1.1rem;
+    }
+    
+    .mvv-compact-item p {
+        font-size: 0.85rem;
+    }
+}
