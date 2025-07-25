@@ -3337,7 +3337,7 @@ body {
 
 /* Formas específicas baseadas na imagem */
 .shape-yellow-1 {
-    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    background: linear-gradient(135deg, #F7C700, #ffd700);
     width: 200px;
     height: 120px;
     top: 10%;
@@ -3347,7 +3347,7 @@ body {
 }
 
 .shape-orange-1 {
-    background: linear-gradient(135deg, #ff8c00, #ff6b35);
+    background: linear-gradient(135deg, #D9251A, #ff4d4d);
     width: 180px;
     height: 100px;
     top: 25%;
@@ -3357,7 +3357,7 @@ body {
 }
 
 .shape-blue-main {
-    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    background: linear-gradient(135deg, #D9251A, #F7C700);
     width: 320px;
     height: 280px;
     top: 15%;
@@ -3368,7 +3368,7 @@ body {
 }
 
 .shape-yellow-2 {
-    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    background: linear-gradient(135deg, #F7C700, #ffd700);
     width: 150px;
     height: 90px;
     bottom: 15%;
@@ -3378,7 +3378,7 @@ body {
 }
 
 .shape-orange-2 {
-    background: linear-gradient(135deg, #ff8c00, #ff6b35);
+    background: linear-gradient(135deg, #D9251A, #ff4d4d);
     width: 220px;
     height: 110px;
     bottom: 5%;
@@ -3391,7 +3391,7 @@ body {
 .combustivel-card {
     position: relative;
     z-index: 3;
-    background: rgba(30, 58, 138, 0.95);
+    background: rgba(217, 37, 26, 0.95);
     color: white;
     padding: 2rem;
     border-radius: 16px;
