@@ -54,23 +54,39 @@ function scrollToSection(sectionId) {
     if (mobileMenuOpen) {
         toggleMobileMenu();
     }
+    
+    // Atualizar seção ativa no menu
+    updateActiveSection(sectionId);
 }
 
-// Toggle do menu mobile
+// Função para atualizar seção ativa no menu
+function updateActiveSection(activeSection) {
+    // Remover classe ativa de todos os links
+    const allNavLinks = document.querySelectorAll('.nav-link-modern, .nav-link-mobile');
+    allNavLinks.forEach(link => {
+        link.classList.remove('active-section');
+    });
+    
+    // Adicionar classe ativa ao link correspondente
+    const activeLinks = document.querySelectorAll(`[data-section="${activeSection}"]`);
+    activeLinks.forEach(link => {
+        link.classList.add('active-section');
+    });
+}
+
+// Toggle do menu mobile moderno
 function toggleMobileMenu() {
     const mobileNav = document.getElementById('mobile-nav');
-    const menuIcon = document.getElementById('menu-icon');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn-modern');
     
     mobileMenuOpen = !mobileMenuOpen;
     
     if (mobileMenuOpen) {
         mobileNav.classList.add('active');
-        menuIcon.classList.remove('fa-bars');
-        menuIcon.classList.add('fa-times');
+        mobileMenuBtn.classList.add('active');
     } else {
         mobileNav.classList.remove('active');
-        menuIcon.classList.remove('fa-times');
-        menuIcon.classList.add('fa-bars');
+        mobileMenuBtn.classList.remove('active');
     }
 }
 
@@ -80,6 +96,35 @@ function abrirWhatsApp() {
     const mensagem = 'Olá! Gostaria de saber mais sobre as vagas de emprego disponíveis no Auto Posto Estrela D\'Alva';
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, '_blank');
+}
+
+// Função para expandir/recolher informações do footer
+function toggleFooterInfo() {
+    const expanded = document.getElementById('footerExpanded');
+    const button = document.getElementById('footerToggle');
+    const buttonText = button.querySelector('span');
+    
+    if (expanded.classList.contains('show')) {
+        // Recolher
+        expanded.classList.remove('show');
+        button.classList.remove('expanded');
+        buttonText.textContent = 'Mais informações';
+        
+        // Scroll suave para o footer após recolher
+        setTimeout(() => {
+            button.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+    } else {
+        // Expandir
+        expanded.classList.add('show');
+        button.classList.add('expanded');
+        buttonText.textContent = 'Menos informações';
+        
+        // Scroll suave para mostrar o conteúdo expandido
+        setTimeout(() => {
+            expanded.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+    }
 }
 
 // Função para abrir Instagram
@@ -1439,24 +1484,24 @@ function initCombustiveis() {
     // Dados dos combustíveis
     const combustiveisData = {
         comum: {
-            logo: 'Gasolina Comum',
-            tipos: 'GASOLINA COMUM PURA',
-            descricao: '<strong>100% PURA, 0% MISTURA:</strong> Nossa gasolina comum é testada diariamente! Tanques limpos, filtros trocados semanalmente. Certificado de pureza semanal!'
+            logo: 'Gasolina Comun',
+            tipos: 'GASOLINA COMUM BRASILEIRA',
+            descricao: '<div style="text-align: center; margin-bottom: 1rem;"><strong style="display: block; font-size: 1.2rem;"></strong></div>Combustível de qualidade testado diariamente! Tanques limpos e filtros trocados regularmente.'
         },
         aditivada: {
-            logo: 'Gasolina Aditivada',
+            logo: 'Gasolina Adtivada',
             tipos: 'GASOLINA PREMIUM COM ADITIVOS',
-            descricao: '<strong>POTÊNCIA + PROTEÇÃO MÁXIMA:</strong> Gasolina aditivada que LIMPA seu motor enquanto você dirige! Exclusiva fórmula que aumenta a potência em até 15% e protege contra ferrugem. SÓ AQUI!'
+            descricao: '<div style="text-align: center; margin-bottom: 1rem;"><strong style="display: block; font-size: 1.2rem;"></strong></div>Gasolina aditivada que limpa e protege o motor. Reduz depósitos, melhora a performance e prolonga a vida útil do sistema de injeção.'
         },
         s10: {
             logo: 'Diesel S-10',
-            tipos: 'DIESEL S-10 ULTRA PURO',
-            descricao: '<strong>DIESEL CAMPEÃO DE PUREZA:</strong> S-10 com menos de 10ppm de enxofre! Motor mais silencioso, menos fumaça, economia comprovada de até 20%. O diesel mais limpo de Roraima!'
+            tipos: 'DIESEL S-10 PREMIUM',
+            descricao: '<div style="text-align: center; margin-bottom: 1rem;"><strong style="display: block; font-size: 1.2rem;"></strong></div>Diesel S-10 de alta qualidade para seu veículo! Motor mais silencioso, performance superior e proteção total do sistema de injeção.'
         },
         s500: {
             logo: 'Diesel S500',
-            tipos: 'DIESEL S500 PREMIUM',
-            descricao: '<strong>DIESEL CONFIÁVEL E ECONÔMICO:</strong> S500 com qualidade garantida! Ideal para veículos pesados e utilitários. Filtragem rigorosa, combustível limpo e econômico para sua frota!'
+            tipos: 'DIESEL S500 RESISTÊNCIA TOTAL',
+            descricao: '<div style="text-align: center; margin-bottom: 1rem;"><strong style="display: block; font-size: 1.2rem;"></strong></div>Diesel S500 para trabalho pesado! Ideal para caminhões, tratores e máquinas. Qualidade garantida e performance confiável para sua operação.'
         }
     };
     

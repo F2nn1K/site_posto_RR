@@ -30,41 +30,9 @@
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <!-- Header Completo (Fixo) -->
-    <header class="header">
-        <!-- Header Top - Barra Vermelha -->
-        <div class="header-top"></div>
-
-        <!-- Header Principal -->
-        <div class="header-main">
-            <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="Logotipo.png?t=1738139425" alt="Auto Posto Estrela D'Alva" class="logo-img">
-                </div>
-                
-                <nav class="nav desktop-nav">
-                    <button onclick="scrollToSection('home')" class="nav-link">Início</button>
-                    <button onclick="scrollToSection('sobre')" class="nav-link">Sobre</button>
-                    <button onclick="scrollToSection('servicos')" class="nav-link">Serviços</button>
-                    <button onclick="scrollToSection('localizacao')" class="nav-link">Localização</button>
-                    <button onclick="scrollToSection('contato')" class="nav-link">Trabalhe Conosco</button>
-                </nav>
-                
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars" id="menu-icon"></i>
-                </button>
-            </div>
-            
-            <nav class="mobile-nav" id="mobile-nav">
-                <button onclick="scrollToSection('home')" class="nav-link">Início</button>
-                <button onclick="scrollToSection('sobre')" class="nav-link">Sobre</button>
-                <button onclick="scrollToSection('servicos')" class="nav-link">Serviços</button>
-                <button onclick="scrollToSection('localizacao')" class="nav-link">Localização</button>
-                <button onclick="scrollToSection('contato')" class="nav-link">Trabalhe Conosco</button>
-            </nav>
-            </div>
-        </div>
+    <!-- Header Simples -->
+    <header class="header-simple">
+        <div class="header-spacer"></div>
     </header>
 
     <!-- Hero Section -->
@@ -87,7 +55,7 @@
 
     <!-- Sobre Section - Estilo Ipiranga Clean -->
     <section id="sobre" class="sobre-ipiranga">
-        <div class="container">
+        <div class="container-header">
             <!-- Header da seção -->
             <div class="section-header">
                 <div class="brand-showcase">
@@ -103,9 +71,10 @@
                     </div>
                 </div>
             </div>
+        </div>
             
-            <!-- Cards Missão, Visão e Valores -->
-                    <div class="promocoes-carousel">
+        <!-- Cards Missão, Visão e Valores -->
+        <div class="promocoes-carousel">
             <div class="carousel-wrapper">
                 <div class="carousel-container">
                     <div class="carousel-track" id="carouselTrack">
@@ -146,7 +115,7 @@
                 <div class="mvv-compact-grid">
                     <div class="mvv-compact-item">
                         <div class="mvv-compact-icon">
-                            <i class="fas fa-bullseye"></i>
+                            <i class="fas fa-rocket"></i>
                         </div>
                         <h4>Missão</h4>
                         <p>Oferecer uma experiência completa em abastecimento e conveniência, com produtos e serviços de qualidade superior, atendimento atencioso e personalizado. Nosso compromisso é garantir a segurança, confiança e comodidade dos nossos clientes, buscando ir além do simples abastecimento para proporcionar momentos agradáveis e a tranquilidade em cada visita.</p>
@@ -154,7 +123,7 @@
                     
                     <div class="mvv-compact-item">
                         <div class="mvv-compact-icon">
-                            <i class="fas fa-eye"></i>
+                            <i class="fas fa-search"></i>
                         </div>
                         <h4>Visão</h4>
                         <p>Ser a principal escolha dos consumidores na região para abastecimento e conveniência, reconhecido pela qualidade inquestionável, pela confiança em nossos produtos e serviços, e por construir um relacionamento duradouro que cultiva a lealdade dos nossos clientes.</p>
@@ -162,7 +131,7 @@
                     
                     <div class="mvv-compact-item">
                         <div class="mvv-compact-icon">
-                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-gem"></i>
                         </div>
                         <h4>Valores</h4>
                         <p>Nossos valores guiam cada uma de nossas ações e decisões: Foco no Cliente, Qualidade e Excelência, Confiança e Transparência, Valorização e Segurança, Responsabilidade Regional.</p>
@@ -190,19 +159,19 @@
                             <div class="combustivel-icon">
                                 <span class="icon-play">▶</span>
                             </div>
-                            <span class="combustivel-nome">Gasolina Comum</span>
+                            <span class="combustivel-nome">Gasolina Comun;</span>
                         </div>
                         
                         <div class="combustivel-item" data-combustivel="aditivada">
-                            <span class="combustivel-nome">Gasolina Aditivada</span>
+                            <span class="combustivel-nome">Gasolina Adtivada;</span>
                         </div>
                         
                         <div class="combustivel-item" data-combustivel="s10">
-                            <span class="combustivel-nome">S-10</span>
+                            <span class="combustivel-nome">Diesel S-10;</span>
                         </div>
                         
                         <div class="combustivel-item" data-combustivel="s500">
-                            <span class="combustivel-nome">Diesel S500</span>
+                            <span class="combustivel-nome">Diesel S500.</span>
                         </div>
                     </div>
                 </div>
@@ -368,76 +337,81 @@
     </section>
 
     <!-- Localização Section - Design Limpo -->
-    <section id="localizacao" class="localizacao-clean">
-        <div class="container">
-            <!-- Header Limpo -->
-            <div class="clean-header">
-                <h2 class="clean-title">Como chegar ao <span class="title-brand">Auto Posto Estrela D'Alva</span></h2>
-                <p class="clean-subtitle">Estamos em uma localização privilegiada e de fácil acesso em Boa Vista</p>
+    <section id="localizacao" class="location-ipiranga">
+        <!-- Background com gradiente moderno -->
+        <div class="ipiranga-background">
+            <div class="floating-icons">
+                <div class="icon-float icon-1">⛽</div>
+                <div class="icon-float icon-2">🗺️</div>
+                <div class="icon-float icon-3">📍</div>
             </div>
+        </div>
 
-            <!-- Grid Principal -->
-            <div class="location-grid">
-                <!-- Mapa -->
-                <div class="map-section">
-                    <div class="map-wrapper">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.9776886772194!2d-60.67454142555618!3d2.820464754353847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8d93f6e8e5e5e5e5%3A0x5e5e5e5e5e5e5e5e!2sR.%20Estrela%20D'%C3%A1lva%2C%201794%20-%20Profa.%20Araceli%20Souto%20Maior%2C%20Boa%20Vista%20-%20RR%2C%2069315-076!5e0!3m2!1spt-BR!2sbr!4v1638360000000!5m2!1spt-BR!2sbr" 
-                                width="100%" 
-                                height="100%" 
-                                style="border:0;" 
-                                allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+        <div class="container">
+            <div class="ipiranga-layout">
+                <!-- Lado Esquerdo: Imagem do Celular -->
+                <div class="phone-section">
+                    <div class="phone-container">
+                        <!-- Espaço para imagem do celular -->
+                        <div class="phone-image-placeholder">
+                            <!-- Imagem da mão com celular -->
+                            <img src="local/mao.png" alt="Posto Estrela D'Alva no celular" class="phone-mockup">
+                        </div>
+                    </div>
+                    
+                    <!-- Animação de Percurso -->
+                    <div class="route-animation">
+                        <div class="route-path">
+                            <svg class="path-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Linha do percurso -->
+                                <path class="route-line" d="M 20 50 Q 100 20 180 50" stroke="#3b82f6" stroke-width="3" fill="none" stroke-dasharray="5,5">
+                                    <animate attributeName="stroke-dashoffset" values="0;-10" dur="1s" repeatCount="indefinite"/>
+                                </path>
+                                
+                                <!-- Seta no final -->
+                                <polygon class="route-arrow" points="175,45 185,50 175,55" fill="#1d4ed8"/>
+                            </svg>
+                            
+                            <!-- Carrinho/Ícone animado -->
+                            <div class="moving-icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Pontos de referência -->
+                        <div class="route-points">
+                            <div class="point start">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Seu celular</span>
+                            </div>
+                            <div class="point end">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>Nosso posto</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Informações -->
-                <div class="info-section">
-                    <div class="info-box address-box">
-                        <div class="info-icon">
-                            <i class="fas fa-map-marker-alt"></i>
+                <!-- Lado Direito: Conteúdo -->
+                <div class="content-section">
+                    <div class="content-wrapper">
+                        <h2 class="main-title">
+                            Encontre o Posto<br>
+                            <span class="brand-highlight">Estrela D'Alva</span> mais próximo
+                        </h2>
+                        
+                        <p class="subtitle">
+                            Confira nossa localização e serviços mais próximos da sua localização.
+                        </p>
+                        
+                        <div class="cta-section">
+                            <button onclick="abrirMaps()" class="cta-button">
+                                Encontrar posto
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
-                        <div class="info-text">
-                            <h3>Endereço</h3>
-                            <p>R. Estrela D'Alva, 1794<br>
-                            Profa. Araceli Souto Maior<br>
-                            Boa Vista - RR, CEP 69315-076</p>
-                        </div>
-                    </div>
+                        
 
-                    <div class="info-box schedule-box">
-                        <div class="info-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="info-text">
-                            <h3>Funcionamento</h3>
-                            <p class="schedule-hours">24 horas por dia<br>
-                            <span class="schedule-days">Todos os dias da semana</span></p>
-                            <span class="status-badge">Aberto agora</span>
-                        </div>
-                    </div>
-
-                    <div class="info-box contact-box">
-                        <div class="info-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="info-text">
-                            <h3>Contato</h3>
-                            <p class="phone-number">(95) 99174-0090</p>
-                            <p class="contact-method">WhatsApp disponível</p>
-                        </div>
-                    </div>
-
-                    <div class="action-row">
-                        <button onclick="abrirMaps()" class="btn-navigate">
-                            <i class="fas fa-directions"></i>
-                            <span>Ver Rotas</span>
-                        </button>
-                        <button onclick="abrirWhatsApp()" class="btn-whatsapp">
-                            <i class="fab fa-whatsapp"></i>
-                            <span>WhatsApp</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -538,51 +512,68 @@
     <footer class="footer-modern">
         <div class="container">
             <!-- Seção Principal do Footer -->
-            <div class="footer-main">
-                <!-- Contato -->
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <div class="contact-list">
-                        <div class="contact-item">
-                            <div class="contact-icon phone">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="contact-info">
-                                <span class="contact-label">Telefone</span>
-                                <span class="contact-value">(95) 99174-0090</span>
-                            </div>
+
+
+            <!-- Botão Mais Informações -->
+            <div class="footer-toggle">
+                <button onclick="toggleFooterInfo()" class="toggle-button" id="footerToggle">
+                    <span>Mais informações</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <!-- Seções Expandíveis -->
+            <div class="footer-expanded" id="footerExpanded">
+                <div class="expanded-content">
+                    <div class="expanded-grid">
+                        <!-- Produtos -->
+                        <div class="expanded-section">
+                            <h5>Produtos</h5>
+                            <ul class="expanded-list">
+                                <li>Gasolina Comum</li>
+                                <li>Gasolina Aditivada</li>
+                                <li>Diesel S-10</li>
+                                <li>Diesel S500</li>
+                                <li>Etanol</li>
+                            </ul>
                         </div>
-                        <div class="contact-item">
-                            <div class="contact-icon clock">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="contact-info">
-                                <span class="contact-label">Funcionamento</span>
-                                <span class="contact-value">24 horas por dia</span>
-                            </div>
+
+                        <!-- Serviços Completos -->
+                        <div class="expanded-section">
+                            <h5>Serviços Completos</h5>
+                            <ul class="expanded-list">
+                                <li>Calibragem de pneus</li>
+                                <li>Lavagem automotiva</li>
+                                <li>Borracharia</li>
+                                <li>Eletricista automotivo</li>
+                                <li>Venda de acessórios</li>
+                            </ul>
                         </div>
-                        <div class="contact-item">
-                            <div class="contact-icon location">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-info">
-                                <span class="contact-label">Endereço</span>
-                                <span class="contact-value">R. Estrela D'Alva, 1794<br>Boa Vista - RR</span>
-                            </div>
+
+                        <!-- Conveniência -->
+                        <div class="expanded-section">
+                            <h5>Loja de Conveniência</h5>
+                            <ul class="expanded-list">
+                                <li>Bebidas e refrigerantes</li>
+                                <li>Snacks e doces</li>
+                                <li>Produtos de higiene</li>
+                                <li>Itens automotivos</li>
+                                <li>Cigarros e acessórios</li>
+                            </ul>
+                        </div>
+
+                        <!-- Contato Adicional -->
+                        <div class="expanded-section">
+                            <h5>Contato</h5>
+                            <ul class="expanded-list">
+                                <li>Email: contato@estreladalva.com.br</li>
+                                <li>Suporte: (95) 99174-0090</li>
+                                <li>Emergência 24h</li>
+                                <li>WhatsApp Business</li>
+                                <li>Redes Sociais</li>
+                            </ul>
                         </div>
                     </div>
-                </div>
-
-                <!-- Serviços -->
-                <div class="footer-section">
-                    <h4>Nossos Serviços</h4>
-                    <ul class="services-list">
-                        <li><i class="fas fa-gas-pump"></i> Combustível premium</li>
-                        <li><i class="fas fa-tools"></i> Troca de óleo</li>
-                        <li><i class="fas fa-store"></i> Loja de conveniência</li>
-                        <li><i class="fas fa-cut"></i> Barbearia</li>
-                        <li><i class="fas fa-ice-cream"></i> Açaiteria</li>
-                    </ul>
                 </div>
             </div>
 
