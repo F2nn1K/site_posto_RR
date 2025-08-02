@@ -93,7 +93,7 @@ function toggleMobileMenu() {
 // Função para abrir WhatsApp
 function abrirWhatsApp() {
     const numeroWhatsApp = '5595991740090';
-    const mensagem = 'Olá! Gostaria de saber mais sobre as vagas de emprego disponíveis no Auto Posto Estrela D\'Alva';
+    const mensagem = 'Olá! Vim pelo site do Auto Posto Estrela D\'Alva, gostaria de atendimento';
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, '_blank');
 }
@@ -1256,158 +1256,10 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(initModernSectionAnimations, 100);
 });
 
-// Carrossel de Promoções
-let currentSlide = 0;
-let autoplayInterval;
-
-function initCarousel() {
-    const slides = document.querySelectorAll('.promo-card');
-    const indicators = document.querySelectorAll('.indicator');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const totalSlides = slides.length;
-
-    if (totalSlides === 0) return; // Sair se não houver slides
-
-    // Configurações baseadas no tamanho da tela - ajustado para mostrar os slides corretamente
-    function getCarouselConfig() {
-        const screenWidth = window.innerWidth;
-        if (screenWidth <= 480) {
-            return { cardWidth: 450, gap: 16, visibleCards: 1, centerMode: true };
-        } else if (screenWidth <= 768) {
-            return { cardWidth: 600, gap: 16, visibleCards: 1, centerMode: true };
-        } else {
-            return { cardWidth: 800, gap: 16, visibleCards: 1, centerMode: true };
-        }
-    }
-
-    function updateCarousel() {
-        const track = document.getElementById('carouselTrack');
-        if (!track) return;
-        
-        const config = getCarouselConfig();
-        const containerWidth = track.parentElement.offsetWidth;
-        const cardWidth = config.cardWidth;
-        const gap = config.gap;
-        
-        // Calcular posição para centralizar o slide atual
-        const totalWidth = (cardWidth + gap) * totalSlides - gap;
-        const startOffset = (containerWidth - cardWidth) / 2;
-        const slideOffset = currentSlide * (cardWidth + gap);
-        const translateX = startOffset - slideOffset;
-        
-        track.style.transform = `translateX(${translateX}px)`;
-        
-        // Atualizar indicadores
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentSlide);
-        });
-        
-        // Atualizar cards ativos (efeito blur)
-        updateActiveCards();
-    }
-    
-    function updateActiveCards() {
-        slides.forEach((card, index) => {
-            // Apenas o slide atual fica ativo (sem blur)
-            const isActive = (index === currentSlide);
-            card.classList.toggle('active', isActive);
-        });
-    }
-
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        updateCarousel();
-    }
-
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        updateCarousel();
-    }
-
-    // Event listeners para os botões
-    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-
-    // Event listeners para os indicadores
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            currentSlide = index;
-            updateCarousel();
-        });
-    });
-
-    // Auto-play do carrossel
-    function startAutoplay() {
-        autoplayInterval = setInterval(nextSlide, 4000); // Reduzido para 4 segundos
-    }
-
-    function stopAutoplay() {
-        if (autoplayInterval) {
-            clearInterval(autoplayInterval);
-        }
-    }
-
-    startAutoplay();
-
-    // Pausar auto-play ao passar o mouse
-    const carouselContainer = document.querySelector('.carousel-container');
-    if (carouselContainer) {
-        carouselContainer.addEventListener('mouseenter', stopAutoplay);
-        carouselContainer.addEventListener('mouseleave', startAutoplay);
-    }
-
-    // Suporte para gestos touch (mobile)
-    let startX = 0;
-    let endX = 0;
-
-    if (carouselContainer) {
-        carouselContainer.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            stopAutoplay();
-        });
-        
-        carouselContainer.addEventListener('touchend', (e) => {
-            endX = e.changedTouches[0].clientX;
-            const diffX = startX - endX;
-            
-            if (Math.abs(diffX) > 50) { // Mínimo de 50px para considerar um swipe
-                if (diffX > 0) {
-                    nextSlide();
-                } else {
-                    prevSlide();
-                }
-            }
-            
-            startAutoplay();
-        });
-    }
-
-    // Controle por teclado
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            prevSlide();
-        } else if (e.key === 'ArrowRight') {
-            nextSlide();
-        }
-    });
-
-    // Atualizar carrossel quando redimensionar a janela
-    window.addEventListener('resize', () => {
-        updateCarousel();
-    });
-
-    // Inicializar carrossel
-    updateCarousel();
-}
-
-// Adicionar inicialização do carrossel à função de inicialização
-function initializeAppWithCarousel() {
+// Inicialização principal da aplicação
+function initializeApp() {
     // Inicializar proteções de segurança PRIMEIRO
     initSecurity();
-    
-    // Inicializar carrossel
-    initCarousel();
     
     // Inicializar seção de combustíveis
     initCombustiveis();
@@ -1459,9 +1311,8 @@ function initializeAppWithCarousel() {
     }
 }
 
-// Substituir a inicialização original
-document.removeEventListener('DOMContentLoaded', initializeApp);
-document.addEventListener('DOMContentLoaded', initializeAppWithCarousel);
+// Inicialização da aplicação
+document.addEventListener('DOMContentLoaded', initializeApp);
 
 // Exportar funções para uso global (para compatibilidade com onclick)
 window.scrollToSection = scrollToSection;
@@ -1489,18 +1340,18 @@ function initCombustiveis() {
             descricao: '<div style="text-align: center; margin-bottom: 1rem;"><strong style="display: block; font-size: 1.2rem;"></strong></div>Combustível de qualidade testado diariamente! Tanques limpos e filtros trocados regularmente.'
         },
         aditivada: {
-            logo: 'Gasolina Adtivada',
-            tipos: 'GASOLINA PREMIUM COM ADITIVOS',
+            logo: 'Gasolina Aditivada',
+            tipos: 'GASOLINA COM ADITIVOS',
             descricao: '<div style="text-align: center; margin-bottom: 1rem;"><strong style="display: block; font-size: 1.2rem;"></strong></div>Gasolina aditivada que limpa e protege o motor. Reduz depósitos, melhora a performance e prolonga a vida útil do sistema de injeção.'
         },
         s10: {
             logo: 'Diesel S-10',
-            tipos: 'DIESEL S-10 PREMIUM',
+            tipos: 'DIESEL S-10',
             descricao: '<div style="text-align: center; margin-bottom: 1rem;"><strong style="display: block; font-size: 1.2rem;"></strong></div>Diesel S-10 de alta qualidade para seu veículo! Motor mais silencioso, performance superior e proteção total do sistema de injeção.'
         },
         s500: {
             logo: 'Diesel S500',
-            tipos: 'DIESEL S500 RESISTÊNCIA TOTAL',
+            tipos: 'DIESEL S500',
             descricao: '<div style="text-align: center; margin-bottom: 1rem;"><strong style="display: block; font-size: 1.2rem;"></strong></div>Diesel S500 para trabalho pesado! Ideal para caminhões, tratores e máquinas. Qualidade garantida e performance confiável para sua operação.'
         }
     };

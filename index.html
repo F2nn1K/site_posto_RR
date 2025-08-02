@@ -38,7 +38,7 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-bg">
-            <img src="layout.png" alt="Auto Posto Estrela D'Alva" class="hero-bg-img">
+            <img src="layout.jpg" alt="Auto Posto Estrela D'Alva" class="hero-bg-img">
         </div>
         <div class="hero-overlay"></div>
         <div class="hero-decorations">
@@ -55,6 +55,11 @@
 
     <!-- Sobre Section - Estilo Ipiranga Clean -->
     <section id="sobre" class="sobre-ipiranga">
+        <!-- Vídeo de fundo -->
+        <video class="background-video" autoplay muted loop playsinline>
+            <source src="promocao/promocao1.mp4" type="video/mp4">
+        </video>
+        
         <div class="container-header">
             <!-- Header da seção -->
             <div class="section-header">
@@ -73,81 +78,28 @@
             </div>
         </div>
             
-        <!-- Cards Missão, Visão e Valores -->
-        <div class="promocoes-carousel">
-            <div class="carousel-wrapper">
-                <div class="carousel-container">
-                    <div class="carousel-track" id="carouselTrack">
-                        <div class="promo-card">
-                            <img src="promocao/promocao1.jpg" alt="Promoção 1" class="promo-image">
-                        </div>
-                        <div class="promo-card">
-                            <img src="promocao/promocao2.jpg" alt="Promoção 2" class="promo-image">
-                        </div>
-                        <div class="promo-card">
-                            <img src="promocao/promocao3.jpg" alt="Promoção 3" class="promo-image">
-                        </div>
-                        <div class="promo-card">
-                            <img src="promocao/promocao4.jpg" alt="Promoção 4" class="promo-image">
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="carousel-btn carousel-prev" id="prevBtn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="carousel-btn carousel-next" id="nextBtn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                
-                <div class="carousel-indicators">
-                    <span class="indicator active" data-slide="0"></span>
-                    <span class="indicator" data-slide="1"></span>
-                    <span class="indicator" data-slide="2"></span>
-                    <span class="indicator" data-slide="3"></span>
-                </div>
-            </div>
-        </div>
+
         
-        <!-- Missão, Visão e Valores Compacto -->
-        <div class="mvv-compact">
-            <div class="container">
-                <div class="mvv-compact-grid">
-                    <div class="mvv-compact-item">
-                        <div class="mvv-compact-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <h4>Missão</h4>
-                        <p>Oferecer uma experiência completa em abastecimento e conveniência, com produtos e serviços de qualidade superior, atendimento atencioso e personalizado. Nosso compromisso é garantir a segurança, confiança e comodidade dos nossos clientes, buscando ir além do simples abastecimento para proporcionar momentos agradáveis e a tranquilidade em cada visita.</p>
-                    </div>
-                    
-                    <div class="mvv-compact-item">
-                        <div class="mvv-compact-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <h4>Visão</h4>
-                        <p>Ser a principal escolha dos consumidores na região para abastecimento e conveniência, reconhecido pela qualidade inquestionável, pela confiança em nossos produtos e serviços, e por construir um relacionamento duradouro que cultiva a lealdade dos nossos clientes.</p>
-                    </div>
-                    
-                    <div class="mvv-compact-item">
-                        <div class="mvv-compact-icon">
-                            <i class="fas fa-gem"></i>
-                        </div>
-                        <h4>Valores</h4>
-                        <p>Nossos valores guiam cada uma de nossas ações e decisões: Foco no Cliente, Qualidade e Excelência, Confiança e Transparência, Valorização e Segurança, Responsabilidade Regional.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         </div>
     </section>
 
     <!-- Combustíveis Estrela D'Alva Section -->
     <section class="combustiveis-ipiranga">
+        <!-- Partículas animadas de fundo -->
+        <div class="floating-particles">
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
+            <div class="particle particle-6"></div>
+        </div>
+        
         <div class="container">
             <div class="combustiveis-content">
                 <!-- Lado Esquerdo: Informações dos Combustíveis -->
-                <div class="combustiveis-info">
+                <div class="combustiveis-info fade-in-combustiveis-text">
                     <h2>Combustíveis<br>Auto Posto Estrela D'Alva</h2>
                     <p>O Auto Posto Estrela D'Alva completa sua jornada com a qualidade e o desempenho da nossa linha de combustíveis premium para você seguir sempre em movimento.</p>
                     
@@ -159,11 +111,11 @@
                             <div class="combustivel-icon">
                                 <span class="icon-play">▶</span>
                             </div>
-                            <span class="combustivel-nome">Gasolina Comun;</span>
+                            <span class="combustivel-nome">Gasolina Comum;</span>
                         </div>
                         
                         <div class="combustivel-item" data-combustivel="aditivada">
-                            <span class="combustivel-nome">Gasolina Adtivada;</span>
+                            <span class="combustivel-nome">Gasolina Aditivada;</span>
                         </div>
                         
                         <div class="combustivel-item" data-combustivel="s10">
@@ -187,18 +139,18 @@
                     </div>
                     
                     <!-- Card de Informação do Combustível -->
-                    <div class="combustivel-card" id="combustivel-info">
+                    <div class="combustivel-card fade-in-combustiveis-card" id="combustivel-info">
                         <div class="combustivel-header">
                             <div class="combustivel-logo">
                                 <span class="logo-text">Gasolina Comum</span>
                             </div>
                             <div class="combustivel-tipos">
-                                <span>GASOLINA COMUM PURA</span>
+                                <span>GASOLINA COMUM BRASILEIRA</span>
                             </div>
                         </div>
                         
                         <div class="combustivel-descricao">
-                            <h3><strong>100% PURA, 0% MISTURA:</strong> Nossa gasolina comum é testada diariamente! Tanques limpos, filtros trocados semanalmente. Certificado de pureza semanal!</h3>
+                            <h3>Combustível de qualidade testado diariamente! Tanques limpos e filtros trocados regularmente.</h3>
                             
                             <a href="#localizacao" class="saiba-mais-btn">Venha conferir</a>
                         </div>
@@ -211,122 +163,146 @@
 
 
     <!-- Serviços Section -->
-    <section id="servicos" class="servicos">
+    <section id="servicos" class="servicos-modern">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header-modern fade-in-servicos-header">
                 <h2>Nossos <span class="highlight">Serviços</span></h2>
-                <p>Oferecemos uma gama completa de serviços para tornar sua parada mais conveniente e prazerosa.</p>
+                <p>Oferecemos uma experiência completa para tornar sua parada mais conveniente e prazerosa.</p>
             </div>
             
-            <div class="servicos-grid">
-                <div class="servico-card red-bg hover-card">
-                    <div class="servico-icon red">
-                        <img src="bolota.jpeg" alt="Bolota" class="icon-image">
+            <div class="servicos-grid-modern fade-in-servicos-cards">
+                <!-- Troca de Óleo -->
+                <div class="servico-card-modern">
+                    <div class="servico-image-modern">
+                        <img src="troca.png" alt="Troca de Óleo" class="servico-img">
+                        <div class="servico-overlay">
+                            <div class="servico-icon-modern">
+                                <img src="bolota.jpeg" alt="Bolota" class="icon-logo">
+                            </div>
+                        </div>
                     </div>
-                    <div class="servico-image-container">
-                        <img src="troca.png" alt="Troca de Óleo" class="servico-image">
-                    </div>
-                    <div class="servico-hover-content">
-                        <h3>Serviços Oferecidos</h3>
-                        <ul class="servico-list">
-                            <li>Troca de óleo do Motor;</li>
-                            <li>Troca dos filtros;</li>
-                            <li>Troca de óleo e limpeza da caixa de direção;</li>
-                            <li>Troca de óleo e limpeza da caixa de marcha;</li>
-                            <li>Limpeza do Sistema de Arrefecimento;</li>
-                            <li>Limpeza do sistema de lubrificação do motor.</li>
+                    <div class="servico-content-modern">
+                        <h3>Troca de Óleo</h3>
+                        <p>Serviços automotivos completos</p>
+                        <ul class="servico-list-modern">
+                            <li>Troca de óleo do Motor</li>
+                            <li>Troca dos filtros</li>
+                            <li>Limpeza da caixa de direção</li>
+                            <li>Limpeza da caixa de marcha</li>
+                            <li>Sistema de Arrefecimento</li>
+                            <li>Sistema de lubrificação</li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="servico-card yellow-bg hover-card">
-                    <div class="servico-icon yellow">
-                        <img src="logos/conveniencia.png" alt="Loja de Conveniência" class="servico-logo">
+                <!-- Loja de Conveniência -->
+                <div class="servico-card-modern">
+                    <div class="servico-image-modern">
+                        <img src="conve.jpg" alt="Loja de Conveniência" class="servico-img">
+                        <div class="servico-overlay">
+                            <div class="servico-icon-modern">
+                                <img src="logos/conveniencia.png" alt="Conveniência" class="icon-logo">
+                            </div>
+                        </div>
                     </div>
-                    <div class="servico-image-container">
-                        <img src="conve.jpg" alt="Loja de Conveniência" class="servico-image">
-                    </div>
-                    <div class="servico-hover-content">
-                        <h3>Serviços Oferecidos</h3>
-                        <ul class="servico-list">
-                            <li>Bebidas;</li>
-                            <li>Salgadinhos;</li>
-                            <li>Café Expresso;</li>
-                            <li>Wi-Fi (ambiente climatizado).</li>
+                    <div class="servico-content-modern">
+                        <h3>Loja de Conveniência</h3>
+                        <p>Tudo que você precisa em um só lugar</p>
+                        <ul class="servico-list-modern">
+                            <li>Bebidas geladas</li>
+                            <li>Salgadinhos e snacks</li>
+                            <li>Café Expresso</li>
+                            <li>Wi-Fi gratuito</li>
+                            <li>Ambiente climatizado</li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="servico-card purple-bg hover-card">
-                    <div class="servico-icon purple">
-                        <img src="logos/barbearia.jpeg" alt="Barbearia" class="servico-logo">
+
+                <!-- Barbearia -->
+                <div class="servico-card-modern">
+                    <div class="servico-image-modern">
+                        <img src="babearia1.jpg" alt="Barbearia" class="servico-img">
+                        <div class="servico-overlay">
+                            <div class="servico-icon-modern">
+                                <img src="logos/barbearia.jpeg" alt="Barbearia" class="icon-logo">
+                            </div>
+                        </div>
                     </div>
-                    <div class="servico-image-container">
-                        <img src="babearia1.jpg" alt="Barbearia" class="servico-image">
-                    </div>
-                    <div class="servico-hover-content">
-                        <h3>Serviços Oferecidos</h3>
-                        <ul class="servico-list">
-                            <li>Corte de cabelo;</li>
-                            <li>Barba e bigode;</li>
-                            <li>Sobrancelha;</li>
-                            <li>Atendimento profissional.</li>
+                    <div class="servico-content-modern">
+                        <h3>Barbearia</h3>
+                        <p>Cuidado masculino profissional</p>
+                        <ul class="servico-list-modern">
+                            <li>Corte de cabelo</li>
+                            <li>Barba e bigode</li>
+                            <li>Design de sobrancelha</li>
+                            <li>Atendimento profissional</li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="servico-card orange-bg hover-card">
-                    <div class="servico-icon orange">
-                        <img src="logos/acai.png" alt="Açaiteria" class="servico-logo">
+
+                <!-- Açaiteria -->
+                <div class="servico-card-modern">
+                    <div class="servico-image-modern">
+                        <img src="acaip.jpg" alt="Açaiteria" class="servico-img">
+                        <div class="servico-overlay">
+                            <div class="servico-icon-modern">
+                                <img src="logos/acai.png" alt="Açaí" class="icon-logo">
+                            </div>
+                        </div>
                     </div>
-                    <div class="servico-image-container">
-                        <img src="acaip.jpg" alt="Açaiteria" class="servico-image">
-                    </div>
-                    <div class="servico-hover-content">
-                        <h3>Serviços Oferecidos</h3>
-                        <ul class="servico-list">
-                            <li>Açaí premium;</li>
-                            <li>Polpa de açaí;</li>
-                            <li>Açaí com creme;</li>
-                            <li>Taça;</li>
-                            <li>Salada de frutas;</li>
-                            <li>Sorvete e frozen yogurt.</li>
+                    <div class="servico-content-modern">
+                        <h3>Açaiteria</h3>
+                        <p>Açaí premium e refrescante</p>
+                        <ul class="servico-list-modern">
+                            <li>Açaí premium</li>
+                            <li>Polpa de açaí</li>
+                            <li>Açaí com creme</li>
+                            <li>Taças personalizadas</li>
+                            <li>Salada de frutas</li>
+                            <li>Sorvetes e frozen yogurt</li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="servico-card green-bg hover-card">
-                    <div class="servico-icon green">
-                        <img src="logos/econorte.png?v=1" alt="Econorte" class="servico-logo">
+
+                <!-- Econorte -->
+                <div class="servico-card-modern">
+                    <div class="servico-image-modern">
+                        <img src="econorte.jpg" alt="Econorte" class="servico-img">
+                        <div class="servico-overlay">
+                            <div class="servico-icon-modern">
+                                <img src="logos/econorte.png" alt="Econorte" class="icon-logo">
+                            </div>
+                        </div>
                     </div>
-                    <div class="servico-image-container">
-                        <img src="econorte.jpg?v=1" alt="Econorte" class="servico-image">
-                    </div>
-                    <div class="servico-hover-content">
-                        <h3>Serviços Oferecidos</h3>
-                        <ul class="servico-list">
-                            <li>Produtos de Limpeza Residencial;</li>
-                            <li>Produtos de Limpeza Empresariais;</li>
-                            <li>Produtos de Limpeza para o Carro.</li>
+                    <div class="servico-content-modern">
+                        <h3>Produtos Econorte</h3>
+                        <p>Soluções completas em limpeza</p>
+                        <ul class="servico-list-modern">
+                            <li>Limpeza Residencial</li>
+                            <li>Limpeza Empresarial</li>
+                            <li>Produtos para Carros</li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="servico-card blue-bg hover-card">
-                    <div class="servico-icon blue">
-                        <img src="logos/help.jpeg?v=1" alt="Help" class="servico-logo">
+
+                <!-- Help -->
+                <div class="servico-card-modern">
+                    <div class="servico-image-modern">
+                        <img src="help.jpg" alt="Help" class="servico-img">
+                        <div class="servico-overlay">
+                            <div class="servico-icon-modern">
+                                <img src="logos/help.jpeg" alt="Help" class="icon-logo">
+                            </div>
+                        </div>
                     </div>
-                    <div class="servico-image-container">
-                        <img src="help.jpg?v=1" alt="Help" class="servico-image">
-                    </div>
-                    <div class="servico-hover-content">
-                        <h3>Serviços Oferecidos</h3>
-                        <ul class="servico-list">
-                            <li>Controle de Pragas;</li>
-                            <li>Sanitização de Ambientes;</li>
-                            <li>Fumigação em grãos;</li>
-                            <li>Limpeza de Caixa d'água com emissão de certificado;</li>
-                            <li>Tratamento da agua de poço artesianos com emissão de laudo microbiologico e fisico quimico.</li>
+                    <div class="servico-content-modern">
+                        <h3>Help - Controle de Pragas</h3>
+                        <p>Soluções especializadas</p>
+                        <ul class="servico-list-modern">
+                            <li>Controle de Pragas</li>
+                            <li>Sanitização de Ambientes</li>
+                            <li>Fumigação em grãos</li>
+                            <li>Limpeza de Caixa d'água</li>
+                            <li>Tratamento de água</li>
                         </ul>
                     </div>
                 </div>
@@ -350,7 +326,7 @@
         <div class="container">
             <div class="ipiranga-layout">
                 <!-- Lado Esquerdo: Imagem do Celular -->
-                <div class="phone-section">
+                <div class="phone-section fade-in-phone">
                     <div class="phone-container">
                         <!-- Espaço para imagem do celular -->
                         <div class="phone-image-placeholder">
@@ -360,7 +336,7 @@
                     </div>
                     
                     <!-- Animação de Percurso -->
-                    <div class="route-animation">
+                    <div class="route-animation fade-in-animation">
                         <div class="route-path">
                             <svg class="path-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
                                 <!-- Linha do percurso -->
@@ -393,7 +369,7 @@
                 </div>
 
                 <!-- Lado Direito: Conteúdo -->
-                <div class="content-section">
+                <div class="content-section fade-in-text">
                     <div class="content-wrapper">
                         <h2 class="main-title">
                             Encontre o Posto<br>
@@ -534,7 +510,6 @@
                                 <li>Gasolina Aditivada</li>
                                 <li>Diesel S-10</li>
                                 <li>Diesel S500</li>
-                                <li>Etanol</li>
                             </ul>
                         </div>
 
@@ -542,11 +517,11 @@
                         <div class="expanded-section">
                             <h5>Serviços Completos</h5>
                             <ul class="expanded-list">
-                                <li>Calibragem de pneus</li>
-                                <li>Lavagem automotiva</li>
-                                <li>Borracharia</li>
-                                <li>Eletricista automotivo</li>
-                                <li>Venda de acessórios</li>
+                                <li>Troca de óleo do Motor</li>
+                                <li>Troca dos filtros</li>
+                                <li>Limpeza da caixa de direção</li>
+                                <li>Limpeza da caixa de marcha</li>
+                                <li>Sistema de Arrefecimento</li>
                             </ul>
                         </div>
 
@@ -556,9 +531,7 @@
                             <ul class="expanded-list">
                                 <li>Bebidas e refrigerantes</li>
                                 <li>Snacks e doces</li>
-                                <li>Produtos de higiene</li>
-                                <li>Itens automotivos</li>
-                                <li>Cigarros e acessórios</li>
+                                <li>Cigarros</li>
                             </ul>
                         </div>
 
@@ -566,11 +539,9 @@
                         <div class="expanded-section">
                             <h5>Contato</h5>
                             <ul class="expanded-list">
-                                <li>Email: contato@estreladalva.com.br</li>
+                                <li>Email: adm.autopostoestreladalva@gmail.com</li>
                                 <li>Suporte: (95) 99174-0090</li>
-                                <li>Emergência 24h</li>
-                                <li>WhatsApp Business</li>
-                                <li>Redes Sociais</li>
+                                <li><a href="https://www.instagram.com/autopostoestreladalvarr?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">Redes Sociais</a></li>
                             </ul>
                         </div>
                     </div>
@@ -586,7 +557,7 @@
                     <p>&copy; 2025 Auto Posto Estrela D'Alva. Todos os direitos reservados.</p>
                 </div>
                 <div class="slogan">
-                    <p>"Abasteça, aproveite e relaxe!" - Boa Vista, Roraima</p>
+                    <p>Desenvolvido por LV consultoria em Ti</p>
                 </div>
             </div>
         </div>
