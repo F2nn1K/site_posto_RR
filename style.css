@@ -2170,6 +2170,15 @@ body {
     max-width: 500px;
 }
 
+/* Mascote 2 da seção localização */
+.mascote-localizacao {
+    width: 160px;
+    height: auto;
+    margin-top: 4rem;
+    margin-bottom: 0.1rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
 .main-title {
     font-size: 3rem;
     font-weight: 900;
@@ -2179,7 +2188,7 @@ body {
 }
 
 .brand-highlight {
-    color: #ffffff !important;
+    color: #D9251A !important;
     font-weight: 900;
     display: inline-block;
 }
@@ -4568,90 +4577,7 @@ body {
     transform: rotate(180deg);
 }
 
-/* Seções Expandíveis */
-.footer-expanded {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out;
-    opacity: 0;
-    visibility: hidden;
-}
 
-.footer-expanded.show {
-    max-height: 600px;
-    opacity: 1;
-    visibility: visible;
-    transition: max-height 0.5s ease-in-out, opacity 0.3s ease 0.2s;
-}
-
-.expanded-content {
-    padding: 2rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.expanded-grid {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-    .expanded-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 3rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .expanded-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-    }
-}
-
-.expanded-section h5 {
-    color: #F7C700;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid rgba(217, 37, 26, 0.3);
-    padding-bottom: 0.5rem;
-}
-
-.expanded-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.expanded-list li {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.85rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    transition: color 0.3s ease;
-}
-
-.expanded-list li:last-child {
-    border-bottom: none;
-}
-
-.expanded-list li:hover {
-    color: rgba(255, 255, 255, 1);
-    padding-left: 0.5rem;
-}
-
-.expanded-list li a {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.expanded-list li a:hover {
-    color: #F7C700;
-    text-decoration: underline;
-}
 
 /* Linha Divisória */
 .footer-divider {
@@ -5144,7 +5070,7 @@ body {
 .combustiveis-info h2 {
     font-size: 3rem;
     font-weight: 800;
-    color: #2c3e50;
+    color: #D9251A;
     margin-bottom: 1.5rem;
     line-height: 1.1;
 }
@@ -5157,14 +5083,14 @@ body {
 }
 
 .posto-link {
-    color: #1e88e5;
+    color: #D9251A;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
 .posto-link:hover {
-    color: #1565c0;
+    color: #b91c1c;
     text-decoration: underline;
 }
 
@@ -5202,7 +5128,7 @@ body {
 }
 
 .icon-play {
-    color: #1e88e5;
+    color: #D9251A;
     font-size: 0.8rem;
     display: block;
 }
@@ -5217,7 +5143,7 @@ body {
 
 .combustivel-item:hover .combustivel-nome,
 .combustivel-item.active .combustivel-nome {
-    color: #1e88e5;
+    color: #D9251A;
 }
 
 /* Lado Direito - Design Visual */
@@ -5308,6 +5234,32 @@ body {
     margin: 0 auto;
     backdrop-filter: blur(10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Mascote da Estrela D'Alva */
+.mascote-combustivel {
+    position: absolute;
+    top: -180px;
+    left: -30px;
+    width: 160px;
+    height: auto;
+    z-index: 4;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Ajuste do mascote para mobile */
+@media (max-width: 768px) {
+    .mascote-combustivel {
+        top: -120px;
+        left: -20px;
+        width: 120px;
+    }
+    
+    /* Aumenta o espaçamento superior do card para dar espaço ao mascote */
+    .combustivel-card {
+        margin-top: 5rem;
+        padding-top: 3rem;
+    }
 }
 
 .combustivel-header {

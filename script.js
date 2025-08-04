@@ -98,34 +98,7 @@ function abrirWhatsApp() {
     window.open(url, '_blank');
 }
 
-// Função para expandir/recolher informações do footer
-function toggleFooterInfo() {
-    const expanded = document.getElementById('footerExpanded');
-    const button = document.getElementById('footerToggle');
-    const buttonText = button.querySelector('span');
-    
-    if (expanded.classList.contains('show')) {
-        // Recolher
-        expanded.classList.remove('show');
-        button.classList.remove('expanded');
-        buttonText.textContent = 'Mais informações';
-        
-        // Scroll suave para o footer após recolher
-        setTimeout(() => {
-            button.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 300);
-    } else {
-        // Expandir
-        expanded.classList.add('show');
-        button.classList.add('expanded');
-        buttonText.textContent = 'Menos informações';
-        
-        // Scroll suave para mostrar o conteúdo expandido
-        setTimeout(() => {
-            expanded.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
-    }
-}
+
 
 // Função para abrir Instagram
 function abrirInstagram() {
