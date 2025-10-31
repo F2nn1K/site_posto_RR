@@ -1,0 +1,33 @@
+# Proteger diretório de uploads
+# Permitir apenas download direto, não execução
+
+# Bloquear execução de scripts
+<Files "*">
+    SetHandler none
+    SetHandler default-handler
+    Options -ExecCGI
+    RemoveHandler .php .phtml .php3 .php4 .php5 .phps
+    RemoveType .php .phtml .php3 .php4 .php5 .phps
+</Files>
+
+# Permitir apenas arquivos PDF
+<FilesMatch "\.(?i:pdf)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Bloquear todos os outros tipos
+<FilesMatch "\.(?i:php|phtml|php3|php4|php5|phps|pl|py|cgi|shtml|shtm|asp|aspx|jsp|exe|bat|com|scr|vbs|js|html|htm)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Headers de segurança
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set Content-Disposition "attachment"
+</IfModule>
+
+# Indexação negada
+Options -Indexes

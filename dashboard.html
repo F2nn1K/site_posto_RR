@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Estrela D'Alva</title>
+    <meta name="description" content="Seu painel de participante: pontos e atividades.">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="Logotipo.png?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body { background:#F1F2F2; }
+        .dash-header { background:#D9251A; color:#fff; padding:40px 20px; border-bottom:8px solid #F7C700; }
+        .dash-header .wrap { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+        .dash-header .user { font-size:1.2rem; font-weight:700; }
+        .dash-container { max-width:1200px; margin:24px auto; padding:0 20px; }
+        .cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; }
+        .card { background:#fff; border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.08); }
+        .card h3 { margin:0 0 8px; color:#D9251A; font-size:1.05rem; font-weight:800; }
+        .card .value { font-size:2rem; font-weight:900; color:#111; }
+        .actions { margin-top:24px; display:grid; grid-template-columns:1fr; gap:16px; }
+        input[type="number"], input[type="text"] { width:100%; padding:12px 14px; border:2px solid #e0e0e0; border-radius:8px; font-size:1rem; transition: border-color .2s; }
+        input[type="number"]:focus, input[type="text"]:focus { outline:none; border-color:#F7C700; }
+        input[type="file"] { display:none; }
+        .upload-wrapper { position: relative; }
+        .upload-label { display:flex; align-items:center; justify-content:center; gap:8px; padding:12px 14px; border:2px dashed #D9251A; border-radius:8px; cursor:pointer; background:#fff; transition: all .2s; color:#D9251A; font-weight:600; }
+        .upload-label:hover { background:#fff5f5; border-color:#b81e16; }
+        .upload-label.has-file { border-style:solid; background:#d4edda; border-color:#28a745; color:#155724; }
+        .form-grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:14px; }
+        .form-grid-full { grid-column: 1 / -1; }
+        .form-label { display:block; font-weight:700; color:#333; margin-bottom:6px; font-size:.9rem; }
+        .btn { background:#F7C700; color:#D9251A; padding:12px 18px; border:none; border-radius:10px; font-weight:800; cursor:pointer; text-transform:uppercase; transition:all .2s; }
+        .btn:hover { background:#D9251A; color:#F7C700; transform: translateY(-1px); }
+        .btn-registrar-full { width:100%; padding:14px; font-size:1.05rem; }
+        .actions .card { position: relative; }
+        .actions .card form { display:block; }
+        .actions .card #btn-registrar { display:block; margin: 0 auto; max-width: 360px; }
+        .topbar { display:flex; gap:10px; align-items:center; }
+        .logout { background:#e5e7eb; color:#111; }
+        .logout:hover { background:#D9251A; color:#fff; }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dash-header">
+        <div class="wrap">
+            <div class="brand" style="display:flex; align-items:center; gap:12px;">
+                <img src="logos/logoposto.png" alt="Estrela D'Alva" style="width:54px; height:auto; background:#fff; padding:6px; border-radius:8px;">
+                <div>
+                    <div style="font-weight:900; font-size:1.4rem;">Dashboard</div>
+                    <div id="welcome" class="user">Bem-vindo(a), <span id="user-name">...</span>!</div>
+                </div>
+            </div>
+            <div class="topbar">
+                <button class="btn logout" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash-container">
+        <div class="cards">
+            <div class="card" id="card-total-codigos" style="cursor:pointer;">
+                <h3>Total de Códigos</h3>
+                <div class="value" id="total-codigos">0</div>
+            </div>
+            <div class="card">
+                <h3>Total de Abastecimentos</h3>
+                <div class="value" id="total-abastecimentos">0</div>
+            </div>
+            <div class="card">
+                <h3>Códigos no Mês</h3>
+                <div class="value" id="codigos-mes">0</div>
+            </div>
+            <div class="card">
+                <h3>Última Atualização</h3>
+                <div class="value" style="font-size:1.1rem;" id="last-update">—</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div class="card">
+                <h3>Registrar Abastecimento</h3>
+                <p style="margin:0 0 16px; color:#555;">Preencha os dados do abastecimento para gerar códigos de participação.</p>
+                
+                <form id="form-abastecimento" class="form-grid" onsubmit="return false;">
+                    <div>
+                        <label class="form-label">Valor Abastecido (R$)</label>
+                        <input type="number" id="valor-compra" min="1" step="1" placeholder="Ex: 100" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Chave de Acesso (44 dígitos)</label>
+                        <input type="text" id="nfce-chave-registro" inputmode="numeric" placeholder="00000000000000000000000000000000000000000000" maxlength="44" required pattern="[0-9]{44}" title="Informe os 44 dígitos numéricos">
+                    </div>
+                
+                
+                <div class="form-grid-full" style="margin-bottom:14px;">
+                    <label class="form-label">Foto do Cupom (Obrigatória)</label>
+                    <div class="upload-wrapper">
+                        <input type="file" id="foto-cupom" accept="image/jpeg,image/png,image/webp" required>
+                        <label for="foto-cupom" class="upload-label" id="upload-label">
+                            <i class="fas fa-camera"></i>
+                            <span id="upload-text">Clique para anexar foto</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-registrar-full" id="btn-registrar">
+                    <i class="fas fa-plus-circle"></i> Registrar Abastecimento
+                </button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // Carregar dados do usuário e códigos
+        function fetchMe(){
+            return fetch('api_me.php', { credentials: 'same-origin' }).then(r => r.json());
+        }
+        function fetchCodigosResumo(){
+            return fetch('api_codigos.php', { credentials: 'same-origin' }).then(r => r.json());
+        }
+        function postRegistrarAbastecimento(valor, cupom){
+            const fd = new FormData();
+            fd.append('valor', String(valor));
+            fd.append('cupom', cupom);
+            const foto = document.getElementById('foto-cupom').files[0];
+            if (foto) fd.append('foto', foto);
+            return fetch('/api/registrar-abastecimento', {
+                method: 'POST',
+                body: fd,
+                credentials: 'same-origin',
+                headers: { 'Accept': 'application/json' }
+            }).then(async r => {
+                const ct = r.headers.get('content-type') || '';
+                if (!ct.includes('application/json')) {
+                    const text = await r.text();
+                    throw new Error('Resposta inesperada do servidor.');
+                }
+                return r.json();
+            });
+        }
+
+        function atualizarUI(user, codigos){
+            document.getElementById('user-name').textContent = (user && (user.nome || user.name)) ? (user.nome || user.name) : 'Participante';
+            const tc = (codigos && (codigos.total_codigos != null)) ? codigos.total_codigos : (codigos && codigos.total ? codigos.total : 0);
+            const ta = (codigos && (codigos.total_abastecimentos != null)) ? codigos.total_abastecimentos : (codigos && codigos.abastecimentos ? codigos.abastecimentos : 0);
+            const cm = (codigos && (codigos.codigos_mes != null)) ? codigos.codigos_mes : (codigos && codigos.mes ? codigos.mes : 0);
+            const au = (codigos && codigos.atualizado_em) ? codigos.atualizado_em : '—';
+            document.getElementById('total-codigos').textContent = tc;
+            document.getElementById('total-abastecimentos').textContent = ta;
+            document.getElementById('codigos-mes').textContent = cm;
+            document.getElementById('last-update').textContent = au;
+        }
+
+        async function init(){
+            try {
+                const [user, codigos] = await Promise.all([fetchMe(), fetchCodigosResumo()]);
+                if (!user.auth) { window.location.href = '/login'; return; }
+                atualizarUI(user, codigos);
+            } catch (e) {
+                Swal.fire({ icon:'error', title:'Erro', text:'Não foi possível carregar seu painel.' });
+            }
+            
+            // Configurar botão de logout após carregar dados
+            const btnLogout = document.getElementById('btn-logout');
+            if (btnLogout) {
+                btnLogout.addEventListener('click', function(){
+                    fetch('/auth/logout', { 
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' },
+                        credentials: 'same-origin'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = '/login';
+                        }
+                    })
+                    .catch(() => {
+                        window.location.href = '/login';
+                    });
+                });
+            }
+        }
+
+        // Submissão do formulário (Enter ou clique)
+        document.getElementById('form-abastecimento').addEventListener('submit', async function(e){
+            e.preventDefault();
+            // Aciona validação nativa do formulário para campos required/pattern
+            if (!this.checkValidity()) { this.reportValidity(); return; }
+            const btn = document.getElementById('btn-registrar');
+            const valor = parseInt(document.getElementById('valor-compra').value, 10);
+            let chave = (document.getElementById('nfce-chave-registro').value || '').replace(/\D/g,'');
+            if (!valor || valor < 1) {
+                Swal.fire({ icon:'warning', title:'Valor inválido', text:'Informe um valor inteiro maior que zero.' });
+                return;
+            }
+            if (chave.length !== 44) {
+                Swal.fire({ icon:'warning', title:'Chave inválida', text:'Informe os 44 dígitos da chave.' });
+                return;
+            }
+            btn.disabled = true; btn.textContent = 'Enviando...';
+            try {
+                const fd = new FormData();
+                fd.append('valor', String(valor));
+                fd.append('chave', chave);
+                const foto = document.getElementById('foto-cupom').files[0];
+                if (!foto) throw new Error('Anexe a foto do cupom.');
+                fd.append('foto', foto);
+                const r = await fetch('/api_registrar_abastecimento.php', { method: 'POST', body: fd, credentials: 'same-origin' });
+                const result = await r.json();
+                if (result.success) {
+                    Swal.fire({ 
+                        icon:'success', 
+                        title:'Códigos gerados!', 
+                        text: `Foram gerados ${result.qtd_codigos} código(s).`,
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire({ icon:'error', title:'Erro', text: result.message || 'Falha ao registrar pontos.' });
+                }
+            } catch (e) {
+                Swal.fire({ icon:'error', title:'Erro', text: e.message || 'Tente novamente.' });
+            } finally {
+                btn.disabled = false; btn.innerHTML = '<i class="fas fa-plus-circle"></i> Registrar Abastecimento';
+            }
+        });
+
+        // Ao clicar no card de Total de Códigos, abrir modal com filtro inline e lista
+        document.getElementById('card-total-codigos').addEventListener('click', async function(){
+            try {
+                const hoje = new Date();
+                const pad2 = n => String(n).padStart(2,'0');
+                const diaDefault = `${hoje.getFullYear()}-${pad2(hoje.getMonth()+1)}-${pad2(hoje.getDate())}`;
+
+                const buildItems = (items) => items.map(i => `
+                    <div style=\"display:grid; grid-template-columns: 1fr auto; gap:12px; padding:12px 0; border-bottom:1px solid #f3f4f6;\">
+                        <div>
+                            <div style=\"font-weight:800; color:#111;\">Cupom: ${i.cupom}</div>
+                            <div style=\"color:#6b7280; font-size:.9rem;\">${i.data} • Valor R$ ${i.valor}</div>
+                            ${i.tem_foto ? '<a href=\"api_foto_cupom.php?id='+i.abastecimento_id+'\" target=\"_blank\" style=\"color:#D9251A; font-size:.85rem; font-weight:700;\"><i class=\"fas fa-image\"></i> Ver foto</a>' : ''}
+                        </div>
+                        <div style=\"align-self:center; font-weight:900; color:#D9251A; background:#fff3f3; padding:6px 10px; border-radius:8px;\">${i.codigo}</div>
+                    </div>
+                `).join('');
+
+                async function carregarLista(diaEscolhido) {
+                    const lista = document.getElementById('lista-codigos');
+                    if (!lista) return;
+                    lista.innerHTML = '<div style=\'padding:10px; color:#6b7280;\'>Carregando...</div>';
+                    const resp = await fetch('api_codigos_lista.php' + (diaEscolhido ? (`?dia=${diaEscolhido}`) : ''), { credentials: 'same-origin' });
+                    const data = await resp.json();
+                    if (!Array.isArray(data.items) || data.items.length === 0) {
+                        lista.innerHTML = '<div style=\'padding:10px; color:#6b7280;\'>Nenhum código para o dia selecionado.</div>';
+                        return;
+                    }
+                    lista.innerHTML = buildItems(data.items);
+                }
+
+                await Swal.fire({
+                    title: 'Códigos gerados',
+                    html: `
+                        <div style=\"display:flex; align-items:center; gap:10px; margin-bottom:12px;\">
+                            <label for=\"filtro-dia\" style=\"font-weight:800;\">Dia:</label>
+                            <input type=\"date\" id=\"filtro-dia\" value=\"${diaDefault}\" style=\"padding:8px 10px; border:2px solid #e5e7eb; border-radius:8px;\">
+                        </div>
+                        <div id=\"lista-codigos\" style=\"text-align:left; max-height:360px; overflow:auto; border-top:1px solid #eee;\"></div>
+                    `,
+                    width: 760,
+                    confirmButtonText: 'Fechar',
+                    didOpen: async () => {
+                        const input = document.getElementById('filtro-dia');
+                        input.addEventListener('change', (e) => carregarLista(e.target.value));
+                        await carregarLista(diaDefault);
+                    }
+                });
+            } catch (e) {
+                Swal.fire({ icon:'error', title:'Erro', text:'Não foi possível carregar os códigos.' });
+            }
+        });
+
+        // Feedback visual ao selecionar foto
+        document.getElementById('foto-cupom').addEventListener('change', function(){
+            const label = document.getElementById('upload-label');
+            const text = document.getElementById('upload-text');
+            if (this.files.length > 0) {
+                label.classList.add('has-file');
+                text.innerHTML = '<i class="fas fa-check"></i> ' + this.files[0].name;
+            } else {
+                label.classList.remove('has-file');
+                text.innerHTML = 'Clique para anexar foto';
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>
+
+

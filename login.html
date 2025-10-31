@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Promoção Estrela D'Alva</title>
+    <meta name="description" content="Área segura de acesso do Auto Posto Estrela D'Alva.">
+    <meta name="robots" content="noindex,nofollow">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="Logotipo.png?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      if (window.top !== window.self) { window.top.location = window.location; }
+    </script>
+
+    <style>
+        body { background: #F1F2F2; }
+        .login-header {
+            background: #D9251A; color: #fff; padding: 50px 20px; text-align: center;
+            border-bottom: 8px solid #F7C700; position: relative; min-height: 160px;
+        }
+        .login-header .logo-container { margin-bottom: 10px; }
+        .login-header .logo-container img { max-width: 90px; height: auto; background: #fff; padding: 8px; border-radius: 10px; }
+        .login-container { max-width: 520px; margin: 30px auto; padding: 0 20px; }
+        .form-card { background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .form-card h2 { color: #D9251A; font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; text-align: center; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 22px; font-size: 0.95rem; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display:block; color:#333; font-weight:700; margin-bottom:8px; font-size:0.95rem; }
+        .form-group input { width:100%; padding:14px 16px; border:2px solid #e0e0e0; border-radius:8px; font-size:1rem; transition:border-color .3s ease; box-sizing:border-box; }
+        .form-group input:focus { outline:none; border-color:#F7C700; }
+        .btn-submit { width:100%; background:#F7C700; color:#D9251A; padding:14px; border:none; border-radius:50px; font-size:1.05rem; font-weight:800; text-transform:uppercase; cursor:pointer; transition:all .3s ease; margin-top:6px; }
+        .btn-submit:hover { background:#D9251A; color:#F7C700; transform: translateY(-2px); }
+        .btn-submit:disabled { opacity:.6; cursor:not-allowed; }
+        .links { text-align:center; margin-top:14px; }
+        .links a { color:#666; text-decoration:none; font-weight:600; }
+        .links a:hover { color:#D9251A; }
+    </style>
+</head>
+<body>
+    <div class="login-header">
+        <div class="logo-container">
+            <a href="https://autopostoestreladalva.com.br/" title="Ir para o site">
+                <img src="logos/logoposto.png" alt="Auto Posto Estrela D'Alva">
+            </a>
+        </div>
+        <h1><i class="fas fa-sign-in-alt"></i> Login</h1>
+        <p>Acesse sua conta para participar das promoções</p>
+    </div>
+
+    <div class="login-container">
+        <div class="form-card">
+            <h2>Entrar</h2>
+            <p class="subtitle">Informe seu e-mail e senha cadastrados</p>
+
+            <form id="login-form">
+                <!-- Honeypot -->
+                <input type="text" name="website" autocomplete="off" tabindex="-1" style="display:none;" aria-hidden="true">
+                <!-- CSRF -->
+                <input type="hidden" name="csrf_token" id="csrf_token">
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required placeholder="seu@email.com" maxlength="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required placeholder="Sua senha" minlength="6">
+                </div>
+
+                <button type="submit" class="btn-submit" id="btn-login"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+            </form>
+
+            <div class="links" style="display:flex; justify-content:space-between; gap:10px;">
+                <a href="cadastro.html">Não tem conta? Cadastre-se</a>
+                <a href="#" id="btn-admin" style="color:#D9251A; font-weight:800;">Área do Administrador</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CSRF
+        fetch('auth/csrf', { credentials: 'same-origin' })
+            .then(r => r.json())
+            .then(d => {
+                document.getElementById('csrf_token').value = d.token;
+                window.__formIssuedAt = d.issued_at;
+            })
+            .catch(() => document.getElementById('btn-login').disabled = true);
+
+        document.getElementById('login-form').addEventListener('submit', function(e){
+            e.preventDefault();
+            const btn = document.getElementById('btn-login');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+
+            const formData = new FormData(this);
+
+            // Removido bloqueio temporal para simplificar
+
+            fetch('/auth/login', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' }, credentials: 'same-origin' })
+                .then(r => r.json())
+                .then(result => {
+                    if (result.success) {
+                        window.location.assign('/dashboard');
+                        return;
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Não foi possível entrar', text: result.message || 'Credenciais inválidas', confirmButtonColor: '#D9251A' });
+                    }
+                })
+                .catch(() => {
+                    Swal.fire({ icon: 'error', title: 'Erro de conexão', text: 'Tente novamente mais tarde.', confirmButtonColor: '#D9251A' });
+                })
+                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar'; });
+        });
+
+        // Modal de login do administrador
+        document.getElementById('btn-admin').addEventListener('click', async function(e){
+            e.preventDefault();
+            // SEMPRE renovar o token CSRF antes do modal (evita expiração e falha)
+            try {
+                const r = await fetch('auth/csrf', { credentials: 'same-origin' });
+                const d = await r.json();
+                document.getElementById('csrf_token').value = d.token;
+                window.__formIssuedAt = d.issued_at;
+            } catch (_) {}
+            const { value: formValues } = await Swal.fire({
+                title: 'Área do Administrador',
+                html:
+                    '<input id="swal-user" class="swal2-input" placeholder="Usuário">' +
+                    '<input id="swal-pass" class="swal2-input" placeholder="Senha" type="password">',
+                focusConfirm: false,
+                showCancelButton: true,
+                preConfirm: () => {
+                    return {
+                        usuario: (document.getElementById('swal-user').value || '').trim(),
+                        senha: document.getElementById('swal-pass').value || ''
+                    }
+                }
+            });
+            if (!formValues) return;
+            const fd = new FormData();
+            fd.append('usuario', formValues.usuario);
+            fd.append('senha', formValues.senha);
+            fd.append('csrf_token', document.getElementById('csrf_token').value);
+            const resp = await fetch('/admin_login.php', { method:'POST', body: fd, credentials:'same-origin', headers: { 'Accept':'application/json' } });
+            const res = await resp.json();
+            if (res.success) {
+                // Força navegação dura para evitar caches/SPA
+                window.location.href = '/admin';
+            } else {
+                Swal.fire({ icon:'error', title:'Acesso negado', text: res.message || 'Verifique suas credenciais.' });
+            }
+        });
+    </script>
+</body>
+</html>
+
+

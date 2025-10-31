@@ -26,8 +26,174 @@
     <!-- Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Supabase -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        /* Banner Aniversário */
+        .banner-aniversario {
+            width: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            position: relative;
+        }
+        
+        .banner-aniversario .banner-link {
+            width: 100%;
+            display: block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .banner-aniversario .banner-link:hover {
+            opacity: 0.9;
+            transform: scale(1.01);
+        }
+        
+        .banner-aniversario .banner-img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        /* Botão sobreposto no banner */
+        .btn-banner-participe {
+            position: absolute;
+            top: 68%;
+            left: 57%;
+            transform: translate(-50%, -50%);
+            background: #D9251A;
+            color: #F7C700;
+            padding: 15px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1.4rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            border: 3px solid #F7C700;
+            letter-spacing: 1.5px;
+            z-index: 10;
+            white-space: nowrap;
+            animation: pulse-button 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-button {
+            0%, 100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1.05);
+                box-shadow: 0 12px 35px rgba(247, 199, 0, 0.8);
+            }
+        }
+        
+        .btn-banner-participe:hover {
+            background: #F7C700;
+            color: #D9251A;
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 12px 35px rgba(247, 199, 0, 0.6);
+            border-color: #D9251A;
+            animation: none;
+        }
+        
+        @media (max-width: 768px) {
+            .banner-aniversario {
+                flex-direction: column;
+                padding-bottom: 20px;
+            }
+            
+            .banner-aniversario .banner-img {
+                object-fit: contain;
+            }
+            
+            .banner-aniversario .banner-link:hover {
+                transform: scale(1);
+            }
+            
+            .btn-banner-participe {
+                position: relative;
+                top: auto;
+                left: 28%;
+                transform: translateX(-50%);
+                font-size: 1.2rem;
+                padding: 15px 35px;
+                border: 3px solid #F7C700;
+                margin-top: 20px;
+                animation: pulse-button-mobile 2s ease-in-out infinite;
+            }
+            
+            @keyframes pulse-button-mobile {
+                0%, 100% {
+                    opacity: 1;
+                    transform: translateX(-50%) scale(1);
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+                }
+                50% {
+                    opacity: 0.8;
+                    transform: translateX(-50%) scale(1.05);
+                    box-shadow: 0 12px 35px rgba(247, 199, 0, 0.8);
+                }
+            }
+            
+            .btn-banner-participe:hover {
+                transform: translateX(-50%) scale(1.05);
+                animation: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn-banner-participe {
+                font-size: 1rem;
+                padding: 12px 25px;
+            }
+        }
+        
+        /* Layout E: Botão pill invertido */
+        .hero-promo-btn {
+            position: relative;
+            margin-top: 30px;
+            display: inline-block;
+            background: #F7C700;
+            color: #D9251A;
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 18px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(247, 199, 0, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .hero-promo-btn:hover {
+            background: #D9251A;
+            color: #F7C700;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(217, 37, 26, 0.5);
+        }
+        @media (max-width: 768px) {
+            .hero-promo-btn {
+                font-size: 1.1rem;
+                padding: 16px 35px;
+                margin-top: 20px;
+            }
+        }
+    </style>
+    
+    
 </head>
 <body>
     <!-- Header Simples -->
@@ -51,6 +217,21 @@
                 <!-- Cards removidos para dar mais destaque à imagem de fundo -->
             </div>
         </div>
+        
+    </section>
+
+    <!-- Banner Aniversário -->
+    <section class="banner-aniversario">
+        <a href="promocoes.html" class="banner-link">
+            <img src="aniversario/aniversario.jpg" 
+                 alt="1 Ano Auto Posto Estrela D'Alva" 
+                 class="banner-img"
+                 loading="lazy"
+                 decoding="async">
+        </a>
+        <a href="promocoes.html" class="btn-banner-participe">
+            Participe Agora
+        </a>
     </section>
 
     <!-- Sobre Section - Estilo Ipiranga Clean -->
@@ -378,7 +559,7 @@
                         <img src="mascote/mascote2.png" alt="Mascote Estrela D'Alva" class="mascote-localizacao">
                         
                         <h2 class="main-title">
-                            Encontre o AutoPosto<br>
+                            Encontre o Auto Posto<br>
                             <span class="brand-highlight">Estrela D'Alva</span>
                         </h2>
                         
@@ -518,6 +699,6 @@
         <i class="fab fa-whatsapp"></i>
     </button>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=20250903-1"></script>
 </body>
 </html>

@@ -1,12 +1,8 @@
 // Variáveis globais
 let mobileMenuOpen = false;
 
-// Configuração do Supabase - as credenciais reais agora estão nas variáveis do Railway
-const SUPABASE_URL = 'https://ezpjdywoywtpxtiynseg.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6cGpkeXdveXd0cHh0aXluc2VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4NjE3MjgsImV4cCI6MjA2ODQzNzcyOH0.qiVX5Lti7kpOoJEEAlU795P9OmXFBDqOKKxUBW4cFc8';
-
-// Inicializar Supabase
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Configurações para envio via PHP
+const API_ENDPOINT = 'enviar_curriculo.php';
 
 // Configurações de segurança avançadas
 const SECURITY_CONFIG = {
@@ -150,8 +146,7 @@ function sanitizeInput(input, fieldType = 'default') {
         .replace(/require\s*\(/gi, '') // Remove require
         .replace(/localStorage\./gi, '') // Remove localStorage access
         .replace(/sessionStorage\./gi, '') // Remove sessionStorage access
-        .replace(/cookie/gi, '') // Remove cookie access
-        .trim();
+        .replace(/cookie/gi, ''); // Remove cookie access
     
     // Validação específica por tipo de campo
     const maxLength = SECURITY_CONFIG.maxTextLength[fieldType] || 1000;
@@ -227,8 +222,7 @@ function initSecurity() {
     // Configurar validação em tempo real
     setupRealtimeValidation();
     
-    // Registrar carregamento da página para tracking
-    console.log('🔒 Sistema de segurança iniciado');
+    // Sistema de segurança iniciado
 }
 
 // Função para adicionar event listeners de segurança
@@ -255,7 +249,7 @@ function addSecurityEventListeners() {
     document.addEventListener('copy', function(e) {
         const selection = window.getSelection().toString();
         if (selection.length > 1000) {
-            console.warn('🚨 Tentativa de cópia em massa detectada');
+            // Cópia em massa detectada (sem log)
         }
     });
 }
@@ -392,7 +386,7 @@ function validateCargo(cargo) {
     return cargosValidos.includes(cargo);
 }
 
-// Função para enviar currículo para o Supabase com proteções avançadas
+// Função para enviar currículo via PHP com proteções avançadas
 async function enviarCurriculo(event) {
     event.preventDefault();
     
@@ -446,9 +440,9 @@ async function enviarCurriculo(event) {
         const formData = new FormData(form);
         
         // Obter e sanitizar dados com tipo específico
-        const nome = sanitizeInput(formData.get('nome'), 'nome');
-        const email = sanitizeInput(formData.get('email'), 'email');
-        const telefone = sanitizeInput(formData.get('telefone'), 'telefone');
+        const nome = sanitizeInput(formData.get('nome'), 'nome').trim();
+        const email = sanitizeInput(formData.get('email'), 'email').trim();
+        const telefone = sanitizeInput(formData.get('telefone'), 'telefone').trim();
         const cargo = formData.get('cargo');
         const curriculo = formData.get('curriculo');
         
@@ -476,55 +470,43 @@ async function enviarCurriculo(event) {
             throw new Error('Por favor, selecione um cargo válido.');
         }
         
-        // Validar arquivo PDF
-        const fileValidation = validatePDFFile(curriculo);
-        if (!fileValidation.valid) {
-            throw new Error(fileValidation.message);
-        }
-        
-        // Upload do arquivo para o Supabase Storage
-        let arquivoUrl = null;
-        if (curriculo) {
-            const fileName = `curriculos/${Date.now()}-${curriculo.name}`;
-            
-            const { data: uploadData, error: uploadError } = await supabase.storage
-                .from('curriculos')
-                .upload(fileName, curriculo);
-            
-            if (uploadError) {
-                throw new Error('Erro ao fazer upload do arquivo: ' + uploadError.message);
+        // Validar arquivo PDF se enviado
+        if (curriculo && curriculo.size > 0) {
+            const fileValidation = validatePDFFile(curriculo);
+            if (!fileValidation.valid) {
+                throw new Error(fileValidation.message);
             }
-            
-            // Obter URL pública do arquivo
-            const { data: urlData } = supabase.storage
-                .from('curriculos')
-                .getPublicUrl(fileName);
-            
-            arquivoUrl = urlData.publicUrl;
         }
         
-        // Salvar dados no banco
-        const { data, error } = await supabase
-            .from('curriculos')
-            .insert([
-                {
-                    nome: nome,
-                    email: email,
-                    telefone: telefone,
-                    cargo: cargo,
-                    arquivo_url: arquivoUrl
-                }
-            ]);
+        // Preparar FormData para envio
+        const sendData = new FormData();
+        sendData.append('nome', nome);
+        sendData.append('email', email);
+        sendData.append('telefone', telefone);
+        sendData.append('cargo', cargo);
+        sendData.append('website', honeypot || ''); // honeypot
         
-        if (error) {
-            throw new Error('Erro ao salvar currículo: ' + error.message);
+        if (curriculo && curriculo.size > 0) {
+            sendData.append('curriculo', curriculo);
         }
         
-        // Limpar formulário
-        form.reset();
+        // Enviar para o PHP
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            body: sendData
+        });
         
-        // Mostrar feedback de sucesso
-        showNotification('Currículo enviado com sucesso! Entraremos em contato em breve.', 'success');
+        const result = await response.json();
+        
+        if (result.success) {
+            // Limpar formulário
+            form.reset();
+            
+            // Mostrar feedback de sucesso
+            showNotification(result.message, 'success');
+        } else {
+            throw new Error(result.message);
+        }
         
     } catch (error) {
         // Mostrar erro

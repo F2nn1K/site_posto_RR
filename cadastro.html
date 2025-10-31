@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Promoção Aniversário Estrela D'Alva</title>
+    <meta name="description" content="Cadastre-se para participar dos sorteios da campanha de 1 ano do Auto Posto Estrela D'Alva">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="Logotipo.png?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+        body {
+            background: #F1F2F2;
+        }
+        
+        .cadastro-header {
+            background: #D9251A;
+            color: #fff;
+            padding: 60px 20px 40px 20px;
+            text-align: center;
+            border-bottom: 8px solid #F7C700;
+            position: relative;
+            min-height: 200px;
+        }
+        
+        .cadastro-header .logo-container {
+            margin-bottom: 15px;
+        }
+        
+        .cadastro-header .logo-container img {
+            max-width: 100px;
+            height: auto;
+            background: #fff;
+            padding: 8px;
+            border-radius: 10px;
+        }
+        
+        .cadastro-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        
+        .btn-login-header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #F7C700;
+            color: #D9251A;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid #F7C700;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-login-header:hover {
+            background: #fff;
+            color: #D9251A;
+            border-color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .btn-login-header {
+                top: 10px;
+                right: 10px;
+                padding: 8px 20px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        .cadastro-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .form-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-card h2 {
+            color: #D9251A;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .form-card .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #F7C700;
+        }
+        
+        .form-group input.error {
+            border-color: #D9251A;
+        }
+        
+        .form-group .form-help {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            background: #F7C700;
+            color: #D9251A;
+            padding: 16px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn-submit:hover {
+            background: #D9251A;
+            color: #F7C700;
+            transform: translateY(-2px);
+        }
+        
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-voltar-promo {
+            display: block;
+            text-align: center;
+            color: #666;
+            text-decoration: none;
+            margin-top: 20px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .btn-voltar-promo:hover {
+            color: #D9251A;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Modal de Regulamento */
+        .modal-regulamento {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-regulamento.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content-regulamento {
+            background: #fff;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header-regulamento {
+            background: #D9251A;
+            color: #fff;
+            padding: 20px 25px;
+            text-align: center;
+        }
+        
+        .modal-header-regulamento h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        
+        .modal-body-regulamento {
+            padding: 25px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        
+        .modal-body-regulamento h3 {
+            color: #D9251A;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .modal-body-regulamento h3:first-child {
+            margin-top: 0;
+        }
+        
+        .modal-body-regulamento p,
+        .modal-body-regulamento li {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .modal-body-regulamento ul {
+            margin-left: 20px;
+        }
+        
+        .modal-footer-regulamento {
+            padding: 20px 25px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .checkbox-aceite {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        
+        .checkbox-aceite input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .checkbox-aceite label {
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .btn-confirmar-regulamento {
+            width: 100%;
+            background: #F7C700;
+            color: #D9251A;
+            padding: 14px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-confirmar-regulamento:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .btn-confirmar-regulamento:not(:disabled):hover {
+            background: #D9251A;
+            color: #F7C700;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 30px 20px;
+            }
+            
+            .cadastro-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão Login Fixo -->
+    <a href="login" style="position: fixed; top: 20px; right: 20px; z-index: 99999; display: inline-block; background: #F7C700; color: #D9251A; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; font-size: 0.95rem; box-shadow: 0 5px 15px rgba(0,0,0,0.4);">
+        <i class="fas fa-sign-in-alt"></i> LOGIN
+    </a>
+    
+    <!-- Header -->
+    <div class="cadastro-header">
+        
+        <div class="logo-container">
+            <img src="logos/logoposto.png" alt="Auto Posto Estrela D'Alva">
+        </div>
+        <h1><i class="fas fa-gift"></i> Cadastro para Sorteios</h1>
+        <p>Preencha seus dados e participe!</p>
+    </div>
+
+    <!-- Modal de Regulamento -->
+    <div class="modal-regulamento" id="modal-regulamento">
+        <div class="modal-content-regulamento">
+            <div class="modal-header-regulamento">
+                <h2><i class="fas fa-file-contract"></i> Regulamento da Promoção</h2>
+            </div>
+            
+            <div class="modal-body-regulamento">
+                <h3>1. Da Promoção</h3>
+                <p>
+                    A promoção "1 Ano de Auto Posto Estrela D'Alva" é realizada pelo Auto Posto Estrela D'Alva Ltda, 
+                    localizado na Rua Estrela D'Alva, nº 1794, Bairro Professora Aracelis Souto Maior – Boa Vista/RR, 
+                    com o objetivo de comemorar o primeiro aniversário do posto e premiar seus clientes pela preferência e fidelidade.
+                </p>
+                
+                <h3>2. Período de Participação</h3>
+                <p>
+                    <strong>Início:</strong> 01/11/2025<br>
+                    <strong>Término:</strong> 20/12/2025<br>
+                    <strong>Grande Sorteio:</strong> 20/12/2025
+                </p>
+                <p>Os cadastros realizados dentro desse período serão válidos para os sorteios semanais e para o sorteio final.</p>
+                
+                <h3>3. Quem Pode Participar</h3>
+                <p>Poderão participar da promoção:</p>
+                <ul>
+                    <li>Pessoas físicas, maiores de 18 anos, com CPF válido;</li>
+                    <li>Residentes em Boa Vista/RR ou região;</li>
+                    <li>Clientes que abastecerem no Auto Posto Estrela D'Alva durante o período da promoção.</li>
+                </ul>
+                <p><strong>Observação:</strong> Não há limite de participações por CPF. Cada cupom fiscal equivale a uma nova chance de participar.</p>
+                
+                <h3>4. Como Participar</h3>
+                <ol>
+                    <li>A cada R$ 20,00 em abastecimento, o cliente recebe 1 número da sorte para participar da promoção;</li>
+                    <li>O número da sorte é gerado automaticamente no momento do cadastro, com base no valor do cupom fiscal:
+                        <ul>
+                            <li>Exemplo: se o cliente abastecer R$ 100,00, o sistema gerará 5 números da sorte;</li>
+                            <li>Se o valor for R$ 35,00, o sistema contabilizará 1 número da sorte para concorrer;</li>
+                        </ul>
+                    </li>
+                    <li>Acesse o site oficial do Auto Posto Estrela D'Alva e clique na aba Promoção;</li>
+                    <li>Cadastre seus dados pessoais e envie a foto do cupom fiscal (ou nota), informando o valor abastecido e os 44 dígitos do cupom fiscal;</li>
+                    <li>Guarde o comprovante fiscal até o término da promoção;</li>
+                    <li>Aguarde os sorteios semanais e o grande sorteio final.</li>
+                </ol>
+                
+                <h3>5. Dos Prêmios</h3>
+                <p><strong>Sorteios Semanais – Novembro</strong></p>
+                <ul>
+                    <li>Semana 1: 2 Vales Açaí – R$ 35,00 cada</li>
+                    <li>Semana 2: 1 Voucher de Combustível – R$ 100,00</li>
+                    <li>Semana 3: 5 Combos Salgado + Cappuccino</li>
+                    <li>Semana 4: 1 Combo Especial da Conveniência</li>
+                </ul>
+                
+                <p><strong>Sorteios Semanais – Dezembro</strong></p>
+                <ul>
+                    <li>Semana 1: 2 Vales Açaí – R$ 35,00 cada</li>
+                    <li>Semana 2: 1 Voucher de Combustível – R$ 100,00</li>
+                    <li>Semana 3: 1 Combo Especial da Conveniência</li>
+                </ul>
+                
+                <p><strong>Grande Sorteio – 20/12/2025</strong></p>
+                <ul>
+                    <li>1 iPhone 17 – 512GB</li>
+                    <li>2 Vouchers de Combustível – R$ 200,00 cada</li>
+                    <li>3 Vales Açaí – R$ 35,00 cada</li>
+                    <li>1 Combo de Fim de Ano da Conveniência (R$ 150,00)</li>
+                </ul>
+                
+                <h3>6. Dos Sorteios</h3>
+                <ul>
+                    <li>Os sorteios serão realizados semanalmente, conforme cronograma divulgado nas redes sociais do Auto Posto Estrela D'Alva.</li>
+                    <li>Os ganhadores serão notificados por WhatsApp e e-mail cadastrados.</li>
+                    <li>Os resultados serão publicados no Instagram oficial do Auto Posto Estrela D'Alva.</li>
+                    <li>Os prêmios deverão ser retirados no posto em até 30 (trinta) dias após a divulgação.</li>
+                    <li>Caso o ganhador não compareça no prazo informado, o prêmio será anulado e não haverá novo sorteio.</li>
+                </ul>
+                
+                <h3>7. Disposições Gerais</h3>
+                <ul>
+                    <li>Os prêmios não poderão ser trocados por dinheiro ou outro bem de valor equivalente.</li>
+                    <li>O Auto Posto Estrela D'Alva reserva-se o direito de alterar este regulamento a qualquer momento, mediante aviso prévio em suas redes sociais e site.</li>
+                    <li>Os dados informados pelos participantes serão utilizados exclusivamente para esta promoção.</li>
+                    <li>Colaboradores do Auto Posto Estrela D'Alva não poderão participar.</li>
+                    <li>Em caso de dúvidas, entre em contato pelo WhatsApp (95) 99174-0090.</li>
+                </ul>
+                
+                <h3>8. Proteção de Dados (LGPD)</h3>
+                <p>
+                    Os dados pessoais coletados serão tratados de forma segura, confidencial e exclusiva para fins da promoção, 
+                    conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).
+                </p>
+                <p>
+                    O participante poderá solicitar, a qualquer momento, a exclusão de seus dados, mediante solicitação 
+                    pelos canais de atendimento do Auto Posto Estrela D'Alva.
+                </p>
+                <p style="text-align: center; margin-top: 20px; font-weight: 700; color: #D9251A;">
+                    ✅ Auto Posto Estrela D'Alva – 1 Ano Com Você!<br>
+                    Mais prêmios, mais vantagens e muito combustível para celebrar juntos!
+                </p>
+            </div>
+            
+            <div class="modal-footer-regulamento">
+                <div class="checkbox-aceite">
+                    <input type="checkbox" id="aceitar-termos">
+                    <label for="aceitar-termos">Li e aceito o regulamento da promoção</label>
+                </div>
+                <button class="btn-confirmar-regulamento" id="btn-confirmar-regulamento" disabled>
+                    Confirmar e Prosseguir
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cadastro-container">
+        <div class="form-card">
+            <h2>Seus Dados</h2>
+            <p class="subtitle">Preencha corretamente para participar dos sorteios</p>
+            
+            <div class="alert success" id="success-alert">
+                <i class="fas fa-check-circle"></i> Cadastro realizado com sucesso! Boa sorte nos sorteios!
+            </div>
+            
+            <div class="alert error" id="error-alert">
+                <i class="fas fa-exclamation-circle"></i> <span id="error-message"></span>
+            </div>
+            
+            <form id="cadastro-form">
+                <!-- Honeypot: oculto aos usuários reais -->
+                <input type="text" name="website" autocomplete="off" tabindex="-1" style="display:none;" aria-hidden="true">
+                <!-- CSRF token (preenchido via JS a partir de csrf.php) -->
+                <input type="hidden" name="csrf_token" id="csrf_token">
+                <div class="form-group">
+                    <label for="nome">Nome Completo *</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Digite seu nome completo" maxlength="100" pattern="^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:\s[A-Za-zÀ-ÖØ-öø-ÿ]+)*$" title="Use apenas letras e espaço, sem começar com espaço.">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">E-mail *</label>
+                    <input type="email" id="email" name="email" required placeholder="seu@email.com" maxlength="100">
+                </div>
+                
+                <div class="form-group">
+                    <label for="cpf">CPF *</label>
+                    <input type="text" id="cpf" name="cpf" required placeholder="000.000.000-00" maxlength="14">
+                    <small class="form-help">Digite apenas números</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="whatsapp">WhatsApp *</label>
+                    <input type="tel" id="whatsapp" name="whatsapp" required placeholder="(95) 99999-9999" maxlength="15">
+                </div>
+                
+                <div class="form-group">
+                    <label for="idade">Idade *</label>
+                    <input type="number" id="idade" name="idade" required placeholder="Ex: 25" min="18" max="120">
+                    <small class="form-help">Mínimo 18 anos</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="senha">Senha *</label>
+                    <input type="password" id="senha" name="senha" required placeholder="Mínimo 6 caracteres" minlength="6">
+                    <small class="form-help">Mínimo 6 caracteres</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmar_senha">Confirmar Senha *</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" required placeholder="Digite a senha novamente">
+                </div>
+                
+                <button type="submit" class="btn-submit" id="btn-submit">
+                    <i class="fas fa-check"></i> Cadastrar e Participar
+                </button>
+            </form>
+            
+            <a href="promocoes" class="btn-voltar-promo">
+                <i class="fas fa-arrow-left"></i> Voltar para Promoções
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Obter token CSRF ao carregar a página
+        fetch('auth/csrf', { credentials: 'same-origin' })
+            .then(r => r.json())
+            .then(d => {
+                document.getElementById('csrf_token').value = d.token;
+                // Guardar timestamp para validação extra no cliente
+                window.__formIssuedAt = d.issued_at;
+            })
+            .catch(() => {
+                // fallback: bloquear submissão se não houver token
+                document.getElementById('btn-submit').disabled = true;
+            });
+        // Controle do Modal de Regulamento
+        let aceitouRegulamento = false;
+        let dadosFormulario = null;
+        const modal = document.getElementById('modal-regulamento');
+        const checkboxAceite = document.getElementById('aceitar-termos');
+        const btnConfirmarRegulamento = document.getElementById('btn-confirmar-regulamento');
+        
+        // Habilitar/desabilitar botão conforme checkbox
+        checkboxAceite.addEventListener('change', function() {
+            btnConfirmarRegulamento.disabled = !this.checked;
+        });
+        
+        // Confirmar regulamento e fechar modal
+        btnConfirmarRegulamento.addEventListener('click', function() {
+            aceitouRegulamento = true;
+            modal.classList.remove('show');
+            
+            // Processar o cadastro agora
+            if (dadosFormulario) {
+                processarCadastro(dadosFormulario);
+                dadosFormulario = null;
+            }
+        });
+        
+        // Máscaras para CPF e WhatsApp
+        document.getElementById('cpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            }
+            e.target.value = value;
+        });
+        
+        document.getElementById('whatsapp').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            }
+            e.target.value = value;
+        });
+        
+        // Função para processar o cadastro
+        function processarCadastro(formElement) {
+            const btnSubmit = document.getElementById('btn-submit');
+            const formData = new FormData(formElement);
+            
+            // Desabilitar botão
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cadastrando...';
+            
+            // Enviar para o PHP
+            fetch('api/cadastrar-participante', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    // Sucesso: mostrar alerta e recarregar a página para novo cadastro
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cadastro realizado!',
+                        text: 'Você já está participando dos sorteios. Boa sorte!',
+                        confirmButtonColor: '#F7C700',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    // Tratamento de erros específicos
+                    let titulo = 'Erro no cadastro';
+                    let mensagem = result.message;
+                    let icone = 'error';
+                    
+                    if (result.message === 'cpf_duplicado') {
+                        titulo = 'CPF já cadastrado';
+                        mensagem = 'Este CPF já está cadastrado no sistema. Cada CPF pode participar apenas uma vez.';
+                        icone = 'warning';
+                    } else if (result.message === 'email_duplicado') {
+                        titulo = 'Email já cadastrado';
+                        mensagem = 'Este email já está cadastrado no sistema. Use outro email ou recupere sua senha.';
+                        icone = 'warning';
+                    } else if (result.message === 'whatsapp_duplicado') {
+                        titulo = 'WhatsApp já cadastrado';
+                        mensagem = 'Este número de WhatsApp já está cadastrado no sistema. Cada número pode participar apenas uma vez.';
+                        icone = 'warning';
+                    }
+                    
+                    Swal.fire({
+                        icon: icone,
+                        title: titulo,
+                        text: mensagem,
+                        confirmButtonColor: '#D9251A'
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro de conexão',
+                    text: 'Não foi possível processar seu cadastro. Verifique sua conexão e tente novamente.',
+                    confirmButtonColor: '#D9251A'
+                });
+                console.error('Erro:', error);
+            })
+            .finally(() => {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fas fa-check"></i> Cadastrar e Participar';
+            });
+        }
+        
+        // Limpeza e validação do campo Nome em tempo real
+        (function(){
+            const nomeInput = document.getElementById('nome');
+            if (!nomeInput) return;
+            nomeInput.addEventListener('input', function(){
+                // Remover tudo que não seja letra, espaço ou acento
+                this.value = this.value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g, '');
+                // Impedir espaço no começo
+                this.value = this.value.replace(/^\s+/, '');
+                // Consolidar múltiplos espaços
+                this.value = this.value.replace(/\s{2,}/g, ' ');
+            });
+        })();
+
+        // Validação e envio do formulário
+        document.getElementById('cadastro-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btnSubmit = document.getElementById('btn-submit');
+            
+            // RENOVAR TOKEN CSRF antes de enviar (para evitar expiração)
+            try {
+                const csrfResponse = await fetch('auth/csrf', { credentials: 'same-origin' });
+                const csrfData = await csrfResponse.json();
+                document.getElementById('csrf_token').value = csrfData.token;
+            } catch (err) {
+                console.error('Erro ao renovar CSRF:', err);
+            }
+            
+            // Obter dados
+            const formData = new FormData(this);
+            const nome = formData.get('nome').trim();
+            const email = formData.get('email').trim();
+            const cpf = formData.get('cpf').replace(/\D/g, '');
+            const whatsapp = formData.get('whatsapp').replace(/\D/g, '');
+            const idade = parseInt(formData.get('idade'));
+            const senha = formData.get('senha');
+            const confirmarSenha = formData.get('confirmar_senha');
+            
+            // Validações com SweetAlert2
+            if (nome.length < 3) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Nome inválido',
+                    text: 'Nome deve ter pelo menos 3 caracteres',
+                    confirmButtonColor: '#D9251A'
+                });
+                return;
+            }
+            
+            if (cpf.length !== 11) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'CPF inválido',
+                    text: 'Digite 11 dígitos do CPF',
+                    confirmButtonColor: '#D9251A'
+                });
+                return;
+            }
+            
+            if (whatsapp.length < 10) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'WhatsApp inválido',
+                    text: 'Digite um número de WhatsApp válido',
+                    confirmButtonColor: '#D9251A'
+                });
+                return;
+            }
+            
+            if (idade < 18) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Idade mínima',
+                    text: 'É necessário ter pelo menos 18 anos para participar',
+                    confirmButtonColor: '#D9251A'
+                });
+                return;
+            }
+            
+            if (senha.length < 6) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Senha muito curta',
+                    text: 'A senha deve ter pelo menos 6 caracteres',
+                    confirmButtonColor: '#D9251A'
+                });
+                return;
+            }
+            
+            if (senha !== confirmarSenha) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Senhas não conferem',
+                    text: 'As senhas digitadas não são iguais',
+                    confirmButtonColor: '#D9251A'
+                });
+                return;
+            }
+
+            // Se já aceitou o regulamento, processar direto
+            if (aceitouRegulamento) {
+                processarCadastro(this);
+            } else {
+                // Mostrar modal de regulamento
+                dadosFormulario = this;
+                modal.classList.add('show');
+            }
+        });
+    </script>
+</body>
+</html>
+

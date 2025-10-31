@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teste NFC-e - JSON</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 24px; background:#f7f7f7; }
+    .wrap { max-width: 900px; margin:0 auto; background:#fff; border-radius:10px; padding:18px 18px 10px; box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+    h1 { margin: 0 0 12px; font-size: 20px; }
+    label { display:block; font-weight:700; margin:8px 0 6px; }
+    input { width:100%; padding:10px 12px; border:2px solid #e5e7eb; border-radius:8px; font-size:15px; }
+    button { margin-top:12px; background:#111827; color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:700; }
+    button:disabled { opacity:.6; cursor:not-allowed; }
+    .row { display:flex; gap:12px; align-items:flex-end; }
+    .col { flex:1; }
+    pre { background:#0b1020; color:#c7d2fe; padding:14px; border-radius:8px; overflow:auto; max-height:60vh; }
+    .hint { color:#374151; font-size:13px; margin-top:6px; }
+    a { color:#2563eb; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Teste de consulta NFC-e (JSON bruto)</h1>
+    <div class="row">
+      <div class="col">
+        <label>Chave de acesso (44 dígitos)</label>
+        <input id="chave" maxlength="44" placeholder="00000000000000000000000000000000000000000000">
+        <div class="hint">Esta página envia a chave para <code>/api_nfce_consulta.php</code> e mostra a resposta JSON.</div>
+      </div>
+      <div>
+        <button id="btn">Consultar</button>
+      </div>
+    </div>
+
+    <div id="link-publico" class="hint" style="margin-top:10px;"></div>
+
+    <h3 style="margin:16px 0 8px;">Resposta</h3>
+    <pre id="out">(sem dados)</pre>
+  </div>
+
+  <script>
+    const elChave = document.getElementById('chave');
+    const elBtn = document.getElementById('btn');
+    const elOut = document.getElementById('out');
+    const elLink = document.getElementById('link-publico');
+
+    function pretty(obj){
+      try { return JSON.stringify(obj, null, 2); } catch(e){ return String(obj); }
+    }
+
+    async function consultar(){
+      let chave = (elChave.value || '').replace(/\D/g,'');
+      if (chave.length !== 44){
+        alert('Informe os 44 dígitos da chave.');
+        return;
+      }
+      elBtn.disabled = true; elBtn.textContent = 'Consultando...';
+      elOut.textContent = '(consultando...)';
+      elLink.textContent = '';
+      try {
+        const fd = new FormData(); fd.append('chave', chave);
+        const r = await fetch('/api_nfce_consulta.php', { method: 'POST', body: fd, credentials: 'same-origin', headers: { 'Accept': 'application/json' } });
+        let data;
+        try { data = await r.json(); }
+        catch(e){ data = { error: 'Resposta não-JSON', status: r.status, text: await r.text() }; }
+        elOut.textContent = pretty(data);
+        if (data && data.url_publica){
+          elLink.innerHTML = 'Página pública: <a href="' + data.url_publica + '" target="_blank" rel="noopener">abrir</a>';
+        }
+      } catch (e) {
+        elOut.textContent = pretty({ error: e && e.message ? e.message : String(e) });
+      } finally {
+        elBtn.disabled = false; elBtn.textContent = 'Consultar';
+      }
+    }
+
+    elBtn.addEventListener('click', consultar);
+    elChave.addEventListener('keydown', (e)=>{ if (e.key==='Enter') consultar(); });
+  </script>
+</body>
+</html>
+
+

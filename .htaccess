@@ -1,0 +1,78 @@
+# Segurança básica e URLs amigáveis
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Forçar HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Remover .html da URL (redirecionamento 301)
+RewriteCond %{THE_REQUEST} \s/+(.*)\.html[\s?]
+RewriteRule ^ %1 [R=301,L]
+
+# Servir arquivos .html quando a URL limpa for usada (exceto rotas protegidas/APIs)
+RewriteCond %{REQUEST_URI} !^/dashboard/?$
+RewriteCond %{REQUEST_URI} !^/dashbord/?$
+RewriteCond %{REQUEST_URI} !^/auth/
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# Rotas amigáveis (páginas públicas)
+RewriteRule ^login/?$ login.html [L]
+RewriteRule ^cadastro/?$ cadastro.html [L]
+RewriteRule ^promocoes/?$ promocoes.html [L]
+# Dashboard e Admin protegidos via controlador de rotas
+RewriteRule ^dashboard/?$ route.php?route=dashboard [L,QSA]
+RewriteRule ^dashbord/?$ route.php?route=dashboard [L,QSA]
+
+# Admin protegido
+RewriteRule ^admin/?$ route.php?route=admin [L,QSA]
+
+# Rotas amigáveis (APIs)
+RewriteRule ^auth/login/?$ login.php [L]
+RewriteRule ^auth/csrf/?$ csrf.php [L]
+RewriteRule ^auth/logout/?$ logout.php [L]
+RewriteRule ^api/cadastrar-participante/?$ cadastrar_participante.php [L]
+RewriteRule ^api/me/?$ api_me.php [L]
+RewriteRule ^api/pontos/?$ api_pontos.php [L]
+RewriteRule ^api/registrar-pontos/?$ api_registrar_pontos.php [L]
+RewriteRule ^api/codigos/?$ api_codigos.php [L]
+RewriteRule ^api/codigos/lista/?$ api_codigos_lista.php [L]
+RewriteRule ^api/registrar-abastecimento/?$ api_registrar_abastecimento.php [L]
+RewriteRule ^api/sorteio/?$ api_sorteio.php [L]
+RewriteRule ^api/foto-cupom/?$ api_foto_cupom.php [L]
+
+# Bloquear acesso direto aos arquivos protegidos (FORÇAR LOGIN)
+RewriteRule ^dashboard\.html$ /login [R=302,L]
+RewriteRule ^dashbord\.html$ /login [R=302,L]
+RewriteRule ^admin\.php$ /login?admin=1 [R=302,L]
+
+# Headers para login: noindex e no-store
+<Files "login.html">
+  <IfModule mod_headers.c>
+    Header always set X-Robots-Tag "noindex, nofollow"
+    Header always set Cache-Control "no-store, no-cache, must-revalidate"
+  </IfModule>
+</Files>
+
+# Proteger arquivos sensíveis e admin HTML direto
+<FilesMatch "^(admin\.html|admin\.php)$">
+  <IfModule mod_headers.c>
+    Header always set Cache-Control "no-store, no-cache, must-revalidate"
+  </IfModule>
+</FilesMatch>
+</IfModule>
+
+# Bloquear acesso direto a arquivos sensíveis
+<FilesMatch "^(config\.php|README_HOSTINGER\.md|dashboard\.html|dashboard\.php)$">
+    Require all denied
+</FilesMatch>
+
+# Nota: dashboard.php e admin.php têm proteção PHP interna (sessão)
+# Não podem ser bloqueados no .htaccess senão route.php não consegue carregá-los
+
+
