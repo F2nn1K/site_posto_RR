@@ -34,10 +34,6 @@ Site institucional do Auto Posto Estrela D'Alva com sistema de promoção de ani
 - Sistema de autenticação
 - Sorteios semanais
 
-## Promoção
-
-Campanha de 1 ano do Auto Posto Estrela D'Alva com sorteios semanais de novembro e dezembro de 2025, culminando no grande sorteio do dia 20/12/2025.
-
 ## Desenvolvedor
 
 LV Consultoria em TI
